@@ -1,0 +1,6 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/noto-sans-tc";
+
+:root {
+  font-family: "Inter Variable", "Noto Sans TC Variable", sans-serif;
+}
