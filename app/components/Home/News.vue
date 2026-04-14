@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Dialog from "primevue/dialog";
-import Button from "primevue/button";
-
 interface NewsData {
   [key: string]: {
     id: number;
@@ -37,7 +34,6 @@ const dialogVisible = ref(false);
 const eventDetail = ref();
 
 function setEventDetail(eventData: EventData) {
-  console.log(eventData);
   eventDetail.value = eventData;
 }
 </script>
