@@ -20,14 +20,15 @@ const recoveryTimeResult = computed(() => {
     <div class="flex flex-col gap-2 bg-zinc-200 rounded-md p-5">
       <div class="text-lg">
         <span>目前樹脂：</span>
-        <input
-          type="number"
-          name="currentResin"
-          id="currentResin"
-          min="0"
-          max="200"
+        <InputNumber
           v-model="currentResin"
-          class="rounded-sm bg-zinc-300 px-2 py-1 inputArrowHidden"
+          inputId="current-resin"
+          showButtons
+          :min="0"
+          :max="200"
+          :pt="{
+            pcInputText: { root: { class: 'w-40' } },
+          }"
         />
       </div>
       <div>預計回滿時間：{{ recoveryTimeResult }}</div>
