@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+generator json {
+  provider  = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model character {
+  id               Int     @id @default(autoincrement())
+  slug             String? @db.VarChar(255)
+  name             String? @db.VarChar(255)
+  title            String? @db.VarChar(255)
+  description      String? @db.VarChar(255)
+  weapontype       String? @db.VarChar(255)
+  weapontext       String? @db.VarChar(255)
+  bodytype         String? @db.VarChar(255)
+  gender           String? @db.VarChar(255)
+  qualitytype      String? @db.VarChar(255)
+  rarity           Int?
+  /// [characterBirthday]
+  birthday         Json?
+  elementtype      String? @db.VarChar(255)
+  elementtext      String? @db.VarChar(255)
+  affiliation      String? @db.VarChar(255)
+  associationtype  String? @db.VarChar(255)
+  region           String? @db.VarChar(255)
+  /// [characterCV]
+  cv               Json?
+  /// [characterStats]
+  stats            Json?
+  /// [characterCosts]
+  costs            Json?
+  talents          Json?
+  passives         Json?
+  /// [characterConstellation]
+  constellation    Json?
+  dictionary       Json?
+  profile          Json?
+  /// [characterImages]
+  images           Json?
+  version          String? @db.VarChar(255)
+  releasetimestamp Int?
+}
