@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { siteLinks } from "@/site.config";
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
+
+const dialogVisible = ref(false);
+const newUserName = ref(store.name);
+const newGender = ref(store.playerGender);
 </script>
 
 <template>
@@ -27,11 +33,68 @@ import { siteLinks } from "@/site.config";
             >
               <span class="px-3 text-sm lg:text-base">{{ link.name }}</span>
             </NuxtLink>
+            <a class="min-w-fit cursor-pointer" @click="dialogVisible = !dialogVisible"
+              ><span class="px-3 text-sm lg:text-base">設定</span></a
+            >
           </div>
         </div>
       </nav>
     </div>
   </header>
+
+  <Dialog v-model:visible="dialogVisible" modal header="設定" :style="{ width: '25rem' }">
+    <div class="flex flex-col mb-5 gap-5">
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-surface-500 dark:text-surface-400">使用者名稱</p>
+        <InputText
+          id="username"
+          class="flex-auto"
+          autocomplete="off"
+          v-model="newUserName"
+          :invalid="!newUserName"
+        />
+      </div>
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-surface-500 dark:text-surface-400">
+          性別（<i
+            class="pi pi-question"
+            v-tooltip.top="{
+              value: '此設定僅用於顯示角色故事中的第二人稱代詞',
+              pt: { text: 'text-center' },
+            }"
+          ></i
+          >）
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex items-center gap-2">
+            <RadioButton v-model="newGender" inputId="gender-male" name="male" value="male" />
+            <label for="gender-male">男</label>
+          </div>
+          <div class="flex items-center gap-2">
+            <RadioButton v-model="newGender" inputId="gender-female" name="female" value="female" />
+            <label for="gender-female">女</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-2">
+      <Button
+        type="button"
+        label="取消"
+        severity="secondary"
+        @click="dialogVisible = false"
+      ></Button>
+      <Button
+        type="button"
+        label="儲存"
+        @click="
+          newUserName && (dialogVisible = false);
+          newUserName && store.changeUserName(newUserName);
+          newGender && store.changeGender(newGender);
+        "
+      ></Button>
+    </div>
+  </Dialog>
 </template>
 
 <style scope>
