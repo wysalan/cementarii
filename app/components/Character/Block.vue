@@ -7,7 +7,7 @@ interface CharacterData {
   id: number;
   name: Record<string, string>;
   rarity: number;
-  region?: string;
+  region: string;
   elementType: string;
   elementText: string;
   weaponType: string;
@@ -56,9 +56,8 @@ function getElementIcon(character: CharacterData) {
   >
     <div class="relative">
       <NuxtImg
-        crossorigin="anonymous"
         :src="
-          'https://storage.wysalan.com/gi/assets/avatar-icon/' + getAvatarFileName(data) + '.webp'
+          'https://assets.wysalan.com/cementarii/avatar-icon/' + getAvatarFileName(data) + '.webp'
         "
         :alt="data.name"
         width="96"
@@ -73,7 +72,7 @@ function getElementIcon(character: CharacterData) {
       />
       <div class="absolute top-1.25 left-1.25">
         <NuxtImg
-          :src="'https://storage.wysalan.com/gi/assets/elements/' + getElementIcon(data) + '.png'"
+          :src="'https://assets.wysalan.com/cementarii/elements/' + getElementIcon(data) + '.png'"
           :alt="data.elementText + '元素圖示'"
           width="30"
           height="30"
