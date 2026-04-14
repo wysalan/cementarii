@@ -33,4 +33,13 @@ export default defineNuxtConfig({
       include: ["Tooltip"],
     },
   },
+
+  typescript: {
+    tsConfig: {
+      include: ["./app/types/*"],
+      compilerOptions: {
+        types: ["node"],
+      },
+    },
+  },
 });
