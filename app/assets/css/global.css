@@ -1,19 +1,13 @@
 @import "primeicons/primeicons.css";
 
 #site-content {
-  @apply bg-background dark:bg-backgroundDark flex flex-col min-h-100vh;
+  @apply flex flex-col min-h-100vh;
 }
 
 * {
   margin: 0;
   padding: 0;
 }
-
-/* body {
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-} */
 
 html {
   scroll-padding-top: 5.5rem;
@@ -22,9 +16,4 @@ html {
 
 :root {
   line-height: 1.4;
-}
-
-.inputArrowHidden {
-  appearance: none;
-  -moz-appearance: textfield;
 }
