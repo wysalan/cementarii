@@ -6,6 +6,16 @@ const store = useUserStore();
 const dialogVisible = ref(false);
 const newUserName = ref(store.name);
 const newGender = ref(store.playerGender);
+const newLevel = ref(store.defaultTalentLevel);
+
+const levelOptions = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+const reloadAfterSetting = ref(false);
+
+const reloadPage = () => {
+  if (reloadAfterSetting.value) {
+    window.location.reload();
+  }
+};
 </script>
 
 <template>
@@ -45,7 +55,16 @@ const newGender = ref(store.playerGender);
   <Dialog v-model:visible="dialogVisible" modal header="設定" :style="{ width: '25rem' }">
     <div class="flex flex-col mb-5 gap-5">
       <div class="flex flex-col gap-2 justify-center items-center">
-        <p class="text-surface-500 dark:text-surface-400">使用者名稱</p>
+        <p class="text-surface-500 dark:text-surface-400">
+          玩家名稱
+          <i
+            class="pi pi-question-circle"
+            v-tooltip.top="{
+              value: '用於首頁顯示及旅行者角色故事的玩家顯示名稱',
+              pt: { text: 'text-center' },
+            }"
+          ></i>
+        </p>
         <InputText
           id="username"
           class="flex-auto"
@@ -56,14 +75,14 @@ const newGender = ref(store.playerGender);
       </div>
       <div class="flex flex-col gap-2 justify-center items-center">
         <p class="text-surface-500 dark:text-surface-400">
-          性別（<i
-            class="pi pi-question"
+          性別
+          <i
+            class="pi pi-question-circle"
             v-tooltip.top="{
               value: '此設定僅用於顯示角色故事中的第二人稱代詞',
               pt: { text: 'text-center' },
             }"
-          ></i
-          >）
+          ></i>
         </p>
         <div class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2">
@@ -75,6 +94,30 @@ const newGender = ref(store.playerGender);
             <label for="gender-female">女</label>
           </div>
         </div>
+      </div>
+      <Divider
+        align="center"
+        :pt="{ root: { class: 'm-0' }, content: { class: 'bg-transparent select-none' } }"
+      >
+        <strong>以下設定需重新整理才可生效</strong>
+      </Divider>
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <p class="text-surface-500 dark:text-surface-400">技能預設顯示等級</p>
+        <Select
+          v-model="newLevel"
+          :options="levelOptions"
+          placeholder="Select a City"
+          class="w-full md:w-56"
+        />
+      </div>
+      <div class="flex justify-center items-center gap-2">
+        <Checkbox
+          v-model="reloadAfterSetting"
+          inputId="reloadAfterSetting"
+          name="reloadAfterSetting"
+          binary
+        />
+        <label for="reloadAfterSetting">儲存後重新整理頁面</label>
       </div>
     </div>
     <div class="flex justify-end gap-2">
@@ -91,6 +134,8 @@ const newGender = ref(store.playerGender);
           newUserName && (dialogVisible = false);
           newUserName && store.changeUserName(newUserName);
           newGender && store.changeGender(newGender);
+          newLevel && store.changeDefaultTalentLevel(newLevel);
+          reloadPage();
         "
       ></Button>
     </div>
