@@ -4,7 +4,7 @@ generator client {
 }
 
 generator json {
-  provider  = "prisma-json-types-generator"
+  provider = "prisma-json-types-generator"
 }
 
 datasource db {
@@ -17,18 +17,18 @@ model character {
   name             String? @db.VarChar(255)
   title            String? @db.VarChar(255)
   description      String? @db.VarChar(255)
-  weapontype       String? @db.VarChar(255)
-  weapontext       String? @db.VarChar(255)
-  bodytype         String? @db.VarChar(255)
+  weapon_type      String? @db.VarChar(255)
+  weapon_text      String? @db.VarChar(255)
+  body_type        String? @db.VarChar(255)
   gender           String? @db.VarChar(255)
-  qualitytype      String? @db.VarChar(255)
+  quality_type     String? @db.VarChar(255)
   rarity           Int?
   /// [characterBirthday]
   birthday         Json?
-  elementtype      String? @db.VarChar(255)
-  elementtext      String? @db.VarChar(255)
+  element_type     String? @db.VarChar(255)
+  element_text     String? @db.VarChar(255)
   affiliation      String? @db.VarChar(255)
-  associationtype  String? @db.VarChar(255)
+  association_type String? @db.VarChar(255)
   region           String? @db.VarChar(255)
   /// [characterCV]
   cv               Json?
@@ -36,14 +36,20 @@ model character {
   stats            Json?
   /// [characterCosts]
   costs            Json?
+  /// [characterTalents]
   talents          Json?
+  /// [characterPassives]
   passives         Json?
   /// [characterConstellation]
   constellation    Json?
+  /// [characterDictionary]
   dictionary       Json?
+  /// [characterProfile]
   profile          Json?
   /// [characterImages]
   images           Json?
   version          String? @db.VarChar(255)
   releasetimestamp Int?
+  /// [characterOutfits]
+  outfits          Json?   @default("[]")
 }
