@@ -19,10 +19,11 @@ interface Dictionary {
   linkToEffect: Record<string, string>;
 }
 
-// 取代 LINK#F11190008 正則 = LINK#[A-Z]\d+
-
 export default function useCharacterDataParser() {
-  function parseDescriptionText(content: string | undefined, dictionary?: Dictionary): string {
+  function parseDescriptionText(
+    content: string | undefined,
+    dictionary?: Dictionary | null,
+  ): string {
     if (!content) return "";
 
     const spanStyle = "cursor: pointer; font-weight: bold";
@@ -87,5 +88,26 @@ export default function useCharacterDataParser() {
     });
   }
 
-  return { parseDescriptionText, parseTalentAttributes };
+  function parseVoiceOverContent(
+    content: string | undefined,
+    userName: string,
+    playerGender: string,
+  ) {
+    if (!content) return "";
+    if (playerGender === "male") {
+      return content
+        .replace(/\\n/g, "<br>")
+        .replace(/^#/g, "")
+        .replace(/{F#妳}{M#你}/g, "你")
+        .replace(/{NICKNAME}/g, userName);
+    } else if (playerGender === "female") {
+      return content
+        .replace(/\\n/g, "<br>")
+        .replace(/^#/g, "")
+        .replace(/{F#妳}{M#你}/g, "妳");
+    }
+    return content.replace(/\\n/g, "<br>").replace(/^#/g, "");
+  }
+
+  return { parseDescriptionText, parseTalentAttributes, parseVoiceOverContent };
 }
