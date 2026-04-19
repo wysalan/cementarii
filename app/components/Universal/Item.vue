@@ -10,7 +10,7 @@ const { data } = defineProps<{ data: Item }>();
 <template>
   <NuxtLink
     :to="`/material/${data.id}`"
-    class="flex flex-col justify-center items-center bg-zinc-100/80 shadow-lg backdrop-blur-md rounded-md min-w-20 h-full"
+    class="flex flex-col justify-center items-center bg-zinc-100/80 ring-2 ring-zinc-300 backdrop-blur-md rounded-md min-w-20 h-full m-1"
     v-tooltip.top="data.name"
   >
     <NuxtImg

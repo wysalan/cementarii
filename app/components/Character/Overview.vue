@@ -135,6 +135,15 @@ const materialCalculationResult = computed(() => {
     return costsValue[levelIndex.value - 1];
   }
 });
+
+function getSubstatValue(type: string | undefined, substat: number) {
+  if (type) {
+    if (type === "FIGHT_PROP_ELEMENT_MASTERY") {
+      return substat;
+    }
+    return (substat * 100).toFixed(1) + "%";
+  }
+}
 </script>
 
 <template>
@@ -187,7 +196,7 @@ const materialCalculationResult = computed(() => {
         </div>
         <div class="flex flex-row justify-between text-lg">
           <p class="font-semibold text-zinc-950 opacity-80">{{ data.stats?.substat.text }}</p>
-          <p>{{ (calculatedStats.sp * 100).toFixed(1) + "%" }}</p>
+          <p>{{ getSubstatValue(data.stats?.substat.type, calculatedStats.sp) }}</p>
         </div>
       </div>
     </div>
@@ -234,7 +243,7 @@ const materialCalculationResult = computed(() => {
       <div class="flex flex-row justify-start items-center gap-3">
         <div class="flex flex-row justify-between w-full">
           <h2 class="text-xl font-semibold dark:text-white">基礎資料</h2>
-          <Tag severity="contrast">Ver. {{ data.version }}</Tag>
+          <Tag severity="contrast" class="select-none">Ver. {{ data.version }}</Tag>
         </div>
       </div>
       <div class="flex flex-col gap-5">
