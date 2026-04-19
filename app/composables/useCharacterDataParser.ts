@@ -15,6 +15,7 @@ interface TalentAttributeResult {
 
 interface Dictionary {
   talentKeywords: string[];
+  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
 }
@@ -43,6 +44,8 @@ export default function useCharacterDataParser() {
         (_, htmlContent: string, keyword: string) => {
           if (dictionary.talentKeywords.includes(keyword)) {
             return `<span data-type="talent" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
+          } else if (dictionary.constellationKeywords.includes(keyword)) {
+            return `<span data-type="constellation" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
           } else if (Object.keys(dictionary.relatedEffects).includes(keyword)) {
             return `<span data-type="effect" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
           } else if (Object.keys(dictionary.linkToEffect).includes(keyword)) {

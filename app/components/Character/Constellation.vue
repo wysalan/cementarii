@@ -7,12 +7,17 @@ const { parseDescriptionText } = useCharacterDataParser();
 
 interface Dictionary {
   talentKeywords: string[];
+  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
 }
 
 const talentsList = Object.values(data.talents?.list || {});
 const talentMap = Object.fromEntries(talentsList.map(({ name, ...rest }) => [name, rest]));
+const constellationList = Object.values(data.constellation?.list || {});
+const constellationMap = Object.fromEntries(
+  constellationList.map(({ name, ...rest }) => [name, rest]),
+);
 const dictionary: Dictionary | null = data.dictionary;
 
 const popupData = ref({
@@ -48,6 +53,18 @@ const handleInsideClick = (event: MouseEvent) => {
         title: "相關效果",
         name: name,
         description: dictionary?.relatedEffects[name] || "",
+      };
+    } else if (type === "constellation") {
+      popupData.value = {
+        title: "相關命之座",
+        name: name,
+        description: constellationMap[name]?.description || "",
+      };
+    } else {
+      popupData.value = {
+        title: "錯誤",
+        name: "無法取得資料",
+        description: "尚未設定此效果說明",
       };
     }
     dialogVisible.value = true;

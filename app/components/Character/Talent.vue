@@ -7,6 +7,7 @@ const store = useUserStore();
 
 interface Dictionary {
   talentKeywords: string[];
+  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
 }
@@ -58,6 +59,12 @@ const handleInsideClick = (event: MouseEvent) => {
         title: "相關效果",
         name: name,
         description: dictionary?.relatedEffects[name] || "",
+      };
+    } else {
+      popupData.value = {
+        title: "無",
+        name: "無此效果或連結錯誤",
+        description: "尚未設定此效果說明",
       };
     }
     dialogVisible.value = true;
