@@ -9,7 +9,7 @@ import VoiceOver from "@/components/Character/VoiceOver.vue";
 
 // Set layout
 definePageMeta({
-  layout: "character",
+  layout: "detail",
 });
 
 const { slug } = useRoute().params;
@@ -84,11 +84,7 @@ const outfitImgs = computed(() => {
 </script>
 
 <template>
-  <Body
-    :style="'background: ' + imageColors.color"
-    v-if="!extractingImgColor"
-    class="transition-color ease-in-out"
-  />
+  <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
   <main v-if="characterData">
     <div
       class="fixed -z-1 inset-0 bg-fixed"
