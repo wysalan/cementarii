@@ -152,13 +152,7 @@ const removeAllFilter = () => {
       <div class="flex justify-center items-center pt-5">
         <IconField>
           <InputIcon class="pi pi-search" />
-          <InputText
-            v-model="weaponSearchKeyword"
-            placeholder="搜尋武器"
-            :pt="{
-              root: { style: { 'border-radius': '20px' } },
-            }"
-          />
+          <InputText v-model="weaponSearchKeyword" placeholder="搜尋武器" />
           <InputIcon
             class="pi pi-times"
             @click="weaponSearchKeyword = ''"
