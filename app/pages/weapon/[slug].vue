@@ -83,6 +83,30 @@ const selectedRefinementRank = ref(1);
 
 const dialogVisible = ref(false);
 
+// Material
+const materialCalculationMethod = ref("累計");
+const materialCalculationOption = ref(["單一", "累計"]);
+const costsValue = Object.values(weaponData.value!.costs!);
+
+const materialCalculationResult = computed(() => {
+  if (materialCalculationMethod.value === "累計") {
+    const map = new Map();
+    costsValue
+      .slice(0, levelIndex.value)
+      .flat()
+      .forEach((item) => {
+        if (map.has(item.id)) {
+          map.get(item.id)!.count += item.count;
+        } else {
+          map.set(item.id, { ...item });
+        }
+      });
+    return [...map.values()].sort((a, b) => a.id - b.id);
+  } else {
+    return costsValue[levelIndex.value - 1];
+  }
+});
+
 // Functions
 function getBgColor(rarity: number | null) {
   if (rarity) {
@@ -182,12 +206,6 @@ function getSubstatValue(type: string | undefined, substat: number) {
               <p class="font-semibold opacity-60">基礎攻擊力</p>
               <p class="text-2xl font-bold">{{ calculatedStats.attack.toFixed(0) }}</p>
             </div>
-            <div>
-              <Divider
-                layout="vertical"
-                :pt="{ root: { class: 'before:border-l-black before:border-l-2 opacity-50' } }"
-              />
-            </div>
             <div class="flex flex-col text-right w-30">
               <p class="font-semibold opacity-60">
                 {{ getSubstatText(weaponData.stats?.type.substat) }}
@@ -210,16 +228,50 @@ function getSubstatValue(type: string | undefined, substat: number) {
             class="w-full"
           />
         </div>
-        <Select
-          v-model="selectedRefinementRank"
-          :options="refinementRankList"
-          optionLabel="title"
-          optionValue="rank"
-          placeholder="選擇精煉等階"
-          class="w-full"
-        />
+        <div class="flex flex-col justify-start items-center gap-3">
+          <div class="flex flex-row justify-between items-center w-full">
+            <h2 class="text-xl font-semibold dark:text-white">
+              所需素材
+              <i
+                class="pi pi-question-circle"
+                v-tooltip.top="{
+                  value: '將武器升至 ' + actualLevel + ' 級所需要的素材',
+                  pt: { text: 'text-center' },
+                }"
+              ></i>
+            </h2>
+            <Select
+              v-model="materialCalculationMethod"
+              :options="materialCalculationOption"
+              placeholder="選擇計算方式"
+            />
+          </div>
+          <div
+            class="flex flex-row justify-start max-w-full overflow-x-auto gap-3 pb-2 overflow-y-hidden"
+            v-if="materialCalculationResult?.toString().length"
+          >
+            <UniversalItem
+              v-for="(item, key) in materialCalculationResult"
+              :key="key"
+              :data="item"
+            />
+          </div>
+          <div v-else class="w-full">
+            <p class="">無需材料</p>
+          </div>
+        </div>
         <div class="flex flex-col gap-3">
-          <h3 class="text-xl font-semibold">{{ weaponData.effect?.text.name }}</h3>
+          <div class="flex flex-row justify-between items-center w-full">
+            <h3 class="text-xl font-semibold">{{ weaponData.effect?.text.name }}</h3>
+            <Select
+              v-model="selectedRefinementRank"
+              :options="refinementRankList"
+              optionLabel="title"
+              optionValue="rank"
+              placeholder="選擇精煉等階"
+              class="w-fit"
+            />
+          </div>
           <p
             v-html="parseEffectDescription(weaponData.effect, selectedRefinementRank)"
             class="lg:text-lg"
