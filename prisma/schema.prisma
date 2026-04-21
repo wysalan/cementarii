@@ -53,3 +53,23 @@ model character {
   /// [characterOutfits]
   outfits          Json?   @default("[]")
 }
+
+model weapon {
+  id          Int     @id @default(autoincrement())
+  slug        String? @db.VarChar(255)
+  name        String? @db.VarChar(255)
+  rarity      Int?
+  weapon_type String? @db.VarChar(255)
+  weapon_text String? @db.VarChar(255)
+  description String? @db.VarChar(255)
+  /// [weaponEffect]
+  effect      Json?
+  /// [weaponStats]
+  stats       Json?
+  /// [weaponCosts]
+  costs       Json?
+  story       String?
+  /// [weaponImages]
+  images      Json?
+  version     String? @db.VarChar(255)
+}

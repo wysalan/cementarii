@@ -116,5 +116,43 @@ declare global {
       description: string;
       images: Record<string, string>;
     }[];
+
+    type weaponEffect = {
+      text: {
+        name: string;
+        description: string;
+      };
+      params: {
+        [key: string]: string[];
+      };
+    };
+
+    type weaponStats = {
+      type: {
+        attack: string;
+        substat: string;
+      };
+      base: {
+        attack: number;
+        substat: number;
+      };
+      curve: {
+        attack: string;
+        substat: string;
+      };
+      promotion: Record<string, number>[];
+    };
+
+    type weaponCosts = {
+      [key: string]: {
+        id: number;
+        name: string;
+        count: number;
+      };
+    };
+
+    type weaponImages = {
+      [key: string]: string;
+    };
   }
 }
