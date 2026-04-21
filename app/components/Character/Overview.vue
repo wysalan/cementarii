@@ -159,7 +159,12 @@ function getSubstatValue(type: string | undefined, substat: number) {
           :src="
             'https://assets.wysalan.com/cementarii/avatar-icon/' + outfitImgs?.AvatarIcon + '.webp'
           "
-          class="w-15 h-15 rounded-sm bg-linear-to-b from-#945c2c to-#b27330"
+          class="w-15 h-15 rounded-sm"
+          :class="
+            data.rarity === 4
+              ? 'bg-linear-to-b from-#5e5789 to-#9c75b7'
+              : 'bg-linear-to-b from-#945c2c to-#b27330'
+          "
         />
         <div class="text-left dark:text-white">
           <h2 class="text-2xl font-semibold">{{ data.name }}</h2>
