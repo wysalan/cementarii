@@ -3,8 +3,6 @@ import weaponList from "@/data/weaponList.json";
 
 const weaponSearchKeyword = ref("");
 
-const test = ref(0);
-
 const filter = ref<Record<string, string[]>>({
   rarity: ["1", "2", "3", "4", "5"],
   raritySelected: [],
