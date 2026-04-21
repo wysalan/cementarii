@@ -27,7 +27,7 @@ const recoveryTimeResult = computed(() => {
           :min="0"
           :max="200"
           :pt="{
-            pcInputText: { root: { class: 'w-40' } },
+            pcInputText: { root: { class: 'w-25 h-10' } },
           }"
         />
       </div>
