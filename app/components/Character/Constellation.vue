@@ -2,8 +2,8 @@
 import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
-import useCharacterDataParser from "@/composables/useCharacterDataParser";
-const { parseDescriptionText } = useCharacterDataParser();
+import useDataParser from "@/composables/useDataParser";
+const { parseDescriptionText } = useDataParser();
 
 interface Dictionary {
   talentKeywords: string[];

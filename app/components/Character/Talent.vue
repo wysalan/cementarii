@@ -12,8 +12,8 @@ interface Dictionary {
   linkToEffect: Record<string, string>;
 }
 
-import useCharacterDataParser from "@/composables/useCharacterDataParser";
-const { parseDescriptionText, parseTalentAttributes } = useCharacterDataParser();
+import useDataParser from "@/composables/useDataParser";
+const { parseDescriptionText, parseTalentAttributes } = useDataParser();
 
 const talentsList = Object.values(data.talents?.list || {});
 const talentMap = Object.fromEntries(talentsList.map(({ name, ...rest }) => [name, rest]));
