@@ -35,12 +35,9 @@ const dialogVisible = ref(false);
 
 const handleInsideClick = (event: MouseEvent) => {
   const target = (event.target as Element)?.closest("[data-name]");
-
   if (!target) return;
-
   const type = (target as HTMLElement).dataset.type;
   const name = (target as HTMLElement).dataset.name;
-
   if (type && name) {
     if (type === "effect") {
       popupData.value = {
@@ -62,8 +59,8 @@ const handleInsideClick = (event: MouseEvent) => {
       };
     } else {
       popupData.value = {
-        title: "無",
-        name: "無此效果或連結錯誤",
+        title: "錯誤",
+        name: "無法取得資料",
         description: "尚未設定此效果說明",
       };
     }
@@ -91,7 +88,6 @@ const needMaterials = computed(() => {
 
 <template>
   <div class="flex flex-col w-full h-85vh justify-start items-center overflow-y-auto mt-5">
-    div
     <div class="flex flex-col gap-5 w-full">
       <Card
         v-for="(talent, index) in talentsList"
