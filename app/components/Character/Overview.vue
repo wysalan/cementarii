@@ -240,10 +240,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
   </div>
   <!-- 左側：基本資訊 -->
   <div
-    class="xl:absolute xl:left-2% md:top-1/2 xl:translate-[2%,-50%] xl:z-5 max-xl:mt-5 max-h-full overflow-y-auto"
+    class="xl:absolute xl:left-2% xl:top-1/2 xl:translate-[2%,-50%] xl:z-5 max-xl:mt-5 max-h-full overflow-y-auto"
   >
     <div
-      class="flex flex-col dark:bg-black/30 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-70 2xl:w-100 p-5 gap-5 shadow-md"
+      class="flex flex-col dark:bg-black/30 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-80 2xl:w-100 p-5 gap-5 shadow-md"
     >
       <div class="flex flex-row justify-start items-center gap-3">
         <div class="flex flex-row justify-between w-full">
@@ -308,7 +308,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
     </div>
     <div
-      class="flex flex-col dark:bg-black/30 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-70 2xl:w-100 p-5 gap-5 mt-5 mb-30 xl:mb-0 shadow-md"
+      class="flex flex-col dark:bg-black/30 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-80 2xl:w-100 p-5 gap-5 mt-5 mb-30 xl:mb-0 shadow-md"
     >
       <div class="flex flex-col gap-5">
         <div class="flex flex-row items-center text-lg gap-5">
