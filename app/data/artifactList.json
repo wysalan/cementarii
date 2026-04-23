@@ -15,7 +15,7 @@
   },
   {
     "id": 10003,
-    "slug": "defender's-will",
+    "slug": "defenders-will",
     "name": "守護之心",
     "rarityList": [3, 4],
     "icon": "UI_RelicIcon_10003_4"
@@ -120,7 +120,7 @@
   },
   {
     "id": 15001,
-    "slug": "gladiator's-finale",
+    "slug": "gladiators-finale",
     "name": "角鬥士的終幕禮",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15001_4"
@@ -134,7 +134,7 @@
   },
   {
     "id": 15003,
-    "slug": "wanderer's-troupe",
+    "slug": "wanderers-troupe",
     "name": "流浪大地的樂團",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15003_4"
@@ -232,7 +232,7 @@
   },
   {
     "id": 15019,
-    "slug": "shimenawa's-reminiscence",
+    "slug": "shimenawas-reminiscence",
     "name": "追憶之注連",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15019_4"
@@ -302,14 +302,14 @@
   },
   {
     "id": 15029,
-    "slug": "nymph's-dream",
+    "slug": "nymphs-dream",
     "name": "水仙之夢",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15029_4"
   },
   {
     "id": 15030,
-    "slug": "vourukasha's-glow",
+    "slug": "vourukashas-glow",
     "name": "花海甘露之光",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15030_4"
@@ -372,7 +372,7 @@
   },
   {
     "id": 15039,
-    "slug": "long-night's-oath",
+    "slug": "long-nights-oath",
     "name": "長夜之誓",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15039_4"
@@ -386,14 +386,14 @@
   },
   {
     "id": 15041,
-    "slug": "night-of-the-sky's-unveiling",
+    "slug": "night-of-the-skys-unveiling",
     "name": "穹境示現之夜",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15041_4"
   },
   {
     "id": 15042,
-    "slug": "silken-moon's-serenade",
+    "slug": "silken-moons-serenade",
     "name": "紡月的夜歌",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15042_4"
