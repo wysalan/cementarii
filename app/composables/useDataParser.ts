@@ -49,13 +49,22 @@ export default function useDataParser() {
       return result.replace(
         /\{LINK\}((?:<span[^>]*>)?(.*?)(?:<\/span>)?)\{\/LINK\}/g,
         (_, htmlContent: string, keyword: string) => {
-          if (dictionary.talentKeywords.includes(keyword)) {
+          if (dictionary.talentKeywords && dictionary.talentKeywords.includes(keyword)) {
             return `<span data-type="talent" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-          } else if (dictionary.constellationKeywords.includes(keyword)) {
+          } else if (
+            dictionary.constellationKeywords &&
+            dictionary.constellationKeywords.includes(keyword)
+          ) {
             return `<span data-type="constellation" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-          } else if (Object.keys(dictionary.relatedEffects).includes(keyword)) {
+          } else if (
+            dictionary.relatedEffects &&
+            Object.keys(dictionary.relatedEffects).includes(keyword)
+          ) {
             return `<span data-type="effect" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-          } else if (Object.keys(dictionary.linkToEffect).includes(keyword)) {
+          } else if (
+            dictionary.linkToEffect &&
+            Object.keys(dictionary.linkToEffect).includes(keyword)
+          ) {
             return `<span data-type="related" data-name="${dictionary.linkToEffect[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
           } else {
             return `<span data-type="unknown" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
