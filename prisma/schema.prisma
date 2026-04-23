@@ -73,3 +73,19 @@ model weapon {
   images      Json?
   version     String? @db.VarChar(255)
 }
+
+model artifact {
+  id          Int     @id @default(autoincrement())
+  slug        String? @db.VarChar(255)
+  name        String? @db.VarChar(255)
+  /// [artifactRarityList]
+  rarity_list Json?
+  effect_1pcs String? @db.VarChar(255)
+  effect_2pcs String? @db.VarChar(255)
+  effect_4pcs String? @db.VarChar(255)
+  /// [artifactParts]
+  relic_parts Json?
+  /// [artifactImages]
+  imgaes      Json?
+  version     String? @db.VarChar(255)
+}

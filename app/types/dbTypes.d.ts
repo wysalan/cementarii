@@ -154,5 +154,25 @@ declare global {
     type weaponImages = {
       [key: string]: string;
     };
+
+    type artifactRarityList = number[];
+
+    type artifactParts = {
+      [key: string]: {
+        name: string;
+        relicType: string;
+        relicText: string;
+        description: string;
+        story: string;
+      };
+    };
+
+    type artifactImages = {
+      flower: string;
+      plume: string;
+      sands: string;
+      goblet: string;
+      circlet: string;
+    };
   }
 }
