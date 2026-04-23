@@ -84,12 +84,12 @@ const dialogVisible = ref(false);
 // Material
 const materialCalculationMethod = ref("累計");
 const materialCalculationOption = ref(["單一", "累計"]);
-const costsValue = Object.values(weaponData.value!.costs!);
+const costsList = weaponData.value ? Object.values(weaponData.value!.costs!) : [];
 
 const materialCalculationResult = computed(() => {
   if (materialCalculationMethod.value === "累計") {
     const map = new Map();
-    costsValue
+    costsList
       .slice(0, levelIndex.value)
       .flat()
       .forEach((item) => {
@@ -101,7 +101,7 @@ const materialCalculationResult = computed(() => {
       });
     return [...map.values()].sort((a, b) => a.id - b.id);
   } else {
-    return costsValue[levelIndex.value - 1];
+    return costsList[levelIndex.value - 1];
   }
 });
 
@@ -161,7 +161,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
 
 <template>
   <main class="container mx-auto" v-if="weaponData">
-    <div class="grid grid-cols-1 lg:grid-cols-10 h-90dvh gap-5 overflow-y-auto max-lg:mx-5">
+    <div class="grid grid-cols-1 lg:grid-cols-10 h-90dvh gap-5 max-lg:mx-5 lg:mt-3">
       <div
         class="flex justify-center items-center w-full h-100 lg:h-full p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
@@ -304,8 +304,13 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
     </Dialog>
   </main>
-  <main class="container mx-auto pt-5 pb-10" v-else>
-    <p>{{ slug }}'s data isn't available right now.</p>
+  <main v-else>
+    <div class="container mx-auto pt-5 pb-10">
+      <p class="text-lg">目前無此武器資料，或是連接資料庫時發生錯誤</p>
+      <p class="text-lg" v-if="error">
+        錯誤訊息：{{ error?.statusMessage }} (Status code: {{ error?.statusCode }})
+      </p>
+    </div>
   </main>
 </template>
 

@@ -30,7 +30,7 @@ function tabSwitcher(tabName: string) {
 }
 
 // Get Data from database
-const { data: characterData, pending, error } = await useFetch(`/api/character/${slug}`);
+const { data: characterData, status, error } = await useFetch(`/api/character/${slug}`);
 
 // Extract Image Color
 import { getColorSync, getPaletteSync } from "colorthief";
@@ -85,7 +85,7 @@ const outfitImgs = computed(() => {
 
 <template>
   <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
-  <main v-if="characterData">
+  <main v-if="status === 'success' && characterData">
     <div
       class="fixed -z-1 inset-0 bg-fixed"
       :style="
@@ -148,7 +148,10 @@ const outfitImgs = computed(() => {
   </main>
   <main v-else>
     <div class="container mx-auto pt-5 pb-10">
-      <p>Not character data available right now.</p>
+      <p>目前無此角色資料，或是連接資料庫時發生錯誤</p>
+      <p v-if="error">
+        錯誤訊息：{{ error?.statusMessage }} (Status code: {{ error?.statusCode }})
+      </p>
     </div>
   </main>
 </template>
