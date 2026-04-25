@@ -1,4 +1,5 @@
 @import "primeicons/primeicons.css";
+@layer primevue, unocss;
 
 #site-content {
   @apply flex flex-col min-h-100vh;
