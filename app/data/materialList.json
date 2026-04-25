@@ -1,0 +1,5447 @@
+[
+  {
+    "id": 104003,
+    "name": {
+      "CHT": "大英雄的經驗",
+      "EN": "Hero's Wit"
+    },
+    "category": "EXP_FRUIT",
+    "rarity": 4,
+    "typeText": "角色經驗素材",
+    "icon": "UI_ItemIcon_104003"
+  },
+  {
+    "id": 104002,
+    "name": {
+      "CHT": "冒險家的經驗",
+      "EN": "Adventurer's Experience"
+    },
+    "category": "EXP_FRUIT",
+    "rarity": 3,
+    "typeText": "角色經驗素材",
+    "icon": "UI_ItemIcon_104002"
+  },
+  {
+    "id": 104001,
+    "name": {
+      "CHT": "流浪者的經驗",
+      "EN": "Wanderer's Advice"
+    },
+    "category": "EXP_FRUIT",
+    "rarity": 2,
+    "typeText": "角色經驗素材",
+    "icon": "UI_ItemIcon_104001"
+  },
+  {
+    "id": 112004,
+    "name": {
+      "CHT": "史萊姆原漿",
+      "EN": "Slime Concentrate"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112004"
+  },
+  {
+    "id": 112003,
+    "name": {
+      "CHT": "史萊姆清",
+      "EN": "Slime Secretions"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112003"
+  },
+  {
+    "id": 112002,
+    "name": {
+      "CHT": "史萊姆凝液",
+      "EN": "Slime Condensate"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112002"
+  },
+  {
+    "id": 112007,
+    "name": {
+      "CHT": "不祥的面具",
+      "EN": "Ominous Mask"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112007"
+  },
+  {
+    "id": 112006,
+    "name": {
+      "CHT": "汙穢的面具",
+      "EN": "Stained Mask"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112006"
+  },
+  {
+    "id": 112005,
+    "name": {
+      "CHT": "破損的面具",
+      "EN": "Damaged Mask"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112005"
+  },
+  {
+    "id": 112010,
+    "name": {
+      "CHT": "禁咒繪卷",
+      "EN": "Forbidden Curse Scroll"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112010"
+  },
+  {
+    "id": 112009,
+    "name": {
+      "CHT": "封魔繪卷",
+      "EN": "Sealed Scroll"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112009"
+  },
+  {
+    "id": 112008,
+    "name": {
+      "CHT": "導能繪卷",
+      "EN": "Divining Scroll"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112008"
+  },
+  {
+    "id": 112013,
+    "name": {
+      "CHT": "歷戰的箭鏃",
+      "EN": "Weathered Arrowhead"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112013"
+  },
+  {
+    "id": 112012,
+    "name": {
+      "CHT": "銳利的箭鏃",
+      "EN": "Sharp Arrowhead"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112012"
+  },
+  {
+    "id": 112011,
+    "name": {
+      "CHT": "牢固的箭鏃",
+      "EN": "Firm Arrowhead"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112011"
+  },
+  {
+    "id": 112016,
+    "name": {
+      "CHT": "黑晶號角",
+      "EN": "Black Crystal Horn"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112016"
+  },
+  {
+    "id": 112015,
+    "name": {
+      "CHT": "黑銅號角",
+      "EN": "Black Bronze Horn"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112015"
+  },
+  {
+    "id": 112014,
+    "name": {
+      "CHT": "沉重號角",
+      "EN": "Heavy Horn"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112014"
+  },
+  {
+    "id": 112019,
+    "name": {
+      "CHT": "幽邃刻像",
+      "EN": "Deathly Statuette"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112019"
+  },
+  {
+    "id": 112018,
+    "name": {
+      "CHT": "夤夜刻像",
+      "EN": "Dark Statuette"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112018"
+  },
+  {
+    "id": 112017,
+    "name": {
+      "CHT": "晦暗刻像",
+      "EN": "Gloomy Statuette"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112017"
+  },
+  {
+    "id": 112022,
+    "name": {
+      "CHT": "地脈的新芽",
+      "EN": "Ley Line Sprout"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112022"
+  },
+  {
+    "id": 112021,
+    "name": {
+      "CHT": "地脈的枯葉",
+      "EN": "Dead Ley Line Leaves"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112021"
+  },
+  {
+    "id": 112020,
+    "name": {
+      "CHT": "地脈的舊枝",
+      "EN": "Dead Ley Line Branch"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112020"
+  },
+  {
+    "id": 112025,
+    "name": {
+      "CHT": "混沌爐心",
+      "EN": "Chaos Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112025"
+  },
+  {
+    "id": 112024,
+    "name": {
+      "CHT": "混沌迴路",
+      "EN": "Chaos Circuit"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112024"
+  },
+  {
+    "id": 112023,
+    "name": {
+      "CHT": "混沌裝置",
+      "EN": "Chaos Device"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112023"
+  },
+  {
+    "id": 112028,
+    "name": {
+      "CHT": "霧虛燈芯",
+      "EN": "Mist Grass Wick"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112028"
+  },
+  {
+    "id": 112027,
+    "name": {
+      "CHT": "霧虛草囊",
+      "EN": "Mist Grass"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112027"
+  },
+  {
+    "id": 112026,
+    "name": {
+      "CHT": "霧虛花粉",
+      "EN": "Mist Grass Pollen"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112026"
+  },
+  {
+    "id": 112031,
+    "name": {
+      "CHT": "督察長祭刀",
+      "EN": "Inspector's Sacrificial Knife"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112031"
+  },
+  {
+    "id": 112030,
+    "name": {
+      "CHT": "特工祭刀",
+      "EN": "Agent's Sacrificial Knife"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112030"
+  },
+  {
+    "id": 112029,
+    "name": {
+      "CHT": "獵兵祭刀",
+      "EN": "Hunter's Sacrificial Knife"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112029"
+  },
+  {
+    "id": 112034,
+    "name": {
+      "CHT": "尉官的徽記",
+      "EN": "Lieutenant's Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112034"
+  },
+  {
+    "id": 112033,
+    "name": {
+      "CHT": "士官的徽記",
+      "EN": "Sergeant's Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112033"
+  },
+  {
+    "id": 112032,
+    "name": {
+      "CHT": "新兵的徽記",
+      "EN": "Recruit's Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112032"
+  },
+  {
+    "id": 112037,
+    "name": {
+      "CHT": "攫金鴉印",
+      "EN": "Golden Raven Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112037"
+  },
+  {
+    "id": 112036,
+    "name": {
+      "CHT": "藏銀鴉印",
+      "EN": "Silver Raven Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112036"
+  },
+  {
+    "id": 112035,
+    "name": {
+      "CHT": "尋寶鴉印",
+      "EN": "Treasure Hoarder Insignia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112035"
+  },
+  {
+    "id": 112040,
+    "name": {
+      "CHT": "原素花蜜",
+      "EN": "Energy Nectar"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112040"
+  },
+  {
+    "id": 112039,
+    "name": {
+      "CHT": "微光花蜜",
+      "EN": "Shimmering Nectar"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112039"
+  },
+  {
+    "id": 112038,
+    "name": {
+      "CHT": "騙騙花蜜",
+      "EN": "Whopperflower Nectar"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112038"
+  },
+  {
+    "id": 112043,
+    "name": {
+      "CHT": "石化的骨片",
+      "EN": "Fossilized Bone Shard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112043"
+  },
+  {
+    "id": 112042,
+    "name": {
+      "CHT": "結實的骨片",
+      "EN": "Sturdy Bone Shard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112042"
+  },
+  {
+    "id": 112041,
+    "name": {
+      "CHT": "脆弱的骨片",
+      "EN": "Fragile Bone Shard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112041"
+  },
+  {
+    "id": 112046,
+    "name": {
+      "CHT": "名刀鐔",
+      "EN": "Famed Handguard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112046"
+  },
+  {
+    "id": 112045,
+    "name": {
+      "CHT": "影打刀鐔",
+      "EN": "Kageuchi Handguard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112045"
+  },
+  {
+    "id": 112044,
+    "name": {
+      "CHT": "破舊的刀鐔",
+      "EN": "Old Handguard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112044"
+  },
+  {
+    "id": 112049,
+    "name": {
+      "CHT": "混沌真眼",
+      "EN": "Chaos Oculus"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112049"
+  },
+  {
+    "id": 112048,
+    "name": {
+      "CHT": "混沌樞紐",
+      "EN": "Chaos Axis"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112048"
+  },
+  {
+    "id": 112047,
+    "name": {
+      "CHT": "混沌機關",
+      "EN": "Chaos Gear"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112047"
+  },
+  {
+    "id": 112052,
+    "name": {
+      "CHT": "偏光稜鏡",
+      "EN": "Polarizing Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112052"
+  },
+  {
+    "id": 112051,
+    "name": {
+      "CHT": "水晶稜鏡",
+      "EN": "Crystal Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112051"
+  },
+  {
+    "id": 112050,
+    "name": {
+      "CHT": "黯淡稜鏡",
+      "EN": "Dismal Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112050"
+  },
+  {
+    "id": 112055,
+    "name": {
+      "CHT": "浮游晶化核",
+      "EN": "Spectral Nucleus"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112055"
+  },
+  {
+    "id": 112054,
+    "name": {
+      "CHT": "浮游幽核",
+      "EN": "Spectral Heart"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112054"
+  },
+  {
+    "id": 112053,
+    "name": {
+      "CHT": "浮游乾核",
+      "EN": "Spectral Husk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112053"
+  },
+  {
+    "id": 112058,
+    "name": {
+      "CHT": "隱獸鬼爪",
+      "EN": "Concealed Talon"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112058"
+  },
+  {
+    "id": 112057,
+    "name": {
+      "CHT": "隱獸利爪",
+      "EN": "Concealed Unguis"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112057"
+  },
+  {
+    "id": 112056,
+    "name": {
+      "CHT": "隱獸指爪",
+      "EN": "Concealed Claw"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112056"
+  },
+  {
+    "id": 112061,
+    "name": {
+      "CHT": "孢囊晶塵",
+      "EN": "Crystalline Cyst Dust"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112061"
+  },
+  {
+    "id": 112060,
+    "name": {
+      "CHT": "螢光孢粉",
+      "EN": "Luminescent Pollen"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112060"
+  },
+  {
+    "id": 112059,
+    "name": {
+      "CHT": "蕈獸孢子",
+      "EN": "Fungal Spores"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112059"
+  },
+  {
+    "id": 112064,
+    "name": {
+      "CHT": "茁壯菌核",
+      "EN": "Robust Fungal Nucleus"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112064"
+  },
+  {
+    "id": 112063,
+    "name": {
+      "CHT": "休眠菌核",
+      "EN": "Dormant Fungal Nucleus"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112063"
+  },
+  {
+    "id": 112062,
+    "name": {
+      "CHT": "失活菌核",
+      "EN": "Inactivated Fungal Nucleus"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112062"
+  },
+  {
+    "id": 112067,
+    "name": {
+      "CHT": "織金紅綢",
+      "EN": "Rich Red Brocade"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112067"
+  },
+  {
+    "id": 112066,
+    "name": {
+      "CHT": "鑲邊紅綢",
+      "EN": "Trimmed Red Silk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112066"
+  },
+  {
+    "id": 112065,
+    "name": {
+      "CHT": "褪色紅綢",
+      "EN": "Faded Red Satin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112065"
+  },
+  {
+    "id": 112070,
+    "name": {
+      "CHT": "混沌錨栓",
+      "EN": "Chaos Bolt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112070"
+  },
+  {
+    "id": 112069,
+    "name": {
+      "CHT": "混沌模組",
+      "EN": "Chaos Module"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112069"
+  },
+  {
+    "id": 112068,
+    "name": {
+      "CHT": "混沌容器",
+      "EN": "Chaos Storage"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112068"
+  },
+  {
+    "id": 112073,
+    "name": {
+      "CHT": "輝光稜晶",
+      "EN": "Radiant Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112073"
+  },
+  {
+    "id": 112072,
+    "name": {
+      "CHT": "混濁稜晶",
+      "EN": "Turbid Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112072"
+  },
+  {
+    "id": 112071,
+    "name": {
+      "CHT": "破缺稜晶",
+      "EN": "Damaged Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112071"
+  },
+  {
+    "id": 112076,
+    "name": {
+      "CHT": "鍥紋的橫脊",
+      "EN": "Marked Shell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112076"
+  },
+  {
+    "id": 112075,
+    "name": {
+      "CHT": "密固的橫脊",
+      "EN": "Sturdy Shell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112075"
+  },
+  {
+    "id": 112074,
+    "name": {
+      "CHT": "殘毀的橫脊",
+      "EN": "Desiccated Shell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112074"
+  },
+  {
+    "id": 112079,
+    "name": {
+      "CHT": "漫遊者的盛放之花",
+      "EN": "Wanderer's Blooming Flower"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112079"
+  },
+  {
+    "id": 112078,
+    "name": {
+      "CHT": "何人所珍藏之花",
+      "EN": "Treasured Flower"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112078"
+  },
+  {
+    "id": 112077,
+    "name": {
+      "CHT": "來自何處的待放之花",
+      "EN": "A Flower Yet to Bloom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112077"
+  },
+  {
+    "id": 112082,
+    "name": {
+      "CHT": "異色結晶石",
+      "EN": "Xenochromatic Crystal"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112082"
+  },
+  {
+    "id": 112081,
+    "name": {
+      "CHT": "異海之塊",
+      "EN": "Transoceanic Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112081"
+  },
+  {
+    "id": 112080,
+    "name": {
+      "CHT": "異海凝珠",
+      "EN": "Transoceanic Pearl"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112080"
+  },
+  {
+    "id": 112085,
+    "name": {
+      "CHT": "奇械機芯齒輪",
+      "EN": "Artificed Dynamic Gear"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112085"
+  },
+  {
+    "id": 112084,
+    "name": {
+      "CHT": "機關正齒輪",
+      "EN": "Mechanical Spur Gear"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112084"
+  },
+  {
+    "id": 112083,
+    "name": {
+      "CHT": "齧合齒輪",
+      "EN": "Meshing Gear"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112083"
+  },
+  {
+    "id": 112088,
+    "name": {
+      "CHT": "初生的濁水幻靈",
+      "EN": "Newborn Tainted Hydro Phantasm"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112088"
+  },
+  {
+    "id": 112087,
+    "name": {
+      "CHT": "濁水的一掬",
+      "EN": "Scoop of Tainted Water"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112087"
+  },
+  {
+    "id": 112086,
+    "name": {
+      "CHT": "濁水的一滴",
+      "EN": "Drop of Tainted Water"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112086"
+  },
+  {
+    "id": 112091,
+    "name": {
+      "CHT": "異界生命核",
+      "EN": "Alien Life Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112091"
+  },
+  {
+    "id": 112090,
+    "name": {
+      "CHT": "外世突觸",
+      "EN": "Foreign Synapse"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112090"
+  },
+  {
+    "id": 112089,
+    "name": {
+      "CHT": "隙間之核",
+      "EN": "Rift Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112089"
+  },
+  {
+    "id": 112094,
+    "name": {
+      "CHT": "役人的時時刻刻",
+      "EN": "Operative's Constancy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112094"
+  },
+  {
+    "id": 112093,
+    "name": {
+      "CHT": "役人的制式懷錶",
+      "EN": "Operative's Standard Pocket Watch"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112093"
+  },
+  {
+    "id": 112092,
+    "name": {
+      "CHT": "老舊的役人懷錶",
+      "EN": "Old Operative's Pocket Watch"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112092"
+  },
+  {
+    "id": 112097,
+    "name": {
+      "CHT": "淵光鰭翅",
+      "EN": "Chasmlight Fin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112097"
+  },
+  {
+    "id": 112096,
+    "name": {
+      "CHT": "月色鰭翅",
+      "EN": "Lunar Fin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112096"
+  },
+  {
+    "id": 112095,
+    "name": {
+      "CHT": "羽狀鰭翅",
+      "EN": "Feathery Fin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112095"
+  },
+  {
+    "id": 112100,
+    "name": {
+      "CHT": "未熄的劍柄",
+      "EN": "Still-Smoldering Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112100"
+  },
+  {
+    "id": 112099,
+    "name": {
+      "CHT": "裂斷的劍柄",
+      "EN": "Splintered Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112099"
+  },
+  {
+    "id": 112098,
+    "name": {
+      "CHT": "殘毀的劍柄",
+      "EN": "Ruined Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112098"
+  },
+  {
+    "id": 112103,
+    "name": {
+      "CHT": "橫行霸者的利齒",
+      "EN": "Tyrant's Fang"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112103"
+  },
+  {
+    "id": 112102,
+    "name": {
+      "CHT": "老練的堅齒",
+      "EN": "Seasoned Fang"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112102"
+  },
+  {
+    "id": 112101,
+    "name": {
+      "CHT": "稚嫩的尖齒",
+      "EN": "Juvenile Fang"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112101"
+  },
+  {
+    "id": 112106,
+    "name": {
+      "CHT": "龍冠武士的金哨",
+      "EN": "Saurian-Crowned Warrior's Golden Whistle"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112106"
+  },
+  {
+    "id": 112105,
+    "name": {
+      "CHT": "戰士的鐵哨",
+      "EN": "Warrior's Metal Whistle"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112105"
+  },
+  {
+    "id": 112104,
+    "name": {
+      "CHT": "衛從的木哨",
+      "EN": "Sentry's Wooden Whistle"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112104"
+  },
+  {
+    "id": 112109,
+    "name": {
+      "CHT": "意志巡遊的符像",
+      "EN": "Sigil of a Striding Will"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112109"
+  },
+  {
+    "id": 112108,
+    "name": {
+      "CHT": "意志明晰的寄偶",
+      "EN": "Locus of a Clear Will"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112108"
+  },
+  {
+    "id": 112107,
+    "name": {
+      "CHT": "意志破碎的殘片",
+      "EN": "Shard of a Shattered Will"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112107"
+  },
+  {
+    "id": 112112,
+    "name": {
+      "CHT": "聚燃的遊像眼",
+      "EN": "Ignited Seeing Eye"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112112"
+  },
+  {
+    "id": 112111,
+    "name": {
+      "CHT": "聚燃的命種",
+      "EN": "Ignited Seed of Life"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112111"
+  },
+  {
+    "id": 112110,
+    "name": {
+      "CHT": "聚燃的石塊",
+      "EN": "Ignited Stone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112110"
+  },
+  {
+    "id": 112115,
+    "name": {
+      "CHT": "秘源真芯",
+      "EN": "Heart of the Secret Source"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112115"
+  },
+  {
+    "id": 112114,
+    "name": {
+      "CHT": "秘源機鞘",
+      "EN": "Sheath of the Secret Source"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112114"
+  },
+  {
+    "id": 112113,
+    "name": {
+      "CHT": "秘源軸",
+      "EN": "Axis of the Secret Source"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112113"
+  },
+  {
+    "id": 112118,
+    "name": {
+      "CHT": "迷光的蜷葉之心",
+      "EN": "Illusory Leafcoil"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112118"
+  },
+  {
+    "id": 112117,
+    "name": {
+      "CHT": "惑光的闊葉",
+      "EN": "Bewildering Broadleaf"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112117"
+  },
+  {
+    "id": 112116,
+    "name": {
+      "CHT": "折光的胚芽",
+      "EN": "Refractive Bud"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112116"
+  },
+  {
+    "id": 112121,
+    "name": {
+      "CHT": "明燃的稜狀殼",
+      "EN": "Blazing Prismshell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112121"
+  },
+  {
+    "id": 112120,
+    "name": {
+      "CHT": "蘊熱的背殼",
+      "EN": "Warm Back-Shell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112120"
+  },
+  {
+    "id": 112119,
+    "name": {
+      "CHT": "冷裂殼塊",
+      "EN": "Cold-Cracked Shellshard"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112119"
+  },
+  {
+    "id": 112124,
+    "name": {
+      "CHT": "精製機軸",
+      "EN": "Precision Drive Shaft"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112124"
+  },
+  {
+    "id": 112123,
+    "name": {
+      "CHT": "加固機軸",
+      "EN": "Reinforced Drive Shaft"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112123"
+  },
+  {
+    "id": 112122,
+    "name": {
+      "CHT": "毀損機軸",
+      "EN": "Broken Drive Shaft"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112122"
+  },
+  {
+    "id": 112127,
+    "name": {
+      "CHT": "霜鐫的執憑",
+      "EN": "Frost-Etched Warrant"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112127"
+  },
+  {
+    "id": 112126,
+    "name": {
+      "CHT": "精緻的執憑",
+      "EN": "Immaculate Warrant"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112126"
+  },
+  {
+    "id": 112125,
+    "name": {
+      "CHT": "磨損的執憑",
+      "EN": "Tattered Warrant"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 1,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112125"
+  },
+  {
+    "id": 112130,
+    "name": {
+      "CHT": "霜夜的煌榮",
+      "EN": "Frostnight's Glory"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112130"
+  },
+  {
+    "id": 112129,
+    "name": {
+      "CHT": "霜夜的柔輝",
+      "EN": "Frostnight's Glow"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112129"
+  },
+  {
+    "id": 112128,
+    "name": {
+      "CHT": "霜夜的殘照",
+      "EN": "Frostnight's Glimmer"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112128"
+  },
+  {
+    "id": 112133,
+    "name": {
+      "CHT": "繁光軀外骸",
+      "EN": "Radiant Exoskeleton"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112133"
+  },
+  {
+    "id": 112132,
+    "name": {
+      "CHT": "稀光遺骼",
+      "EN": "Glowing Remains"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112132"
+  },
+  {
+    "id": 112131,
+    "name": {
+      "CHT": "失光塊骨",
+      "EN": "Lightless Bone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112131"
+  },
+  {
+    "id": 112136,
+    "name": {
+      "CHT": "幽霧兜盔",
+      "EN": "Mistshroud Helmet"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112136"
+  },
+  {
+    "id": 112135,
+    "name": {
+      "CHT": "幽霧片甲",
+      "EN": "Mistshroud Plate"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112135"
+  },
+  {
+    "id": 112134,
+    "name": {
+      "CHT": "幽霧化形",
+      "EN": "Mistshroud Manifestation"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112134"
+  },
+  {
+    "id": 112139,
+    "name": {
+      "CHT": "深黯的鉤喙",
+      "EN": "Hooked Beak of the Deep Shadow"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112139"
+  },
+  {
+    "id": 112138,
+    "name": {
+      "CHT": "深黯的怪核",
+      "EN": "Aberrant Core of the Deep Shadow"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112138"
+  },
+  {
+    "id": 112137,
+    "name": {
+      "CHT": "深黯的裂眼",
+      "EN": "Fractured Eye of the Deep Shadow"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112137"
+  },
+  {
+    "id": 112142,
+    "name": {
+      "CHT": "寶飾的焰劍",
+      "EN": "Jeweled Flaming Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112142"
+  },
+  {
+    "id": 112141,
+    "name": {
+      "CHT": "殘失的焰劍",
+      "EN": "Fractured Flaming Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112141"
+  },
+  {
+    "id": 112140,
+    "name": {
+      "CHT": "失色的焰劍",
+      "EN": "Faded Flaming Hilt"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色與武器培養素材",
+    "icon": "UI_ItemIcon_112140"
+  },
+  {
+    "id": 113003,
+    "name": {
+      "CHT": "東風之翎",
+      "EN": "Dvalin's Plume"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113003"
+  },
+  {
+    "id": 113004,
+    "name": {
+      "CHT": "東風之爪",
+      "EN": "Dvalin's Claw"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113004"
+  },
+  {
+    "id": 113005,
+    "name": {
+      "CHT": "東風的吐息",
+      "EN": "Dvalin's Sigh"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113005"
+  },
+  {
+    "id": 113006,
+    "name": {
+      "CHT": "北風之尾",
+      "EN": "Tail of Boreas"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113006"
+  },
+  {
+    "id": 113007,
+    "name": {
+      "CHT": "北風之環",
+      "EN": "Ring of Boreas"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113007"
+  },
+  {
+    "id": 113008,
+    "name": {
+      "CHT": "北風的魂匣",
+      "EN": "Spirit Locket of Boreas"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113008"
+  },
+  {
+    "id": 113013,
+    "name": {
+      "CHT": "吞天之鯨·隻角",
+      "EN": "Tusk of Monoceros Caeli"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113013"
+  },
+  {
+    "id": 113014,
+    "name": {
+      "CHT": "魔王之刃·殘片",
+      "EN": "Shard of a Foul Legacy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113014"
+  },
+  {
+    "id": 113015,
+    "name": {
+      "CHT": "武煉之魂·孤影",
+      "EN": "Shadow of the Warrior"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113015"
+  },
+  {
+    "id": 113017,
+    "name": {
+      "CHT": "龍王之冕",
+      "EN": "Dragon Lord's Crown"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113017"
+  },
+  {
+    "id": 113018,
+    "name": {
+      "CHT": "血玉之枝",
+      "EN": "Bloodjade Branch"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113018"
+  },
+  {
+    "id": 113019,
+    "name": {
+      "CHT": "鎏金之鱗",
+      "EN": "Gilded Scale"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113019"
+  },
+  {
+    "id": 113025,
+    "name": {
+      "CHT": "熔毀之刻",
+      "EN": "Molten Moment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113025"
+  },
+  {
+    "id": 113026,
+    "name": {
+      "CHT": "獄火之蝶",
+      "EN": "Hellfire Butterfly"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113026"
+  },
+  {
+    "id": 113027,
+    "name": {
+      "CHT": "灰燼之心",
+      "EN": "Ashen Heart"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113027"
+  },
+  {
+    "id": 113032,
+    "name": {
+      "CHT": "凶將之手眼",
+      "EN": "Mudra of the Malefic General"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113032"
+  },
+  {
+    "id": 113033,
+    "name": {
+      "CHT": "禍神之禊淚",
+      "EN": "Tears of the Calamitous God"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113033"
+  },
+  {
+    "id": 113034,
+    "name": {
+      "CHT": "萬劫之真意",
+      "EN": "The Meaning of Aeons"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113034"
+  },
+  {
+    "id": 113041,
+    "name": {
+      "CHT": "傀儡的懸絲",
+      "EN": "Puppet Strings"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113041"
+  },
+  {
+    "id": 113042,
+    "name": {
+      "CHT": "無心的淵鏡",
+      "EN": "Mirror of Mushin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113042"
+  },
+  {
+    "id": 113043,
+    "name": {
+      "CHT": "空行的虛鈴",
+      "EN": "Daka's Bell"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113043"
+  },
+  {
+    "id": 113046,
+    "name": {
+      "CHT": "生長天地之蕨草",
+      "EN": "Worldspan Fern"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113046"
+  },
+  {
+    "id": 113047,
+    "name": {
+      "CHT": "原初綠洲之初綻",
+      "EN": "Primordial Greenbloom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113047"
+  },
+  {
+    "id": 113048,
+    "name": {
+      "CHT": "亙古樹海之一瞬",
+      "EN": "Everamber"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113048"
+  },
+  {
+    "id": 113054,
+    "name": {
+      "CHT": "無光絲線",
+      "EN": "Lightless Silk String"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113054"
+  },
+  {
+    "id": 113055,
+    "name": {
+      "CHT": "無光渦眼",
+      "EN": "Lightless Eye of the Maelstrom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113055"
+  },
+  {
+    "id": 113056,
+    "name": {
+      "CHT": "無光質塊",
+      "EN": "Lightless Mass"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113056"
+  },
+  {
+    "id": 113060,
+    "name": {
+      "CHT": "殘火燈燭",
+      "EN": "Fading Candle"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113060"
+  },
+  {
+    "id": 113061,
+    "name": {
+      "CHT": "絲織之羽",
+      "EN": "Silken Feather"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113061"
+  },
+  {
+    "id": 113062,
+    "name": {
+      "CHT": "否定裁斷",
+      "EN": "Denial and Judgment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113062"
+  },
+  {
+    "id": 113063,
+    "name": {
+      "CHT": "星與火的基石",
+      "EN": "The Cornerstone of Stars and Flames"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113063"
+  },
+  {
+    "id": 113068,
+    "name": {
+      "CHT": "蝕滅的靈犀",
+      "EN": "Eroded Horn"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113068"
+  },
+  {
+    "id": 113069,
+    "name": {
+      "CHT": "蝕滅的陽焰",
+      "EN": "Eroded Sunfire"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113069"
+  },
+  {
+    "id": 113070,
+    "name": {
+      "CHT": "蝕滅的鱗羽",
+      "EN": "Eroded Scale-Feather"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113070"
+  },
+  {
+    "id": 113073,
+    "name": {
+      "CHT": "昇揚樣本·騎士",
+      "EN": "Ascended Sample: Knight"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113073"
+  },
+  {
+    "id": 113074,
+    "name": {
+      "CHT": "昇揚樣本·戰車",
+      "EN": "Ascended Sample: Rook"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113074"
+  },
+  {
+    "id": 113075,
+    "name": {
+      "CHT": "昇揚樣本·王族",
+      "EN": "Ascended Sample: Queen"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113075"
+  },
+  {
+    "id": 113081,
+    "name": {
+      "CHT": "賢醫的假面",
+      "EN": "Mask of the Virtuous Doctor"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113081"
+  },
+  {
+    "id": 113082,
+    "name": {
+      "CHT": "狂人的約束",
+      "EN": "Madman's Restraint"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113082"
+  },
+  {
+    "id": 113083,
+    "name": {
+      "CHT": "異端的瓶劑",
+      "EN": "Elixir of the Heretic"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113083"
+  },
+  {
+    "id": 113001,
+    "name": {
+      "CHT": "颶風之種",
+      "EN": "Hurricane Seed"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113001"
+  },
+  {
+    "id": 113002,
+    "name": {
+      "CHT": "雷光稜鏡",
+      "EN": "Lightning Prism"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113002"
+  },
+  {
+    "id": 113009,
+    "name": {
+      "CHT": "玄岩之塔",
+      "EN": "Basalt Pillar"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113009"
+  },
+  {
+    "id": 113010,
+    "name": {
+      "CHT": "極寒之核",
+      "EN": "Hoarfrost Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113010"
+  },
+  {
+    "id": 113011,
+    "name": {
+      "CHT": "常燃火種",
+      "EN": "Everflame Seed"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113011"
+  },
+  {
+    "id": 113012,
+    "name": {
+      "CHT": "淨水之心",
+      "EN": "Cleansing Heart"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113012"
+  },
+  {
+    "id": 113016,
+    "name": {
+      "CHT": "未熟之玉",
+      "EN": "Juvenile Jade"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113016"
+  },
+  {
+    "id": 113020,
+    "name": {
+      "CHT": "晶凝之華",
+      "EN": "Crystalline Bloom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113020"
+  },
+  {
+    "id": 113022,
+    "name": {
+      "CHT": "魔偶機心",
+      "EN": "Marionette Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113022"
+  },
+  {
+    "id": 113023,
+    "name": {
+      "CHT": "恒常機關之心",
+      "EN": "Perpetual Heart"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113023"
+  },
+  {
+    "id": 113024,
+    "name": {
+      "CHT": "陰燃之珠",
+      "EN": "Smoldering Pearl"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113024"
+  },
+  {
+    "id": 113028,
+    "name": {
+      "CHT": "排異之露",
+      "EN": "Dew of Repudiation"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113028"
+  },
+  {
+    "id": 113029,
+    "name": {
+      "CHT": "雷霆數珠",
+      "EN": "Storm Beads"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113029"
+  },
+  {
+    "id": 113030,
+    "name": {
+      "CHT": "獸境王器",
+      "EN": "Riftborn Regalia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113030"
+  },
+  {
+    "id": 113031,
+    "name": {
+      "CHT": "龍嗣偽鰭",
+      "EN": "Dragonheir's False Fin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113031"
+  },
+  {
+    "id": 113035,
+    "name": {
+      "CHT": "符紋之齒",
+      "EN": "Runic Fang"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113035"
+  },
+  {
+    "id": 113036,
+    "name": {
+      "CHT": "蕈王鉤喙",
+      "EN": "Majestic Hooked Beak"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113036"
+  },
+  {
+    "id": 113037,
+    "name": {
+      "CHT": "藏雷野實",
+      "EN": "Thunderclap Fruitcore"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113037"
+  },
+  {
+    "id": 113038,
+    "name": {
+      "CHT": "永續機芯",
+      "EN": "Perpetual Caliber"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113038"
+  },
+  {
+    "id": 113039,
+    "name": {
+      "CHT": "導光四面體",
+      "EN": "Light Guiding Tetrahedron"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113039"
+  },
+  {
+    "id": 113040,
+    "name": {
+      "CHT": "滅諍草蔓",
+      "EN": "Quelled Creeper"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113040"
+  },
+  {
+    "id": 113044,
+    "name": {
+      "CHT": "蒼礫蕊羽",
+      "EN": "Pseudo-Stamens"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113044"
+  },
+  {
+    "id": 113045,
+    "name": {
+      "CHT": "常暗圓環",
+      "EN": "Evergloom Ring"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113045"
+  },
+  {
+    "id": 113049,
+    "name": {
+      "CHT": "奇械發條備件·歌裴莉婭",
+      "EN": "Artificed Spare Clockwork Component — Coppelia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113049"
+  },
+  {
+    "id": 113050,
+    "name": {
+      "CHT": "奇械發條備件·科培琉司",
+      "EN": "Artificed Spare Clockwork Component — Coppelius"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113050"
+  },
+  {
+    "id": 113051,
+    "name": {
+      "CHT": "帝皇的決斷",
+      "EN": "Emperor's Resolution"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113051"
+  },
+  {
+    "id": 113052,
+    "name": {
+      "CHT": "「圖比昂裝置」",
+      "EN": "\"Tourbillon Device\""
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113052"
+  },
+  {
+    "id": 113053,
+    "name": {
+      "CHT": "原海麟角",
+      "EN": "Fontemer Unihorn"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113053"
+  },
+  {
+    "id": 113057,
+    "name": {
+      "CHT": "未能達成超越之水",
+      "EN": "Water That Failed To Transcend"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113057"
+  },
+  {
+    "id": 113058,
+    "name": {
+      "CHT": "凝雲鱗甲",
+      "EN": "Cloudseam Scale"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113058"
+  },
+  {
+    "id": 113059,
+    "name": {
+      "CHT": "金色旋律的斷章",
+      "EN": "Fragment of a Golden Melody"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113059"
+  },
+  {
+    "id": 113064,
+    "name": {
+      "CHT": "受祝所縛之印",
+      "EN": "Mark of the Binding Blessing"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113064"
+  },
+  {
+    "id": 113065,
+    "name": {
+      "CHT": "過熟的火榴果",
+      "EN": "Overripe Flamegranate"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113065"
+  },
+  {
+    "id": 113066,
+    "name": {
+      "CHT": "秘刻金紋的源核",
+      "EN": "Gold-Inscribed Secret Source Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113066"
+  },
+  {
+    "id": 113067,
+    "name": {
+      "CHT": "深邃糾纏的凝視",
+      "EN": "Ensnaring Gaze"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113067"
+  },
+  {
+    "id": 113071,
+    "name": {
+      "CHT": "謎土的護符",
+      "EN": "Talisman of the Enigmatic Land"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113071"
+  },
+  {
+    "id": 113072,
+    "name": {
+      "CHT": "龍像的無智核",
+      "EN": "Sparkless Statue Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113072"
+  },
+  {
+    "id": 113076,
+    "name": {
+      "CHT": "秘源積氣喉",
+      "EN": "Secret Source Airflow Accumulator"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113076"
+  },
+  {
+    "id": 113077,
+    "name": {
+      "CHT": "精密型月矩力衝鴨模具",
+      "EN": "Precision Kuuvahki Stamping Die"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113077"
+  },
+  {
+    "id": 113078,
+    "name": {
+      "CHT": "承光的鱗羽",
+      "EN": "Lightbearing Scale-Feather"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113078"
+  },
+  {
+    "id": 113079,
+    "name": {
+      "CHT": "漫光的輝角",
+      "EN": "Radiant Antler"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113079"
+  },
+  {
+    "id": 113080,
+    "name": {
+      "CHT": "循環式軍用月矩核心",
+      "EN": "Cyclic Military Kuuvahki Core"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113080"
+  },
+  {
+    "id": 113084,
+    "name": {
+      "CHT": "魘翼枯骸",
+      "EN": "Remnant of the Dreadwing"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113084"
+  },
+  {
+    "id": 113085,
+    "name": {
+      "CHT": "稜光的斷尾",
+      "EN": "Prismatic Severed Tail"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113085"
+  },
+  {
+    "id": 113086,
+    "name": {
+      "CHT": "墮天的落羽",
+      "EN": "Plume of the Fallen Watcher"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色培養素材",
+    "icon": "UI_ItemIcon_113086"
+  },
+  {
+    "id": 104104,
+    "name": {
+      "CHT": "璀璨原鑽",
+      "EN": "Brilliant Diamond Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104104"
+  },
+  {
+    "id": 104103,
+    "name": {
+      "CHT": "璀璨原鑽塊",
+      "EN": "Brilliant Diamond Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104103"
+  },
+  {
+    "id": 104102,
+    "name": {
+      "CHT": "璀璨原鑽斷片",
+      "EN": "Brilliant Diamond Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104102"
+  },
+  {
+    "id": 104101,
+    "name": {
+      "CHT": "璀璨原鑽碎屑",
+      "EN": "Brilliant Diamond Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104101"
+  },
+  {
+    "id": 104114,
+    "name": {
+      "CHT": "燃願瑪瑙",
+      "EN": "Agnidus Agate Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104114"
+  },
+  {
+    "id": 104113,
+    "name": {
+      "CHT": "燃願瑪瑙塊",
+      "EN": "Agnidus Agate Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104113"
+  },
+  {
+    "id": 104112,
+    "name": {
+      "CHT": "燃願瑪瑙斷片",
+      "EN": "Agnidus Agate Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104112"
+  },
+  {
+    "id": 104111,
+    "name": {
+      "CHT": "燃願瑪瑙碎屑",
+      "EN": "Agnidus Agate Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104111"
+  },
+  {
+    "id": 104124,
+    "name": {
+      "CHT": "滌淨青金",
+      "EN": "Varunada Lazurite Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104124"
+  },
+  {
+    "id": 104123,
+    "name": {
+      "CHT": "滌淨青金塊",
+      "EN": "Varunada Lazurite Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104123"
+  },
+  {
+    "id": 104122,
+    "name": {
+      "CHT": "滌淨青金斷片",
+      "EN": "Varunada Lazurite Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104122"
+  },
+  {
+    "id": 104121,
+    "name": {
+      "CHT": "滌淨青金碎屑",
+      "EN": "Varunada Lazurite Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104121"
+  },
+  {
+    "id": 104134,
+    "name": {
+      "CHT": "生長碧翡",
+      "EN": "Nagadus Emerald Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104134"
+  },
+  {
+    "id": 104133,
+    "name": {
+      "CHT": "生長碧翡塊",
+      "EN": "Nagadus Emerald Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104133"
+  },
+  {
+    "id": 104132,
+    "name": {
+      "CHT": "生長碧翡斷片",
+      "EN": "Nagadus Emerald Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104132"
+  },
+  {
+    "id": 104131,
+    "name": {
+      "CHT": "生長碧翡碎屑",
+      "EN": "Nagadus Emerald Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104131"
+  },
+  {
+    "id": 104144,
+    "name": {
+      "CHT": "最勝紫晶",
+      "EN": "Vajrada Amethyst Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104144"
+  },
+  {
+    "id": 104143,
+    "name": {
+      "CHT": "最勝紫晶塊",
+      "EN": "Vajrada Amethyst Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104143"
+  },
+  {
+    "id": 104142,
+    "name": {
+      "CHT": "最勝紫晶斷片",
+      "EN": "Vajrada Amethyst Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104142"
+  },
+  {
+    "id": 104141,
+    "name": {
+      "CHT": "最勝紫晶碎屑",
+      "EN": "Vajrada Amethyst Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104141"
+  },
+  {
+    "id": 104154,
+    "name": {
+      "CHT": "自在松石",
+      "EN": "Vayuda Turquoise Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104154"
+  },
+  {
+    "id": 104153,
+    "name": {
+      "CHT": "自在松石塊",
+      "EN": "Vayuda Turquoise Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104153"
+  },
+  {
+    "id": 104152,
+    "name": {
+      "CHT": "自在松石斷片",
+      "EN": "Vayuda Turquoise Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104152"
+  },
+  {
+    "id": 104151,
+    "name": {
+      "CHT": "自在松石碎屑",
+      "EN": "Vayuda Turquoise Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104151"
+  },
+  {
+    "id": 104164,
+    "name": {
+      "CHT": "哀敘冰玉",
+      "EN": "Shivada Jade Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104164"
+  },
+  {
+    "id": 104163,
+    "name": {
+      "CHT": "哀敘冰玉塊",
+      "EN": "Shivada Jade Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104163"
+  },
+  {
+    "id": 104162,
+    "name": {
+      "CHT": "哀敘冰玉斷片",
+      "EN": "Shivada Jade Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104162"
+  },
+  {
+    "id": 104161,
+    "name": {
+      "CHT": "哀敘冰玉碎屑",
+      "EN": "Shivada Jade Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104161"
+  },
+  {
+    "id": 104174,
+    "name": {
+      "CHT": "堅牢黃玉",
+      "EN": "Prithiva Topaz Gemstone"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104174"
+  },
+  {
+    "id": 104173,
+    "name": {
+      "CHT": "堅牢黃玉塊",
+      "EN": "Prithiva Topaz Chunk"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104173"
+  },
+  {
+    "id": 104172,
+    "name": {
+      "CHT": "堅牢黃玉斷片",
+      "EN": "Prithiva Topaz Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104172"
+  },
+  {
+    "id": 104171,
+    "name": {
+      "CHT": "堅牢黃玉碎屑",
+      "EN": "Prithiva Topaz Sliver"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色突破素材",
+    "icon": "UI_ItemIcon_104171"
+  },
+  {
+    "id": 104303,
+    "name": {
+      "CHT": "「自由」的哲學",
+      "EN": "Philosophies of Freedom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104303"
+  },
+  {
+    "id": 104302,
+    "name": {
+      "CHT": "「自由」的指引",
+      "EN": "Guide to Freedom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104302"
+  },
+  {
+    "id": 104301,
+    "name": {
+      "CHT": "「自由」的教導",
+      "EN": "Teachings of Freedom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104301"
+  },
+  {
+    "id": 104306,
+    "name": {
+      "CHT": "「抗爭」的哲學",
+      "EN": "Philosophies of Resistance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104306"
+  },
+  {
+    "id": 104305,
+    "name": {
+      "CHT": "「抗爭」的指引",
+      "EN": "Guide to Resistance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104305"
+  },
+  {
+    "id": 104304,
+    "name": {
+      "CHT": "「抗爭」的教導",
+      "EN": "Teachings of Resistance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104304"
+  },
+  {
+    "id": 104309,
+    "name": {
+      "CHT": "「詩文」的哲學",
+      "EN": "Philosophies of Ballad"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104309"
+  },
+  {
+    "id": 104308,
+    "name": {
+      "CHT": "「詩文」的指引",
+      "EN": "Guide to Ballad"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104308"
+  },
+  {
+    "id": 104307,
+    "name": {
+      "CHT": "「詩文」的教導",
+      "EN": "Teachings of Ballad"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104307"
+  },
+  {
+    "id": 104312,
+    "name": {
+      "CHT": "「繁榮」的哲學",
+      "EN": "Philosophies of Prosperity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104312"
+  },
+  {
+    "id": 104311,
+    "name": {
+      "CHT": "「繁榮」的指引",
+      "EN": "Guide to Prosperity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104311"
+  },
+  {
+    "id": 104310,
+    "name": {
+      "CHT": "「繁榮」的教導",
+      "EN": "Teachings of Prosperity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104310"
+  },
+  {
+    "id": 104315,
+    "name": {
+      "CHT": "「勤勞」的哲學",
+      "EN": "Philosophies of Diligence"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104315"
+  },
+  {
+    "id": 104314,
+    "name": {
+      "CHT": "「勤勞」的指引",
+      "EN": "Guide to Diligence"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104314"
+  },
+  {
+    "id": 104313,
+    "name": {
+      "CHT": "「勤勞」的教導",
+      "EN": "Teachings of Diligence"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104313"
+  },
+  {
+    "id": 104318,
+    "name": {
+      "CHT": "「黃金」的哲學",
+      "EN": "Philosophies of Gold"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104318"
+  },
+  {
+    "id": 104317,
+    "name": {
+      "CHT": "「黃金」的指引",
+      "EN": "Guide to Gold"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104317"
+  },
+  {
+    "id": 104316,
+    "name": {
+      "CHT": "「黃金」的教導",
+      "EN": "Teachings of Gold"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104316"
+  },
+  {
+    "id": 104322,
+    "name": {
+      "CHT": "「浮世」的哲學",
+      "EN": "Philosophies of Transience"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104322"
+  },
+  {
+    "id": 104321,
+    "name": {
+      "CHT": "「浮世」的指引",
+      "EN": "Guide to Transience"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104321"
+  },
+  {
+    "id": 104320,
+    "name": {
+      "CHT": "「浮世」的教導",
+      "EN": "Teachings of Transience"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104320"
+  },
+  {
+    "id": 104325,
+    "name": {
+      "CHT": "「風雅」的哲學",
+      "EN": "Philosophies of Elegance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104325"
+  },
+  {
+    "id": 104324,
+    "name": {
+      "CHT": "「風雅」的指引",
+      "EN": "Guide to Elegance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104324"
+  },
+  {
+    "id": 104323,
+    "name": {
+      "CHT": "「風雅」的教導",
+      "EN": "Teachings of Elegance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104323"
+  },
+  {
+    "id": 104328,
+    "name": {
+      "CHT": "「天光」的哲學",
+      "EN": "Philosophies of Light"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104328"
+  },
+  {
+    "id": 104327,
+    "name": {
+      "CHT": "「天光」的指引",
+      "EN": "Guide to Light"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104327"
+  },
+  {
+    "id": 104326,
+    "name": {
+      "CHT": "「天光」的教導",
+      "EN": "Teachings of Light"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104326"
+  },
+  {
+    "id": 104331,
+    "name": {
+      "CHT": "「諍言」的哲學",
+      "EN": "Philosophies of Admonition"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104331"
+  },
+  {
+    "id": 104330,
+    "name": {
+      "CHT": "「諍言」的指引",
+      "EN": "Guide to Admonition"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104330"
+  },
+  {
+    "id": 104329,
+    "name": {
+      "CHT": "「諍言」的教導",
+      "EN": "Teachings of Admonition"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104329"
+  },
+  {
+    "id": 104334,
+    "name": {
+      "CHT": "「巧思」的哲學",
+      "EN": "Philosophies of Ingenuity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104334"
+  },
+  {
+    "id": 104333,
+    "name": {
+      "CHT": "「巧思」的指引",
+      "EN": "Guide to Ingenuity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104333"
+  },
+  {
+    "id": 104332,
+    "name": {
+      "CHT": "「巧思」的教導",
+      "EN": "Teachings of Ingenuity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104332"
+  },
+  {
+    "id": 104337,
+    "name": {
+      "CHT": "「篤行」的哲學",
+      "EN": "Philosophies of Praxis"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104337"
+  },
+  {
+    "id": 104336,
+    "name": {
+      "CHT": "「篤行」的指引",
+      "EN": "Guide to Praxis"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104336"
+  },
+  {
+    "id": 104335,
+    "name": {
+      "CHT": "「篤行」的教導",
+      "EN": "Teachings of Praxis"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104335"
+  },
+  {
+    "id": 104340,
+    "name": {
+      "CHT": "「公平」的哲學",
+      "EN": "Philosophies of Equity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104340"
+  },
+  {
+    "id": 104339,
+    "name": {
+      "CHT": "「公平」的指引",
+      "EN": "Guide to Equity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104339"
+  },
+  {
+    "id": 104338,
+    "name": {
+      "CHT": "「公平」的教導",
+      "EN": "Teachings of Equity"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104338"
+  },
+  {
+    "id": 104343,
+    "name": {
+      "CHT": "「正義」的哲學",
+      "EN": "Philosophies of Justice"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104343"
+  },
+  {
+    "id": 104342,
+    "name": {
+      "CHT": "「正義」的指引",
+      "EN": "Guide to Justice"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104342"
+  },
+  {
+    "id": 104341,
+    "name": {
+      "CHT": "「正義」的教導",
+      "EN": "Teachings of Justice"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104341"
+  },
+  {
+    "id": 104346,
+    "name": {
+      "CHT": "「秩序」的哲學",
+      "EN": "Philosophies of Order"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104346"
+  },
+  {
+    "id": 104345,
+    "name": {
+      "CHT": "「秩序」的指引",
+      "EN": "Guide to Order"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104345"
+  },
+  {
+    "id": 104344,
+    "name": {
+      "CHT": "「秩序」的教導",
+      "EN": "Teachings of Order"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104344"
+  },
+  {
+    "id": 104349,
+    "name": {
+      "CHT": "「角逐」的哲學",
+      "EN": "Philosophies of Contention"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104349"
+  },
+  {
+    "id": 104348,
+    "name": {
+      "CHT": "「角逐」的指引",
+      "EN": "Guide to Contention"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104348"
+  },
+  {
+    "id": 104347,
+    "name": {
+      "CHT": "「角逐」的教導",
+      "EN": "Teachings of Contention"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104347"
+  },
+  {
+    "id": 104352,
+    "name": {
+      "CHT": "「焚燔」的哲學",
+      "EN": "Philosophies of Kindling"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104352"
+  },
+  {
+    "id": 104351,
+    "name": {
+      "CHT": "「焚燔」的指引",
+      "EN": "Guide to Kindling"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104351"
+  },
+  {
+    "id": 104350,
+    "name": {
+      "CHT": "「焚燔」的教導",
+      "EN": "Teachings of Kindling"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104350"
+  },
+  {
+    "id": 104355,
+    "name": {
+      "CHT": "「紛爭」的哲學",
+      "EN": "Philosophies of Conflict"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104355"
+  },
+  {
+    "id": 104354,
+    "name": {
+      "CHT": "「紛爭」的指引",
+      "EN": "Guide to Conflict"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104354"
+  },
+  {
+    "id": 104353,
+    "name": {
+      "CHT": "「紛爭」的教導",
+      "EN": "Teachings of Conflict"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104353"
+  },
+  {
+    "id": 104358,
+    "name": {
+      "CHT": "「月光」的哲學",
+      "EN": "Philosophies of Moonlight"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104358"
+  },
+  {
+    "id": 104357,
+    "name": {
+      "CHT": "「月光」的指引",
+      "EN": "Guide to Moonlight"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104357"
+  },
+  {
+    "id": 104356,
+    "name": {
+      "CHT": "「月光」的教導",
+      "EN": "Teachings of Moonlight"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104356"
+  },
+  {
+    "id": 104361,
+    "name": {
+      "CHT": "「樂園」的哲學",
+      "EN": "Philosophies of Elysium"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104361"
+  },
+  {
+    "id": 104360,
+    "name": {
+      "CHT": "「樂園」的指引",
+      "EN": "Guide to Elysium"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104360"
+  },
+  {
+    "id": 104359,
+    "name": {
+      "CHT": "「樂園」的教導",
+      "EN": "Teachings of Elysium"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104359"
+  },
+  {
+    "id": 104364,
+    "name": {
+      "CHT": "「浪跡」的哲學",
+      "EN": "Philosophies of Vagrancy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104364"
+  },
+  {
+    "id": 104363,
+    "name": {
+      "CHT": "「浪跡」的指引",
+      "EN": "Guide to Vagrancy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104363"
+  },
+  {
+    "id": 104362,
+    "name": {
+      "CHT": "「浪跡」的教導",
+      "EN": "Teachings of Vagrancy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104362"
+  },
+  {
+    "id": 104319,
+    "name": {
+      "CHT": "智識之冕",
+      "EN": "Crown of Insight"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "角色天賦素材",
+    "icon": "UI_ItemIcon_104319"
+  },
+  {
+    "id": 114004,
+    "name": {
+      "CHT": "高塔孤王的碎夢",
+      "EN": "Scattered Piece of Decarabian's Dream"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114004"
+  },
+  {
+    "id": 114003,
+    "name": {
+      "CHT": "高塔孤王的斷片",
+      "EN": "Fragment of Decarabian's Epic"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114003"
+  },
+  {
+    "id": 114002,
+    "name": {
+      "CHT": "高塔孤王的殘垣",
+      "EN": "Debris of Decarabian's City"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114002"
+  },
+  {
+    "id": 114001,
+    "name": {
+      "CHT": "高塔孤王的破瓦",
+      "EN": "Tile of Decarabian's Tower"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114001"
+  },
+  {
+    "id": 114008,
+    "name": {
+      "CHT": "凜風奔狼的懷鄉",
+      "EN": "Boreal Wolf's Nostalgia"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114008"
+  },
+  {
+    "id": 114007,
+    "name": {
+      "CHT": "凜風奔狼的斷牙",
+      "EN": "Boreal Wolf's Broken Fang"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114007"
+  },
+  {
+    "id": 114006,
+    "name": {
+      "CHT": "凜風奔狼的裂齒",
+      "EN": "Boreal Wolf's Cracked Tooth"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114006"
+  },
+  {
+    "id": 114005,
+    "name": {
+      "CHT": "凜風奔狼的始齔",
+      "EN": "Boreal Wolf's Milk Tooth"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114005"
+  },
+  {
+    "id": 114012,
+    "name": {
+      "CHT": "獅牙鬥士的理想",
+      "EN": "Dream of the Dandelion Gladiator"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114012"
+  },
+  {
+    "id": 114011,
+    "name": {
+      "CHT": "獅牙鬥士的鐐銬",
+      "EN": "Shackles of the Dandelion Gladiator"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114011"
+  },
+  {
+    "id": 114010,
+    "name": {
+      "CHT": "獅牙鬥士的鐵鍊",
+      "EN": "Chains of the Dandelion Gladiator"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114010"
+  },
+  {
+    "id": 114009,
+    "name": {
+      "CHT": "獅牙鬥士的枷鎖",
+      "EN": "Fetters of the Dandelion Gladiator"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114009"
+  },
+  {
+    "id": 114016,
+    "name": {
+      "CHT": "孤雲寒林的神體",
+      "EN": "Divine Body from Guyun"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114016"
+  },
+  {
+    "id": 114015,
+    "name": {
+      "CHT": "孤雲寒林的聖骸",
+      "EN": "Relic from Guyun"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114015"
+  },
+  {
+    "id": 114014,
+    "name": {
+      "CHT": "孤雲寒林的輝岩",
+      "EN": "Lustrous Stone from Guyun"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114014"
+  },
+  {
+    "id": 114013,
+    "name": {
+      "CHT": "孤雲寒林的光砂",
+      "EN": "Luminous Sands from Guyun"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114013"
+  },
+  {
+    "id": 114020,
+    "name": {
+      "CHT": "霧海雲間的轉還",
+      "EN": "Mist Veiled Primo Elixir"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114020"
+  },
+  {
+    "id": 114019,
+    "name": {
+      "CHT": "霧海雲間的金丹",
+      "EN": "Mist Veiled Gold Elixir"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114019"
+  },
+  {
+    "id": 114018,
+    "name": {
+      "CHT": "霧海雲間的汞丹",
+      "EN": "Mist Veiled Mercury Elixir"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114018"
+  },
+  {
+    "id": 114017,
+    "name": {
+      "CHT": "霧海雲間的鉛丹",
+      "EN": "Mist Veiled Lead Elixir"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114017"
+  },
+  {
+    "id": 114024,
+    "name": {
+      "CHT": "漆黑隕鐵的一塊",
+      "EN": "Chunk of Aerosiderite"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114024"
+  },
+  {
+    "id": 114023,
+    "name": {
+      "CHT": "漆黑隕鐵的一角",
+      "EN": "Bit of Aerosiderite"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114023"
+  },
+  {
+    "id": 114022,
+    "name": {
+      "CHT": "漆黑隕鐵的一片",
+      "EN": "Piece of Aerosiderite"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114022"
+  },
+  {
+    "id": 114021,
+    "name": {
+      "CHT": "漆黑隕鐵的一粒",
+      "EN": "Grain of Aerosiderite"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114021"
+  },
+  {
+    "id": 114028,
+    "name": {
+      "CHT": "遠海夷地的金枝",
+      "EN": "Golden Branch of a Distant Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114028"
+  },
+  {
+    "id": 114027,
+    "name": {
+      "CHT": "遠海夷地的瓊枝",
+      "EN": "Jade Branch of a Distant Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114027"
+  },
+  {
+    "id": 114026,
+    "name": {
+      "CHT": "遠海夷地的玉枝",
+      "EN": "Jeweled Branch of a Distant Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114026"
+  },
+  {
+    "id": 114025,
+    "name": {
+      "CHT": "遠海夷地的瑚枝",
+      "EN": "Coral Branch of a Distant Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114025"
+  },
+  {
+    "id": 114032,
+    "name": {
+      "CHT": "鳴神御靈的勇武",
+      "EN": "Narukami's Valor"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114032"
+  },
+  {
+    "id": 114031,
+    "name": {
+      "CHT": "鳴神御靈的親愛",
+      "EN": "Narukami's Affection"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114031"
+  },
+  {
+    "id": 114030,
+    "name": {
+      "CHT": "鳴神御靈的歡喜",
+      "EN": "Narukami's Joy"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114030"
+  },
+  {
+    "id": 114029,
+    "name": {
+      "CHT": "鳴神御靈的明惠",
+      "EN": "Narukami's Wisdom"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114029"
+  },
+  {
+    "id": 114036,
+    "name": {
+      "CHT": "今昔劇畫之鬼人",
+      "EN": "Mask of the Kijin"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114036"
+  },
+  {
+    "id": 114035,
+    "name": {
+      "CHT": "今昔劇畫之一角",
+      "EN": "Mask of the One-Horned"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114035"
+  },
+  {
+    "id": 114034,
+    "name": {
+      "CHT": "今昔劇畫之虎齧",
+      "EN": "Mask of the Tiger's Bite"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114034"
+  },
+  {
+    "id": 114033,
+    "name": {
+      "CHT": "今昔劇畫之惡尉",
+      "EN": "Mask of the Wicked Lieutenant"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114033"
+  },
+  {
+    "id": 114040,
+    "name": {
+      "CHT": "謐林涓露的金符",
+      "EN": "Golden Talisman of the Forest Dew"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114040"
+  },
+  {
+    "id": 114039,
+    "name": {
+      "CHT": "謐林涓露的銀符",
+      "EN": "Silver Talisman of the Forest Dew"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114039"
+  },
+  {
+    "id": 114038,
+    "name": {
+      "CHT": "謐林涓露的鐵符",
+      "EN": "Iron Talisman of the Forest Dew"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114038"
+  },
+  {
+    "id": 114037,
+    "name": {
+      "CHT": "謐林涓露的銅符",
+      "EN": "Copper Talisman of the Forest Dew"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114037"
+  },
+  {
+    "id": 114044,
+    "name": {
+      "CHT": "綠洲花園的真諦",
+      "EN": "Oasis Garden's Truth"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114044"
+  },
+  {
+    "id": 114043,
+    "name": {
+      "CHT": "綠洲花園的哀思",
+      "EN": "Oasis Garden's Mourning"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114043"
+  },
+  {
+    "id": 114042,
+    "name": {
+      "CHT": "綠洲花園的恩惠",
+      "EN": "Oasis Garden's Kindness"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114042"
+  },
+  {
+    "id": 114041,
+    "name": {
+      "CHT": "綠洲花園的追憶",
+      "EN": "Oasis Garden's Reminiscence"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114041"
+  },
+  {
+    "id": 114048,
+    "name": {
+      "CHT": "烈日威權的舊日",
+      "EN": "Olden Days of Scorching Might"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114048"
+  },
+  {
+    "id": 114047,
+    "name": {
+      "CHT": "烈日威權的夢想",
+      "EN": "Dream of Scorching Might"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114047"
+  },
+  {
+    "id": 114046,
+    "name": {
+      "CHT": "烈日威權的餘光",
+      "EN": "Remnant Glow of Scorching Might"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114046"
+  },
+  {
+    "id": 114045,
+    "name": {
+      "CHT": "烈日威權的殘響",
+      "EN": "Echo of Scorching Might"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114045"
+  },
+  {
+    "id": 114052,
+    "name": {
+      "CHT": "悠古弦音的迴響",
+      "EN": "Echo of an Ancient Chord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114052"
+  },
+  {
+    "id": 114051,
+    "name": {
+      "CHT": "悠古弦音的樂章",
+      "EN": "Movement of an Ancient Chord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114051"
+  },
+  {
+    "id": 114050,
+    "name": {
+      "CHT": "悠古弦音的斷章",
+      "EN": "Chapter of an Ancient Chord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114050"
+  },
+  {
+    "id": 114049,
+    "name": {
+      "CHT": "悠古弦音的殘章",
+      "EN": "Fragment of an Ancient Chord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114049"
+  },
+  {
+    "id": 114056,
+    "name": {
+      "CHT": "純聖露滴的真粹",
+      "EN": "Essence of Pure Sacred Dewdrop"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114056"
+  },
+  {
+    "id": 114055,
+    "name": {
+      "CHT": "純聖露滴的醴泉",
+      "EN": "Spring of Pure Sacred Dewdrop"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114055"
+  },
+  {
+    "id": 114054,
+    "name": {
+      "CHT": "純聖露滴的凝華",
+      "EN": "Sublimation of Pure Sacred Dewdrop"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114054"
+  },
+  {
+    "id": 114053,
+    "name": {
+      "CHT": "純聖露滴的濾渣",
+      "EN": "Dross of Pure Sacred Dewdrop"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114053"
+  },
+  {
+    "id": 114060,
+    "name": {
+      "CHT": "無垢之海的金杯",
+      "EN": "Golden Goblet of the Pristine Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114060"
+  },
+  {
+    "id": 114059,
+    "name": {
+      "CHT": "無垢之海的銀杯",
+      "EN": "Silver Goblet of the Pristine Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114059"
+  },
+  {
+    "id": 114058,
+    "name": {
+      "CHT": "無垢之海的酒盞",
+      "EN": "Wine Goblet of the Pristine Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114058"
+  },
+  {
+    "id": 114057,
+    "name": {
+      "CHT": "無垢之海的苦盞",
+      "EN": "Broken Goblet of the Pristine Sea"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114057"
+  },
+  {
+    "id": 114064,
+    "name": {
+      "CHT": "貢祭熾心的榮膺",
+      "EN": "Blazing Sacrificial Heart's Splendor"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114064"
+  },
+  {
+    "id": 114063,
+    "name": {
+      "CHT": "貢祭熾心的決絕",
+      "EN": "Blazing Sacrificial Heart's Resolve"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114063"
+  },
+  {
+    "id": 114062,
+    "name": {
+      "CHT": "貢祭熾心的躊躇",
+      "EN": "Blazing Sacrificial Heart's Hesitance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114062"
+  },
+  {
+    "id": 114061,
+    "name": {
+      "CHT": "貢祭熾心的惶恐",
+      "EN": "Blazing Sacrificial Heart's Terror"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114061"
+  },
+  {
+    "id": 114068,
+    "name": {
+      "CHT": "譫妄聖主的神面",
+      "EN": "Delirious Divinity of the Sacred Lord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114068"
+  },
+  {
+    "id": 114067,
+    "name": {
+      "CHT": "譫妄聖主的容光",
+      "EN": "Delirious Demeanor of the Sacred Lord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114067"
+  },
+  {
+    "id": 114066,
+    "name": {
+      "CHT": "譫妄聖主的餘哀",
+      "EN": "Delirious Desolation of the Sacred Lord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114066"
+  },
+  {
+    "id": 114065,
+    "name": {
+      "CHT": "譫妄聖主的朽敗",
+      "EN": "Delirious Decadence of the Sacred Lord"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114065"
+  },
+  {
+    "id": 114072,
+    "name": {
+      "CHT": "神合秘煙的啟示",
+      "EN": "Night-Wind's Mystic Revelation"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114072"
+  },
+  {
+    "id": 114071,
+    "name": {
+      "CHT": "神合秘煙的徵兆",
+      "EN": "Night-Wind's Mystic Augury"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114071"
+  },
+  {
+    "id": 114070,
+    "name": {
+      "CHT": "神合秘煙的預感",
+      "EN": "Night-Wind's Mystic Premonition"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114070"
+  },
+  {
+    "id": 114069,
+    "name": {
+      "CHT": "神合秘煙的思緒",
+      "EN": "Night-Wind's Mystic Consideration"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114069"
+  },
+  {
+    "id": 114076,
+    "name": {
+      "CHT": "奇巧秘器的真願",
+      "EN": "Artful Device Wish"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114076"
+  },
+  {
+    "id": 114075,
+    "name": {
+      "CHT": "奇巧秘器的繼業",
+      "EN": "Artful Device Inheritance"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114075"
+  },
+  {
+    "id": 114074,
+    "name": {
+      "CHT": "奇巧秘器的模本",
+      "EN": "Artful Device Replica"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114074"
+  },
+  {
+    "id": 114073,
+    "name": {
+      "CHT": "奇巧秘器的殘件",
+      "EN": "Artful Device Fragment"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114073"
+  },
+  {
+    "id": 114080,
+    "name": {
+      "CHT": "長夜燧火的烈輝",
+      "EN": "Blaze of Long Night Flint"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114080"
+  },
+  {
+    "id": 114079,
+    "name": {
+      "CHT": "長夜燧火的明焰",
+      "EN": "Flare of Long Night Flint"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114079"
+  },
+  {
+    "id": 114078,
+    "name": {
+      "CHT": "長夜燧火的殘照",
+      "EN": "Afterglow of Long Night Flint"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114078"
+  },
+  {
+    "id": 114077,
+    "name": {
+      "CHT": "長夜燧火的餘燼",
+      "EN": "Ember of Long Night Flint"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114077"
+  },
+  {
+    "id": 114084,
+    "name": {
+      "CHT": "終北遺嗣的煌熠",
+      "EN": "Aureate Radiance of the Far-North Scions"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 5,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114084"
+  },
+  {
+    "id": 114083,
+    "name": {
+      "CHT": "終北遺嗣的禱獻",
+      "EN": "Oblation of the Far-North Scions"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 4,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114083"
+  },
+  {
+    "id": 114082,
+    "name": {
+      "CHT": "終北遺嗣的迷頑",
+      "EN": "Unyielding Delusion of the Far-North Scions"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 3,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114082"
+  },
+  {
+    "id": 114081,
+    "name": {
+      "CHT": "終北遺嗣的哀榮",
+      "EN": "Sundered Glory of the Far-North Scions"
+    },
+    "category": "AVATAR_MATERIAL",
+    "rarity": 2,
+    "typeText": "武器突破素材",
+    "icon": "UI_ItemIcon_114081"
+  },
+  {
+    "id": 101101,
+    "name": {
+      "CHT": "北陸單手劍原胚",
+      "EN": "Northlander Sword Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101101"
+  },
+  {
+    "id": 101102,
+    "name": {
+      "CHT": "北陸弓原胚",
+      "EN": "Northlander Bow Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101102"
+  },
+  {
+    "id": 101103,
+    "name": {
+      "CHT": "北陸雙手劍原胚",
+      "EN": "Northlander Claymore Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101103"
+  },
+  {
+    "id": 101104,
+    "name": {
+      "CHT": "北陸法器原胚",
+      "EN": "Northlander Catalyst Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101104"
+  },
+  {
+    "id": 101105,
+    "name": {
+      "CHT": "北陸長柄武器原胚",
+      "EN": "Northlander Polearm Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101105"
+  },
+  {
+    "id": 101111,
+    "name": {
+      "CHT": "央陸單手劍原胚",
+      "EN": "Midlander Sword Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101111"
+  },
+  {
+    "id": 101112,
+    "name": {
+      "CHT": "央陸弓原胚",
+      "EN": "Midlander Bow Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101112"
+  },
+  {
+    "id": 101113,
+    "name": {
+      "CHT": "央陸雙手劍原胚",
+      "EN": "Midlander Claymore Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101113"
+  },
+  {
+    "id": 101114,
+    "name": {
+      "CHT": "央陸法器原胚",
+      "EN": "Midlander Catalyst Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101114"
+  },
+  {
+    "id": 101115,
+    "name": {
+      "CHT": "央陸長柄武器原胚",
+      "EN": "Midlander Polearm Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101115"
+  },
+  {
+    "id": 101116,
+    "name": {
+      "CHT": "垠土單手劍原胚",
+      "EN": "Borderland Sword Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101116"
+  },
+  {
+    "id": 101117,
+    "name": {
+      "CHT": "垠土弓原胚",
+      "EN": "Borderland Bow Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101117"
+  },
+  {
+    "id": 101118,
+    "name": {
+      "CHT": "垠土雙手劍原胚",
+      "EN": "Borderland Claymore Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101118"
+  },
+  {
+    "id": 101119,
+    "name": {
+      "CHT": "垠土法器原胚",
+      "EN": "Borderland Catalyst Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101119"
+  },
+  {
+    "id": 101120,
+    "name": {
+      "CHT": "垠土長柄武器原胚",
+      "EN": "Borderland Polearm Billet"
+    },
+    "category": "EXCHANGE",
+    "rarity": 4,
+    "typeText": "素材",
+    "icon": "UI_ItemIcon_101120"
+  },
+  {
+    "id": 100021,
+    "name": {
+      "CHT": "鉤鉤果",
+      "EN": "Wolfhook"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100021"
+  },
+  {
+    "id": 100022,
+    "name": {
+      "CHT": "落落莓",
+      "EN": "Valberry"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100022"
+  },
+  {
+    "id": 100023,
+    "name": {
+      "CHT": "塞西莉亞花",
+      "EN": "Cecilia"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100023"
+  },
+  {
+    "id": 100024,
+    "name": {
+      "CHT": "風車菊",
+      "EN": "Windwheel Aster"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100024"
+  },
+  {
+    "id": 100025,
+    "name": {
+      "CHT": "慕風蘑菇",
+      "EN": "Philanemo Mushroom"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100025"
+  },
+  {
+    "id": 100055,
+    "name": {
+      "CHT": "小燈草",
+      "EN": "Small Lamp Grass"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100055"
+  },
+  {
+    "id": 100056,
+    "name": {
+      "CHT": "嘟嘟蓮",
+      "EN": "Calla Lily"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100056"
+  },
+  {
+    "id": 100057,
+    "name": {
+      "CHT": "蒲公英籽",
+      "EN": "Dandelion Seed"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_100057"
+  },
+  {
+    "id": 101272,
+    "name": {
+      "CHT": "空羽蛾",
+      "EN": "Etherwing Moth"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "蒙德區域特產",
+    "icon": "UI_ItemIcon_101272"
+  },
+  {
+    "id": 100027,
+    "name": {
+      "CHT": "絕雲椒椒",
+      "EN": "Jueyun Chili"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100027"
+  },
+  {
+    "id": 100028,
+    "name": {
+      "CHT": "夜泊石",
+      "EN": "Noctilucous Jade"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100028"
+  },
+  {
+    "id": 100029,
+    "name": {
+      "CHT": "霓裳花",
+      "EN": "Silk Flower"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100029"
+  },
+  {
+    "id": 100030,
+    "name": {
+      "CHT": "琉璃百合",
+      "EN": "Glaze Lily"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100030"
+  },
+  {
+    "id": 100031,
+    "name": {
+      "CHT": "清心",
+      "EN": "Qingxin"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100031"
+  },
+  {
+    "id": 100033,
+    "name": {
+      "CHT": "星螺",
+      "EN": "Starconch"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100033"
+  },
+  {
+    "id": 100034,
+    "name": {
+      "CHT": "琉璃袋",
+      "EN": "Violetgrass"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100034"
+  },
+  {
+    "id": 100058,
+    "name": {
+      "CHT": "石珀",
+      "EN": "Cor Lapis"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_100058"
+  },
+  {
+    "id": 101241,
+    "name": {
+      "CHT": "清水玉",
+      "EN": "Clearwater Jade"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "璃月區域特產",
+    "icon": "UI_ItemIcon_101241"
+  },
+  {
+    "id": 101201,
+    "name": {
+      "CHT": "鬼兜蟲",
+      "EN": "Onikabuto"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101201"
+  },
+  {
+    "id": 101202,
+    "name": {
+      "CHT": "緋櫻繡球",
+      "EN": "Sakura Bloom"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101202"
+  },
+  {
+    "id": 101203,
+    "name": {
+      "CHT": "晶化骨髓",
+      "EN": "Crystal Marrow"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101203"
+  },
+  {
+    "id": 101204,
+    "name": {
+      "CHT": "血斛",
+      "EN": "Dendrobium"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101204"
+  },
+  {
+    "id": 101205,
+    "name": {
+      "CHT": "鳴草",
+      "EN": "Naku Weed"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101205"
+  },
+  {
+    "id": 101206,
+    "name": {
+      "CHT": "海靈芝",
+      "EN": "Sea Ganoderma"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101206"
+  },
+  {
+    "id": 101207,
+    "name": {
+      "CHT": "珊瑚真珠",
+      "EN": "Sango Pearl"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101207"
+  },
+  {
+    "id": 101208,
+    "name": {
+      "CHT": "天雲草實",
+      "EN": "Amakumo Fruit"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101208"
+  },
+  {
+    "id": 101209,
+    "name": {
+      "CHT": "幽燈蕈",
+      "EN": "Fluorescent Fungus"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "稻妻區域特產",
+    "icon": "UI_ItemIcon_101209"
+  },
+  {
+    "id": 101213,
+    "name": {
+      "CHT": "樹王聖體菇",
+      "EN": "Rukkhashava Mushrooms"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101213"
+  },
+  {
+    "id": 101214,
+    "name": {
+      "CHT": "帕蒂沙蘭",
+      "EN": "Padisarah"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101214"
+  },
+  {
+    "id": 101215,
+    "name": {
+      "CHT": "月蓮",
+      "EN": "Nilotpala Lotus"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101215"
+  },
+  {
+    "id": 101217,
+    "name": {
+      "CHT": "劫波蓮",
+      "EN": "Kalpalata Lotus"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101217"
+  },
+  {
+    "id": 101220,
+    "name": {
+      "CHT": "赤念果",
+      "EN": "Henna Berry"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101220"
+  },
+  {
+    "id": 101222,
+    "name": {
+      "CHT": "沙脂蛹",
+      "EN": "Sand Grease Pupa"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101222"
+  },
+  {
+    "id": 101223,
+    "name": {
+      "CHT": "悼靈花",
+      "EN": "Mourning Flower"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101223"
+  },
+  {
+    "id": 101224,
+    "name": {
+      "CHT": "萬相石",
+      "EN": "Trishiraite"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101224"
+  },
+  {
+    "id": 101225,
+    "name": {
+      "CHT": "聖金蟲",
+      "EN": "Scarab"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "須彌區域特產",
+    "icon": "UI_ItemIcon_101225"
+  },
+  {
+    "id": 101232,
+    "name": {
+      "CHT": "蒼晶螺",
+      "EN": "Beryl Conch"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101232"
+  },
+  {
+    "id": 101233,
+    "name": {
+      "CHT": "海露花",
+      "EN": "Romaritime Flower"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101233"
+  },
+  {
+    "id": 101235,
+    "name": {
+      "CHT": "柔燈鈴",
+      "EN": "Lumidouce Bell"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101235"
+  },
+  {
+    "id": 101236,
+    "name": {
+      "CHT": "虹彩薔薇",
+      "EN": "Rainbow Rose"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101236"
+  },
+  {
+    "id": 101237,
+    "name": {
+      "CHT": "幽光星星",
+      "EN": "Lumitoile"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101237"
+  },
+  {
+    "id": 101238,
+    "name": {
+      "CHT": "湖光鈴蘭",
+      "EN": "Lakelight Lily"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101238"
+  },
+  {
+    "id": 101239,
+    "name": {
+      "CHT": "子探測單元",
+      "EN": "Subdetection Unit"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101239"
+  },
+  {
+    "id": 101240,
+    "name": {
+      "CHT": "初露之源",
+      "EN": "Spring of the First Dewdrop"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "楓丹區域特產",
+    "icon": "UI_ItemIcon_101240"
+  },
+  {
+    "id": 101247,
+    "name": {
+      "CHT": "浪沫羽鰓",
+      "EN": "Sprayfeather Gill"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101247"
+  },
+  {
+    "id": 101248,
+    "name": {
+      "CHT": "灼灼彩菊",
+      "EN": "Brilliant Chrysanthemum"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101248"
+  },
+  {
+    "id": 101249,
+    "name": {
+      "CHT": "青蜜莓",
+      "EN": "Quenepa Berry"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101249"
+  },
+  {
+    "id": 101250,
+    "name": {
+      "CHT": "肉龍掌",
+      "EN": "Saurian Claw Succulent"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101250"
+  },
+  {
+    "id": 101252,
+    "name": {
+      "CHT": "微光角菌",
+      "EN": "Glowing Hornshroom"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101252"
+  },
+  {
+    "id": 101253,
+    "name": {
+      "CHT": "枯葉紫英",
+      "EN": "Withering Purpurbloom"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101253"
+  },
+  {
+    "id": 101254,
+    "name": {
+      "CHT": "雲岩裂葉",
+      "EN": "Skysplit Gembloom"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101254"
+  },
+  {
+    "id": 101255,
+    "name": {
+      "CHT": "琉鱗石",
+      "EN": "Dracolite"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "納塔區域特產",
+    "icon": "UI_ItemIcon_101255"
+  },
+  {
+    "id": 101257,
+    "name": {
+      "CHT": "隨身軸承",
+      "EN": "Portable Bearing"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "挪德卡萊區域特產",
+    "icon": "UI_ItemIcon_101257"
+  },
+  {
+    "id": 101261,
+    "name": {
+      "CHT": "霜盞花",
+      "EN": "Frostlamp Flower"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "挪德卡萊區域特產",
+    "icon": "UI_ItemIcon_101261"
+  },
+  {
+    "id": 101263,
+    "name": {
+      "CHT": "月落銀",
+      "EN": "Moonfall Silver"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "挪德卡萊區域特產",
+    "icon": "UI_ItemIcon_101263"
+  },
+  {
+    "id": 101268,
+    "name": {
+      "CHT": "冬凌草",
+      "EN": "Winter Icelea"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "挪德卡萊區域特產",
+    "icon": "UI_ItemIcon_101268"
+  },
+  {
+    "id": 101269,
+    "name": {
+      "CHT": "松珀香",
+      "EN": "Pine Amber"
+    },
+    "category": "EXCHANGE",
+    "rarity": 1,
+    "typeText": "挪德卡萊區域特產",
+    "icon": "UI_ItemIcon_101269"
+  },
+  {
+    "id": 104300,
+    "name": {
+      "CHT": "無主的命星",
+      "EN": "Masterless Stella Fortuna"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_104300"
+  },
+  {
+    "id": 107009,
+    "name": {
+      "CHT": "脆弱樹脂",
+      "EN": "Fragile Resin"
+    },
+    "category": "CONSUME",
+    "rarity": 4,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_210"
+  },
+  {
+    "id": 107012,
+    "name": {
+      "CHT": "須臾樹脂",
+      "EN": "Transient Resin"
+    },
+    "category": "CONSUME",
+    "rarity": 4,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_107012"
+  },
+  {
+    "id": 220007,
+    "name": {
+      "CHT": "濃縮樹脂",
+      "EN": "Condensed Resin"
+    },
+    "category": "CONSUME",
+    "rarity": 4,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_211"
+  },
+  {
+    "id": 221,
+    "name": {
+      "CHT": "無主的星輝",
+      "EN": "Masterless Starglitter"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "高級兌換券",
+    "icon": "UI_ItemIcon_221"
+  },
+  {
+    "id": 222,
+    "name": {
+      "CHT": "無主的星塵",
+      "EN": "Masterless Stardust"
+    },
+    "category": "CONSUME",
+    "rarity": 4,
+    "typeText": "普通兌換券",
+    "icon": "UI_ItemIcon_222"
+  },
+  {
+    "id": 223,
+    "name": {
+      "CHT": "糾纏之緣",
+      "EN": "Intertwined Fate"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "限定祈願道具",
+    "icon": "UI_ItemIcon_223"
+  },
+  {
+    "id": 224,
+    "name": {
+      "CHT": "相遇之緣",
+      "EN": "Acquaint Fate"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "祈願道具",
+    "icon": "UI_ItemIcon_224"
+  },
+  {
+    "id": 105005,
+    "name": {
+      "CHT": "祝聖之霜",
+      "EN": "Sanctifying Elixir"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_105005"
+  },
+  {
+    "id": 105006,
+    "name": {
+      "CHT": "啟聖之塵",
+      "EN": "Dust of Enlightenment"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_TrainingIteration"
+  },
+  {
+    "id": 113021,
+    "name": {
+      "CHT": "異夢溶媒",
+      "EN": "Dream Solvent"
+    },
+    "category": "CONSUME",
+    "rarity": 4,
+    "typeText": "消耗品",
+    "icon": "UI_ItemIcon_113021"
+  },
+  {
+    "id": 1202,
+    "name": {
+      "CHT": "空月祝福·新月",
+      "EN": "Blessing of the Welkin Moon - New Moon"
+    },
+    "category": "CONSUME",
+    "rarity": 5,
+    "typeText": "功能開啟憑證",
+    "icon": "UI_ItemIcon_1202"
+  },
+  {
+    "id": 201,
+    "name": {
+      "CHT": "原石",
+      "EN": "Primogem"
+    },
+    "category": "ADSORBATE",
+    "rarity": 5,
+    "typeText": "稀有貨幣",
+    "icon": "UI_ItemIcon_201"
+  },
+  {
+    "id": 202,
+    "name": {
+      "CHT": "摩拉",
+      "EN": "Mora"
+    },
+    "category": "ADSORBATE",
+    "rarity": 3,
+    "typeText": "通用貨幣",
+    "icon": "UI_ItemIcon_202"
+  }
+]
