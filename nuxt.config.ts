@@ -27,10 +27,7 @@ export default defineNuxtConfig({
     options: {
       theme: {
         preset: Zoir,
-        cssLayer: {
-          name: "primevue",
-          order: "primevue, unocss",
-        },
+        mergeProps: true,
       },
     },
     directives: {
