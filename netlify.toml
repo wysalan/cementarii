@@ -1,4 +1,0 @@
-[build.processing]
-skip_processing = true
-[build.processing.images]
-compress = false
