@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@primevue/nuxt-module",
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/color-mode",
   ],
 
   css: ["@/assets/css/global.css", "@/assets/css/fonts.css"],
