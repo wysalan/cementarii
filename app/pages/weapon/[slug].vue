@@ -177,7 +177,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div
-        class="flex flex-col gap-5 w-full lg:h-90dvh rounded-xl p-6 lg:col-span-4 xl:col-span-3 bg-zinc-200 overflow-y-auto"
+        class="flex flex-col gap-5 w-full lg:h-90dvh rounded-xl p-6 lg:col-span-4 xl:col-span-3 bg-zinc-200 overflow-y-auto dark:text-black"
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
@@ -228,7 +228,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
         <div class="flex flex-col justify-start items-center gap-3">
           <div class="flex flex-row justify-between items-center w-full">
-            <h2 class="text-xl font-semibold dark:text-white">
+            <h2 class="text-xl font-semibold">
               所需素材
               <i
                 class="pi pi-question-circle"

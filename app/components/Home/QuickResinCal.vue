@@ -17,7 +17,7 @@ const recoveryTimeResult = computed(() => {
 <template>
   <div class="relative">
     <h2 class="text-2xl pb-2">快速體力試算</h2>
-    <div class="flex flex-col gap-2 bg-zinc-200 rounded-md p-5">
+    <div class="flex flex-col gap-2 bg-zinc-200 rounded-md p-5 dark:text-black">
       <div class="text-lg">
         <span>目前樹脂：</span>
         <InputNumber

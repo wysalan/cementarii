@@ -20,11 +20,11 @@ const store = useUserStore();
         v-for="(story, key) in data.profile?.story"
         :pt="{
           root: { class: 'w-full bg-white/80! backdrop-blur-sm py-2 shadow-md' },
-          header: { class: 'text-xl' },
+          header: { class: 'text-xl dark:text-zinc-700!' },
         }"
       >
         <p
-          class="text-lg"
+          class="text-lg dark:text-zinc-700!"
           v-html="
             parseVoiceOverContent(parseDescriptionText(story.text), store.name, store.playerGender)
           "

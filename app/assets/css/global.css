@@ -1,5 +1,8 @@
 @import "primeicons/primeicons.css";
-@layer primevue, unocss;
+
+body {
+  @apply bg-background dark:bg-backgroundDark transition-colors duration-50;
+}
 
 #site-content {
   @apply flex flex-col min-h-100vh;

@@ -19,11 +19,11 @@ const store = useUserStore();
         class="w-full"
       >
         <template #title>
-          <h2 class="text-2xl py-2">{{ voiceover.title }}</h2>
+          <h2 class="text-2xl py-2 dark:text-zinc-700!">{{ voiceover.title }}</h2>
         </template>
         <template #content>
           <p
-            class="text-lg"
+            class="text-lg dark:text-zinc-700!"
             v-html="parseVoiceOverContent(voiceover.text, store.name, store.playerGender)"
           ></p>
         </template>

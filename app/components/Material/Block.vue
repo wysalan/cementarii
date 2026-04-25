@@ -65,7 +65,7 @@ function getRingColor(rarity: number | undefined) {
       />
     </div>
     <div class="flex flex-col justify-center items-center h-10 w-full my-1">
-      <p class="break-all w-20 xl:w-30 text-center">{{ data.name.CHT }}</p>
+      <p class="break-all w-20 xl:w-30 text-center dark:text-black">{{ data.name.CHT }}</p>
     </div>
   </NuxtLink>
 </template>

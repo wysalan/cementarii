@@ -41,10 +41,10 @@ const reloadPage = () => {
               active-class="link-active"
               class="min-w-fit"
             >
-              <span class="px-3 text-sm lg:text-base">{{ link.name }}</span>
+              <span class="px-3 text-sm lg:text-base dark:text-black">{{ link.name }}</span>
             </NuxtLink>
             <a class="min-w-fit cursor-pointer" @click="dialogVisible = !dialogVisible"
-              ><span class="px-3 text-sm lg:text-base">設定</span></a
+              ><span class="px-3 text-sm lg:text-base dark:text-black">設定</span></a
             >
           </div>
         </div>

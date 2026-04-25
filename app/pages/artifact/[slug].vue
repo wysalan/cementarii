@@ -76,7 +76,7 @@ function getArtifactIcon(partName: string | undefined) {
             class="h-50 w-50"
           />
         </div>
-        <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full">
+        <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black">
           <div class="flex flex-row items-center">
             <h2 class="text-2xl font-semibold">
               {{ artifactData.name }}
@@ -138,9 +138,9 @@ function getArtifactIcon(partName: string | undefined) {
       <!-- 右側故事 -->
       <div class="flex flex-col lg:col-span-6 rounded-lg bg-zinc-200 lg:h-90dvh lg:overflow-y-auto">
         <div class="flex flex-col gap-5 p-5">
-          <p class="text-xl font-semibold opacity-80">聖遺物故事</p>
+          <p class="text-xl font-semibold dark:text-black opacity-80">聖遺物故事</p>
           <div
-            class="text-lg"
+            class="text-lg dark:text-black"
             v-html="
               parseDescriptionText(
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]

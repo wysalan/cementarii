@@ -152,7 +152,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
     class="xl:absolute xl:right-2% xl:top-1/2 xl:translate-[-2%,-50%] xl:z-5 max-xl:mt-36vh max-h-full overflow-y-auto"
   >
     <div
-      class="flex flex-col dark:bg-black/30 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-100 p-5 gap-5 shadow-md"
+      class="flex flex-col dark:bg-zinc-700/40 bg-white/80 rounded-md backdrop-blur-sm h-fit w-full xl:w-100 p-5 gap-5 shadow-md dark:text-white"
     >
       <div class="flex flex-row justify-start items-center gap-3">
         <NuxtImg
@@ -175,7 +175,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
         {{ data.description }}
       </div>
       <div class="flex flex-row items-center gap-5">
-        <div class="bg-zinc-300 rounded-sm p-2 w-25 text-center select-none font-semibold">
+        <div
+          class="bg-zinc-300 rounded-sm p-2 w-25 text-center select-none font-semibold dark:text-zinc-950"
+        >
           Lv. <span class="font-bold">{{ actualLevel }}</span>
         </div>
         <Slider
@@ -188,19 +190,21 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
       <div class="flex flex-col gap-5">
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">生命值上限</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">生命值上限</p>
           <p>{{ calculatedStats.hp.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">攻擊力</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">攻擊力</p>
           <p>{{ calculatedStats.atk.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">防禦力</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">防禦力</p>
           <p>{{ calculatedStats.def.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">{{ data.stats?.substat.text }}</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">
+            {{ data.stats?.substat.text }}
+          </p>
           <p>{{ getSubstatValue(data.stats?.substat.type, calculatedStats.sp) }}</p>
         </div>
       </div>
@@ -238,7 +242,6 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
     </div>
   </div>
-  <!-- 左側：基本資訊 -->
   <div
     class="xl:absolute xl:left-2% xl:top-1/2 xl:translate-[2%,-50%] xl:z-5 max-xl:mt-5 max-h-full overflow-y-auto"
   >
@@ -253,7 +256,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
       <div class="flex flex-col gap-5">
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">元素</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">元素</p>
           <p class="flex flex-row justify-center items-center gap-1">
             <NuxtImg
               :src="
@@ -268,19 +271,19 @@ function getSubstatValue(type: string | undefined, substat: number) {
           </p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">武器</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">武器</p>
           <p>{{ data.weapon_text }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">所屬</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">所屬</p>
           <p>{{ data.affiliation || "無" }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">命之座</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">命之座</p>
           <p>{{ data.constellation?.name }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">生日</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">生日</p>
           <p>{{ data.birthday?.mmdd }}</p>
         </div>
         <Divider
@@ -290,19 +293,19 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <strong>配音演員</strong>
         </Divider>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">華語</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">華語</p>
           <p>{{ data.cv?.CHS }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">日語</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">日語</p>
           <p>{{ data.cv?.JP }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">英語</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">英語</p>
           <p>{{ data.cv?.EN }}</p>
         </div>
         <div class="flex flex-row justify-between text-lg">
-          <p class="font-semibold text-zinc-950 opacity-80">韓語</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80">韓語</p>
           <p>{{ data.cv?.KR }}</p>
         </div>
       </div>
@@ -312,7 +315,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
     >
       <div class="flex flex-col gap-5">
         <div class="flex flex-row items-center text-lg gap-5">
-          <p class="font-semibold text-zinc-950 opacity-80 min-w-fit">衣裝</p>
+          <p class="font-semibold text-zinc-950 dark:text-white opacity-80 min-w-fit">衣裝</p>
           <Select
             v-model="selectedOutfit"
             :options="outfitList"

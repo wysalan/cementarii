@@ -175,7 +175,7 @@ const needMaterials = computed(() => {
       v-model:visible="dialogVisible"
       modal
       :header="popupData.title"
-      class="w-75vw lg:w-50vw text-white"
+      class="w-75vw lg:w-50vw text-white!"
       :pt="{
         root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
         header: { class: 'border-b-2 opacity-80 mb-5 py-2' },

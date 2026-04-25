@@ -82,7 +82,7 @@ function getElementIcon(character: CharacterData) {
         />
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center h-10 w-full">
+    <div class="flex flex-col justify-center items-center h-10 w-full dark:text-black">
       <p>{{ data.name["CHT"] }}</p>
     </div>
   </NuxtLink>

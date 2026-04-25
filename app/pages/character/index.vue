@@ -99,7 +99,7 @@ const removeAllFilter = () => {
           <div class="flex flex-row items-center gap-2">
             <p class="font-semibold">篩選</p>
             <Button
-              label="清除所有篩選條件"
+              label="清除條件"
               rounded
               class="h-7"
               v-if="isFiltered"
@@ -117,12 +117,6 @@ const removeAllFilter = () => {
                 class="flex flex-wrap justify-center items-center"
                 multiple
               />
-              <Button
-                label="清除"
-                rounded
-                :class="!characterFilter.raritySelected?.length ? 'hidden' : 'inline-block'"
-                @click="characterFilter.raritySelected = []"
-              />
             </div>
           </div>
           <div class="flex flex-col justify-center items-center gap-2">
@@ -133,12 +127,6 @@ const removeAllFilter = () => {
                 :options="characterFilter.element"
                 class="flex flex-wrap justify-center items-center"
                 multiple
-              />
-              <Button
-                label="清除"
-                rounded
-                :class="!characterFilter.elementSelected?.length ? 'hidden' : 'inline-block'"
-                @click="characterFilter.elementSelected = []"
               />
             </div>
           </div>
@@ -151,12 +139,6 @@ const removeAllFilter = () => {
                 class="flex flex-wrap justify-center items-center"
                 multiple
               />
-              <Button
-                label="清除"
-                rounded
-                :class="!characterFilter.weaponSelected?.length ? 'hidden' : 'inline-block'"
-                @click="characterFilter.weaponSelected = []"
-              />
             </div>
           </div>
           <div class="flex flex-col justify-center items-center gap-2">
@@ -167,12 +149,6 @@ const removeAllFilter = () => {
                 :options="characterFilter.region"
                 class="flex flex-wrap justify-center items-center"
                 multiple
-              />
-              <Button
-                label="清除"
-                rounded
-                :class="!characterFilter.regionSelected?.length ? 'hidden' : 'inline-block'"
-                @click="characterFilter.regionSelected = []"
               />
             </div>
           </div>
@@ -187,13 +163,6 @@ const removeAllFilter = () => {
                     class="flex flex-wrap justify-center items-center"
                     multiple
                   />
-                  <Button
-                    label="清除"
-                    rounded
-                    class="transition-opacity"
-                    :class="!characterFilter.bodySelected?.length ? 'hidden' : 'inline-block'"
-                    @click="characterFilter.bodySelected = []"
-                  />
                 </div>
               </div>
               <div class="flex flex-col justify-center items-center gap-2">
@@ -204,13 +173,6 @@ const removeAllFilter = () => {
                     :options="characterFilter.identity"
                     class="flex flex-wrap justify-center items-center"
                     multiple
-                  />
-                  <Button
-                    label="清除"
-                    rounded
-                    class="transition-opacity"
-                    :class="!characterFilter.identitySelected?.length ? 'hidden' : 'inline-block'"
-                    @click="characterFilter.identitySelected = []"
                   />
                 </div>
               </div>

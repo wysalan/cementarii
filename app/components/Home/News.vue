@@ -120,7 +120,7 @@ function setEventDetail(eventData: GroupedEventData) {
       <div v-if="data" class="h-100 overflow-y-auto">
         <div
           v-for="(event, key) in filteredEventList"
-          class="p-2 mb-2 bg-zinc-300 rounded-sm"
+          class="p-2 mb-2 bg-zinc-300 rounded-sm dark:text-black"
           :key="key"
         >
           <span
@@ -143,11 +143,18 @@ function setEventDetail(eventData: GroupedEventData) {
     v-model:visible="dialogVisible"
     modal
     :header="eventDetail?.name"
-    class="w-75vw lg:w-50vw"
+    :pt="{
+      root: { class: 'bg-white/90! dark:bg-zinc-700/80! backdrop-blur-md' },
+      header: { class: 'text-zinc-700! dark:text-white!' },
+    }"
+    class="w-95vw lg:w-50vw"
   >
     <div class="flex flex-col gap-5">
       <NuxtImg :src="eventDetail?.banner" class="w-full rounded-sm" />
-      <div class="flex flex-col gap-1" v-html="eventDetail?.description"></div>
+      <div
+        class="flex flex-col gap-1 text-zinc-700! dark:text-white!"
+        v-html="eventDetail?.description"
+      ></div>
     </div>
   </Dialog>
 </template>
