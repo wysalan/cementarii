@@ -295,7 +295,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       v-model:visible="dialogVisible"
       modal
       header="故事"
-      class="w-90vw lg:max-w-fit text-white"
+      class="w-90vw lg:max-w-fit text-white!"
       :pt="{
         root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
         header: { class: 'border-b-2 opacity-80 mb-5 py-2' },

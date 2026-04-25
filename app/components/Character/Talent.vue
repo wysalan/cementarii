@@ -158,10 +158,10 @@ const needMaterials = computed(() => {
         class="min-w-full"
       >
         <template #title>
-          <h2 class="text-white text-2xl py-2">{{ passive.name }}</h2>
+          <h2 class="text-white! text-2xl py-2">{{ passive.name }}</h2>
         </template>
         <template #content>
-          <div class="flex gap-10 items-center text-white">
+          <div class="flex gap-10 items-center text-white!">
             <p
               v-html="parseDescriptionText(passive.description, dictionary)"
               class="text-lg"
