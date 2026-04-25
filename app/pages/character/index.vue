@@ -99,7 +99,7 @@ const removeAllFilter = () => {
           <div class="flex flex-row items-center gap-2">
             <p class="font-semibold">篩選</p>
             <Button
-              label="清除條件"
+              label="清除篩選條件"
               rounded
               class="h-7"
               v-if="isFiltered"
