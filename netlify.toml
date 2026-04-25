@@ -1,6 +1,4 @@
-[images]
-remote_images = [
-  "https://storage.wysalan.com/*",
-  "https://assets.wysalan.com/*",
-  "https://sdk.hoyoverse.com/*",
-]
+[build.processing]
+skip_processing = true
+[build.processing.images]
+compress = false
