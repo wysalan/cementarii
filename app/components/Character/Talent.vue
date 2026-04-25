@@ -16,6 +16,7 @@ import useDataParser from "@/composables/useDataParser";
 const { parseDescriptionText, parseTalentAttributes } = useDataParser();
 
 const talentsList = Object.values(data.talents?.list || {});
+const talentsNameList = Object.keys(data.talents?.list || {});
 const talentMap = Object.fromEntries(talentsList.map(({ name, ...rest }) => [name, rest]));
 const dictionary: Dictionary | null = data.dictionary;
 
@@ -105,7 +106,10 @@ const needMaterials = computed(() => {
               @click="handleInsideClick"
             ></p>
             <div class="flex flex-col gap-3">
-              <div class="flex flex-row items-center gap-5">
+              <div
+                class="flex flex-row items-center gap-5"
+                v-if="!talentsNameList[index]?.includes('Special')"
+              >
                 <div
                   class="bg-zinc-300 rounded-sm p-2 w-20 text-center select-none font-semibold text-black"
                 >
@@ -120,8 +124,11 @@ const needMaterials = computed(() => {
                 <p class="font-semibold text-white opacity-80">{{ prop.text }}</p>
                 <p>{{ prop.value }}</p>
               </div>
-              <Divider align="center" :pt="{ root: { class: 'm-0' } }" />
-              <div class="flex flex-col w-full gap-3">
+              <div
+                class="flex flex-col w-full gap-3"
+                v-if="!talentsNameList[index]?.includes('Special')"
+              >
+                <Divider align="center" :pt="{ root: { class: 'm-0' } }" />
                 <p class="text-lg font-semibold">所需素材</p>
                 <div
                   class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
