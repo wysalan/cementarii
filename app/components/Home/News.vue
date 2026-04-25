@@ -90,7 +90,7 @@ function setEventDetail(eventData: GroupedEventData) {
 <template>
   <div>
     <h2 class="text-2xl pb-2">所有活動一覽</h2>
-    <div class="flex flex-col gap-5 bg-zinc-200 rounded-md p-5 h-150">
+    <div class="flex flex-col gap-5 bg-zinc-200 rounded-md p-5 h-fit">
       <div class="flex flex-row gap-3">
         <Button
           label="全部"
@@ -117,7 +117,7 @@ function setEventDetail(eventData: GroupedEventData) {
           class="min-w-fit"
         />
       </div>
-      <div v-if="data" class="overflow-y-auto">
+      <div v-if="data" class="h-100 overflow-y-auto">
         <div
           v-for="(event, key) in filteredEventList"
           class="p-2 mb-2 bg-zinc-300 rounded-sm"
