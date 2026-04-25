@@ -34,6 +34,9 @@ export default defineNuxtConfig({
       include: ["Tooltip"],
     },
   },
+  image: {
+    provider: "ipx",
+  },
 
   typescript: {
     tsConfig: {
