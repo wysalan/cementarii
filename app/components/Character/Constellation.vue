@@ -78,7 +78,7 @@ const handleInsideClick = (event: MouseEvent) => {
       <Card
         v-for="(constellation, key) in data.constellation?.list"
         :key="key"
-        :pt="{ root: { class: 'bg-zinc-600/70 backdrop-blur-lg shadow-md' } }"
+        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg shadow-md' } }"
         class="w-full"
       >
         <template #title>
@@ -101,7 +101,7 @@ const handleInsideClick = (event: MouseEvent) => {
       :header="popupData.title"
       class="w-75vw lg:w-50vw text-white"
       :pt="{
-        root: { class: 'bg-zinc-600/70 backdrop-blur-lg' },
+        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
         header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
       }"
     >

@@ -93,7 +93,7 @@ const needMaterials = computed(() => {
       <Card
         v-for="(talent, index) in talentsList"
         :key="index"
-        :pt="{ root: { class: 'bg-zinc-600/70 backdrop-blur-lg shadow-md px-3' } }"
+        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg shadow-md px-3' } }"
       >
         <template #title>
           <h2 class="text-white text-2xl py-2">{{ talent.name }}</h2>
@@ -154,7 +154,7 @@ const needMaterials = computed(() => {
       <Card
         v-for="(passive, key) in data.passives"
         :key="key"
-        :pt="{ root: { class: 'bg-zinc-600/70 backdrop-blur-lg' } }"
+        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg' } }"
         class="min-w-full"
       >
         <template #title>
@@ -177,7 +177,7 @@ const needMaterials = computed(() => {
       :header="popupData.title"
       class="w-75vw lg:w-50vw text-white"
       :pt="{
-        root: { class: 'bg-zinc-600/70 backdrop-blur-lg' },
+        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
         header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
       }"
     >

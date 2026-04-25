@@ -15,7 +15,7 @@ const store = useUserStore();
       <Card
         v-for="(voiceover, key) in data.profile?.voiceover"
         :key="key"
-        :pt="{ root: { class: 'bg-white/80 backdrop-blur-sm shadow-md' } }"
+        :pt="{ root: { class: 'bg-white/80! backdrop-blur-sm shadow-md' } }"
         class="w-full"
       >
         <template #title>

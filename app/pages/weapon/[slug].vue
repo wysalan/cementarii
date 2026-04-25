@@ -297,7 +297,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       header="故事"
       class="w-90vw lg:max-w-fit text-white"
       :pt="{
-        root: { class: 'bg-zinc-600/70 backdrop-blur-lg' },
+        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
         header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
         pcCloseButton: { root: { class: 'text-white! hover:bg-zinc-400!' } },
       }"

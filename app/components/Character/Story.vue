@@ -19,7 +19,7 @@ const store = useUserStore();
         class="rounded-xl"
         v-for="(story, key) in data.profile?.story"
         :pt="{
-          root: { class: 'w-full bg-white/80 backdrop-blur-sm py-2 shadow-md' },
+          root: { class: 'w-full bg-white/80! backdrop-blur-sm py-2 shadow-md' },
           header: { class: 'text-xl' },
         }"
       >
