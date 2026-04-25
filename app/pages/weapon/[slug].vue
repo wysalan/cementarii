@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 const { slug } = useRoute().params;
-const { data: weaponData, pending, error } = await useFetch(`/api/weapon/${slug}`);
+const { data: weaponData, status, error } = await useFetch(`/api/weapon/${slug}`);
 const { parseDescriptionText, parseEffectDescription } = useDataParser();
 
 // Type
@@ -160,10 +160,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
 </script>
 
 <template>
-  <main class="container mx-auto" v-if="weaponData">
-    <div class="grid grid-cols-1 lg:grid-cols-10 h-90dvh gap-5 max-lg:mx-5 lg:mt-3">
+  <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && weaponData">
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-5">
       <div
-        class="flex justify-center items-center w-full h-100 lg:h-full p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
+        class="flex justify-center items-center w-full lg:h-90dvh p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
@@ -177,7 +177,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div
-        class="flex flex-col gap-5 w-full h-full rounded-xl p-6 lg:col-span-4 xl:col-span-3 bg-zinc-200"
+        class="flex flex-col gap-5 w-full lg:h-90dvh rounded-xl p-6 lg:col-span-4 xl:col-span-3 bg-zinc-200 overflow-y-auto"
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
@@ -233,7 +233,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
               <i
                 class="pi pi-question-circle"
                 v-tooltip.top="{
-                  value: '將武器升至 ' + actualLevel + ' 級所需要的素材',
+                  value:
+                    materialCalculationMethod === '單一'
+                      ? `將武器從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
+                      : `將武器從 1 級升至 ${actualLevel} 級所需要的素材`,
                   pt: { text: 'text-center' },
                 }"
               ></i>
