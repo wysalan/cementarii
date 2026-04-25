@@ -1,2 +1,6 @@
 [images]
-remote_images = ["https://storage.wysalan.com/*", "https://assets.wysalan.com/*"]
+remote_images = [
+  "https://storage.wysalan.com/*",
+  "https://assets.wysalan.com/*",
+  "https://sdk.hoyoverse.com/*",
+]
