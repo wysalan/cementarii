@@ -6,7 +6,7 @@ const { progress, isLoading } = useLoadingIndicator();
   <Transition name="fade">
     <div
       v-if="isLoading"
-      class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-zinc-400/90 dark:bg-zinc-700/70 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-zinc-400/90 dark:bg-zinc-700/70 backdrop-blur-sm h-100vh"
     >
       <img
         src="@/assets/LoadingProgressBar.webp"
