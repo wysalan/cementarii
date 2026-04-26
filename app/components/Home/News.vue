@@ -117,7 +117,7 @@ function setEventDetail(eventData: GroupedEventData) {
           class="min-w-fit"
         />
       </div>
-      <div v-if="data" class="h-100 overflow-y-auto">
+      <div v-if="data" class="min-f-fit max-h-90 overflow-y-auto">
         <div
           v-for="(event, key) in filteredEventList"
           class="p-2 mb-2 bg-zinc-300 rounded-sm dark:text-black"
@@ -147,16 +147,24 @@ function setEventDetail(eventData: GroupedEventData) {
       root: { class: 'bg-white/90! dark:bg-zinc-700/80! backdrop-blur-md' },
       header: { class: 'text-zinc-700! dark:text-white!' },
     }"
-    class="w-95vw lg:w-50vw"
+    class="w-95vw lg:w-75vw"
   >
     <div class="flex flex-col gap-5">
       <NuxtImg :src="eventDetail?.banner" class="w-full rounded-sm" />
       <div
-        class="flex flex-col gap-1 text-zinc-700! dark:text-white!"
+        class="event-content flex flex-col gap-1 text-zinc-700! dark:text-white!"
         v-html="eventDetail?.description"
       ></div>
     </div>
   </Dialog>
 </template>
 
-<style scoped></style>
+<style scoped>
+.event-content :deep(table) {
+  @apply min-w-full border-2 border-zinc-600 text-center;
+  tbody tr,
+  tbody td {
+    @apply border-2 border-zinc-600;
+  }
+}
+</style>
