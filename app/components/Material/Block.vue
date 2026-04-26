@@ -6,8 +6,10 @@ interface MaterialData {
     EN: string;
   };
   category: string;
-  rarity?: number | undefined;
+  rarity: number;
   typeText: string;
+  description: string;
+  sources: string[];
   icon: string;
 }
 const { data } = defineProps<{ data: MaterialData }>();
