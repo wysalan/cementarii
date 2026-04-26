@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const { progress, isLoading } = useLoadingIndicator({
-  duration: 2000,
-  throttle: 200,
-});
+const { progress, isLoading } = useLoadingIndicator();
 </script>
 
 <template>
@@ -13,7 +10,7 @@ const { progress, isLoading } = useLoadingIndicator({
     >
       <img
         src="@/assets/LoadingProgressBar.webp"
-        class="w-60vw xl:w-30vw h-auto transition-[clip-path] select-none"
+        class="w-80vw md:w-60vw xl:w-35vw h-auto transition-[clip-path] select-none"
         :style="{ clipPath: `inset(0 ${100 - progress}% 0 0)` }"
       />
     </div>
