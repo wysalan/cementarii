@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { siteConfig } from "@/site.config";
 import characterList from "@/data/characterList.json";
 import { useListStore } from "@/stores/List";
 const store = useListStore();
+
+useSeoMeta({
+  title: `角色 | ${siteConfig.title}`,
+});
 
 const characterSearchKeyword = ref("");
 

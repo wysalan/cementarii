@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { siteConfig } from "@/site.config";
 import useDataParser from "@/composables/useDataParser";
 
 definePageMeta({
@@ -9,6 +10,10 @@ definePageMeta({
 const { slug } = useRoute().params;
 const { data: artifactData, status, error } = await useFetch(`/api/artifact/${slug}`);
 const { parseDescriptionText } = useDataParser();
+
+useSeoMeta({
+  title: `${artifactData.value?.name || "找不到聖遺物"} | ${siteConfig.title}`,
+});
 
 const maxRarity: number | undefined = artifactData.value
   ? artifactData.value.rarity_list?.[artifactData.value.rarity_list.length - 1]

@@ -1,3 +1,4 @@
+import { siteConfig } from "./app/site.config";
 import Zoir from "./app/presets/Noir";
 
 export default defineNuxtConfig({
@@ -17,7 +18,16 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Cementarii",
+      title: siteConfig.title,
+      htmlAttrs: {
+        lang: siteConfig.language,
+      },
+      meta: [
+        {
+          name: "description",
+          content: siteConfig.description,
+        },
+      ],
     },
     rootAttrs: {
       id: "site-content",

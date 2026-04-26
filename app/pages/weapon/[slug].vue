@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { siteConfig } from "@/site.config";
 import useDataParser from "@/composables/useDataParser";
 import curve from "@/data/curve.json";
 
@@ -10,6 +11,10 @@ definePageMeta({
 const { slug } = useRoute().params;
 const { data: weaponData, status, error } = await useFetch(`/api/weapon/${slug}`);
 const { parseDescriptionText, parseEffectDescription } = useDataParser();
+
+useSeoMeta({
+  title: `${weaponData.value?.name || "找不到武器"} | ${siteConfig.title}`,
+});
 
 // Type
 interface Curve {

@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { siteConfig } from "@/site.config";
 import artifactList from "@/data/artifactList.json";
+
+useSeoMeta({
+  title: `聖遺物 | ${siteConfig.title}`,
+});
 
 const artifactSearchKeyword = ref("");
 

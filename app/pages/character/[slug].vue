@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-
+import { siteConfig } from "@/site.config";
 import Overview from "@/components/Character/Overview.vue";
 import Talent from "@/components/Character/Talent.vue";
 import Constellation from "@/components/Character/Constellation.vue";
 import Story from "@/components/Character/Story.vue";
 import VoiceOver from "@/components/Character/VoiceOver.vue";
 
-// Set layout
 definePageMeta({
   layout: "detail",
 });
 
 const { slug } = useRoute().params;
+const { data: characterData, status, error } = await useFetch(`/api/character/${slug}`);
+
+useSeoMeta({
+  title: `${characterData.value?.name || "找不到角色"} | ${siteConfig.title}`,
+});
 
 // Tabs
 const tabs: Record<string, Component> = {
@@ -28,9 +32,6 @@ const currentTab = ref("總覽");
 function tabSwitcher(tabName: string) {
   currentTab.value = tabName;
 }
-
-// Get Data from database
-const { data: characterData, status, error } = await useFetch(`/api/character/${slug}`);
 
 // Extract Image Color
 import { getColorSync, getPaletteSync } from "colorthief";

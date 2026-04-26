@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { siteConfig } from "@/site.config";
 import weaponList from "@/data/weaponList.json";
+
+useSeoMeta({
+  title: `武器 | ${siteConfig.title}`,
+});
 
 const weaponSearchKeyword = ref("");
 

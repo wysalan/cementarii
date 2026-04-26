@@ -1,3 +1,9 @@
+export const siteConfig = {
+  title: "Cementarii",
+  description: "整合個人常用功能的《原神》資料庫＆工具平台",
+  language: "zh-TW",
+};
+
 export const siteLinks = [
   { name: "首頁", path: "index" },
   { name: "角色", path: "character" },

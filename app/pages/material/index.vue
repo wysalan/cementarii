@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { siteConfig } from "@/site.config";
 import materialList from "@/data/materialList.json";
+
+useSeoMeta({
+  title: `素材 | ${siteConfig.title}`,
+});
 
 const materialSearchKeyword = ref("");
 
@@ -144,7 +149,7 @@ const removeAllFilter = () => {
       </div>
     </div>
     <div class="flex flex-wrap justify-center gap-5">
-      <LazyMaterialBlock
+      <MaterialBlock
         v-for="(material, index) in filteredMaterialList"
         :key="index"
         :data="material"
