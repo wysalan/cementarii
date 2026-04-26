@@ -147,7 +147,7 @@ function setEventDetail(eventData: GroupedEventData) {
       root: { class: 'bg-white/90! dark:bg-zinc-700/80! backdrop-blur-md' },
       header: { class: 'text-zinc-700! dark:text-white!' },
     }"
-    class="w-95vw lg:w-75vw"
+    class="w-95vw lg:w-50vw"
   >
     <div class="flex flex-col gap-5">
       <NuxtImg :src="eventDetail?.banner" class="w-full rounded-sm" />
