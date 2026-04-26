@@ -121,7 +121,9 @@ function getNameBarColor(rarity: number | undefined) {
             </p>
           </div>
         </div>
-        <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black">
+        <div
+          class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black max-h-50vh overflow-y-auto"
+        >
           <div class="flex flex-col gap-3">
             <p
               v-html="
