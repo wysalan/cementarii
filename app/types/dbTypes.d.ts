@@ -73,10 +73,11 @@ declare global {
     };
 
     type characterDictionary = {
-      talentKeywords: string[];
-      constellationKeywords: string[];
       relatedEffects: Record<string, string>;
       linkToEffect: Record<string, string>;
+      linkToTalent: Record<string, string>;
+      linkToPassive: Record<string, string>;
+      linkToConstellation: Record<string, string>;
     };
 
     type characterImages = {
