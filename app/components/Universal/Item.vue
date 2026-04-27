@@ -22,10 +22,10 @@ interface MaterialData {
 }
 
 const { data } = defineProps<{ data: Item }>();
-const materialData: MaterialData | undefined = materialList.find(
-  (material) => material.id === data.id,
-);
-const { parseVoiceOverContent } = useDataParser();
+const materialData = computed(() => {
+  return materialList.find((material) => material.id === data.id);
+});
+const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 const dialogVisible = ref(false);
@@ -67,21 +67,32 @@ function getNameBarColor(rarity: number | undefined) {
 
 <template>
   <NuxtLink
-    class="flex flex-col justify-center items-center bg-zinc-100/80 ring-2 ring-zinc-300 backdrop-blur-md rounded-md min-w-20 h-full m-1 cursor-pointer"
+    class="flex flex-col justify-center items-center bg-#e9e5dc backdrop-blur-md rounded-md min-w-20 h-full m-1 cursor-pointer"
     v-tooltip.top="data.name"
     @click="dialogVisible = !dialogVisible"
   >
-    <NuxtImg
-      :src="'https://assets.wysalan.com/cementarii/item-icon/UI_ItemIcon_' + data.id + '.webp'"
-      :alt="data.name"
-      class="w-15 h-15"
-      placeholder
-    />
-    <div class="flex flex-col justify-center items-center h-10 w-full">
+    <div
+      class="flex justify-center items-center w-full h-18 rounded-t-md"
+      :class="getBgColor(materialData?.rarity)"
+    >
+      <NuxtImg
+        :src="'https://assets.wysalan.com/cementarii/item-icon/UI_ItemIcon_' + data.id + '.webp'"
+        :alt="data.name"
+        class="w-15 h-15"
+        placeholder
+      />
+    </div>
+    <div class="flex flex-col justify-center items-center h-8 w-full">
       <p class="text-black">{{ data.count }}</p>
     </div>
   </NuxtLink>
-  <Dialog v-model:visible="dialogVisible" modal :header="data.name" class="w-90vw lg:w-35vw">
+  <Dialog
+    v-model:visible="dialogVisible"
+    modal
+    :header="data.name"
+    class="w-90vw lg:w-35vw"
+    :pt="{ root: { class: 'border-none!' } }"
+  >
     <template #container="{ closeCallback }">
       <div class="flex flex-col h-fit rounded-md">
         <div
@@ -96,7 +107,7 @@ function getNameBarColor(rarity: number | undefined) {
             severity="secondary"
             @click="closeCallback"
             aria-label="關閉視窗"
-            class="rounded-xl!"
+            class="rounded-2xl!"
           ></Button>
         </div>
         <div
@@ -122,18 +133,18 @@ function getNameBarColor(rarity: number | undefined) {
           </div>
         </div>
         <div
-          class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black max-h-50vh overflow-y-auto"
+          class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black max-lg:max-h-30vh max-h-50vh overflow-y-auto"
         >
           <div class="flex flex-col gap-3">
             <p
-              v-html="
-                parseVoiceOverContent(materialData?.description, store.name, store.playerGender)
-              "
+              v-html="parseStoryContent(materialData?.description, store.name, store.playerGender)"
               class="text-lg opacity-80"
             ></p>
           </div>
           <div class="flex flex-col gap-3" v-if="materialData?.sources.length">
-            <p class="font-semibold">來源</p>
+            <p class="flex items-center gap-1 font-semibold">
+              <i class="pi pi-map-marker"></i>來源
+            </p>
             <div
               class="rounded-md border-2 border-#d2ccc1 p-3"
               v-for="source in materialData?.sources"
