@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { objectFromEntries } from "ts-extras";
 import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
@@ -6,10 +7,11 @@ import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
 interface Dictionary {
-  talentKeywords: string[];
-  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
+  linkToTalent: Record<string, string>;
+  linkToPassive: Record<string, string>;
+  linkToConstellation: Record<string, string>;
 }
 
 import useDataParser from "@/composables/useDataParser";
@@ -17,8 +19,13 @@ const { parseDescriptionText, parseTalentAttributes } = useDataParser();
 
 const talentsList = Object.values(data.talents?.list || {});
 const talentsNameList = Object.keys(data.talents?.list || {});
-const talentMap = Object.fromEntries(talentsList.map(({ name, ...rest }) => [name, rest]));
 const dictionary: Dictionary | null = data.dictionary;
+
+const skills = objectFromEntries([
+  ["talents", Object.values(data.talents!.list)],
+  ["passives", data.passives!],
+  ["constellation", data.constellation?.list],
+] as const);
 
 const talentsLevel = ref([
   store.defaultTalentLevel,
@@ -39,20 +46,31 @@ const handleInsideClick = (event: MouseEvent) => {
   if (!target) return;
   const type = (target as HTMLElement).dataset.type;
   const name = (target as HTMLElement).dataset.name;
+  const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
+  const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
+  const constellationList = Object.fromEntries(
+    skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
+  );
   if (type && name) {
-    if (type === "effect") {
+    if (type === "talent") {
       popupData.value = {
-        title: "相關效果",
+        title: "相關突破天賦",
         name: name,
-        description: dictionary?.relatedEffects[name] || "",
+        description: talentsList[name]?.description || "",
       };
-    } else if (type === "talent") {
+    } else if (type === "passive") {
       popupData.value = {
-        title: "相關天賦",
+        title: "相關固有天賦",
         name: name,
-        description: talentMap[name]?.description || "",
+        description: passivesList[name]?.description || "",
       };
-    } else if (type === "related") {
+    } else if (type === "constellation") {
+      popupData.value = {
+        title: "相關命之座",
+        name: name,
+        description: constellationList[name]?.description || "",
+      };
+    } else if (type === "effect") {
       popupData.value = {
         title: "相關效果",
         name: name,
@@ -101,7 +119,7 @@ const needMaterials = computed(() => {
         <template #content>
           <div class="grid grid-cols-1 xl:grid-cols-2 gap-10 items-center text-white">
             <p
-              v-html="parseDescriptionText(talent.description, dictionary)"
+              v-html="parseDescriptionText(talent.description, skills, dictionary)"
               class="lg:text-lg"
               @click="handleInsideClick"
             ></p>
@@ -163,7 +181,7 @@ const needMaterials = computed(() => {
         <template #content>
           <div class="flex gap-10 items-center text-white!">
             <p
-              v-html="parseDescriptionText(passive.description, dictionary)"
+              v-html="parseDescriptionText(passive.description, skills, dictionary)"
               class="text-lg"
               @click="handleInsideClick"
             ></p>
@@ -183,7 +201,10 @@ const needMaterials = computed(() => {
     >
       <div class="flex flex-col gap-5">
         <h2 class="text-2xl font-semibold">{{ popupData.name }}</h2>
-        <p v-html="parseDescriptionText(popupData.description, dictionary)" class="text-lg"></p>
+        <p
+          v-html="parseDescriptionText(popupData.description, skills, dictionary)"
+          class="text-lg"
+        ></p>
       </div>
     </Dialog>
   </div>

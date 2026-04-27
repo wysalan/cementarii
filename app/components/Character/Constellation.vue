@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { objectFromEntries } from "ts-extras";
 import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
@@ -6,19 +7,20 @@ import useDataParser from "@/composables/useDataParser";
 const { parseDescriptionText } = useDataParser();
 
 interface Dictionary {
-  talentKeywords: string[];
-  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
+  linkToTalent: Record<string, string>;
+  linkToPassive: Record<string, string>;
+  linkToConstellation: Record<string, string>;
 }
 
-const talentsList = Object.values(data.talents?.list || {});
-const talentMap = Object.fromEntries(talentsList.map(({ name, ...rest }) => [name, rest]));
-const constellationList = Object.values(data.constellation?.list || {});
-const constellationMap = Object.fromEntries(
-  constellationList.map(({ name, ...rest }) => [name, rest]),
-);
 const dictionary: Dictionary | null = data.dictionary;
+
+const skills = objectFromEntries([
+  ["talents", Object.values(data.talents!.list)],
+  ["passives", data.passives!],
+  ["constellation", data.constellation?.list],
+] as const);
 
 const popupData = ref({
   title: "",
@@ -29,36 +31,38 @@ const dialogVisible = ref(false);
 
 const handleInsideClick = (event: MouseEvent) => {
   const target = (event.target as Element)?.closest("[data-name]");
-
   if (!target) return;
-
   const type = (target as HTMLElement).dataset.type;
   const name = (target as HTMLElement).dataset.name;
-
+  const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
+  const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
+  const constellationList = Object.fromEntries(
+    skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
+  );
   if (type && name) {
-    if (type === "effect") {
+    if (type === "talent") {
       popupData.value = {
-        title: "相關效果",
+        title: "相關突破天賦",
         name: name,
-        description: dictionary?.relatedEffects[name] || "",
+        description: talentsList[name]?.description || "",
       };
-    } else if (type === "talent") {
+    } else if (type === "passive") {
       popupData.value = {
-        title: "相關天賦",
+        title: "相關固有天賦",
         name: name,
-        description: talentMap[name]?.description || "",
-      };
-    } else if (type === "related") {
-      popupData.value = {
-        title: "相關效果",
-        name: name,
-        description: dictionary?.relatedEffects[name] || "",
+        description: passivesList[name]?.description || "",
       };
     } else if (type === "constellation") {
       popupData.value = {
         title: "相關命之座",
         name: name,
-        description: constellationMap[name]?.description || "",
+        description: constellationList[name]?.description || "",
+      };
+    } else if (type === "effect") {
+      popupData.value = {
+        title: "相關效果",
+        name: name,
+        description: dictionary?.relatedEffects[name] || "",
       };
     } else {
       popupData.value = {
@@ -87,7 +91,7 @@ const handleInsideClick = (event: MouseEvent) => {
         <template #content>
           <div class="flex text-white">
             <p
-              v-html="parseDescriptionText(constellation.description, dictionary)"
+              v-html="parseDescriptionText(constellation.description, skills, dictionary)"
               @click="handleInsideClick"
               class="text-lg"
             ></p>
@@ -107,7 +111,10 @@ const handleInsideClick = (event: MouseEvent) => {
     >
       <div class="flex flex-col gap-5">
         <h2 class="text-2xl font-semibold">{{ popupData.name }}</h2>
-        <p v-html="parseDescriptionText(popupData.description, dictionary)" class="text-lg"></p>
+        <p
+          v-html="parseDescriptionText(popupData.description, skills, dictionary)"
+          class="text-lg"
+        ></p>
       </div>
     </Dialog>
   </div>

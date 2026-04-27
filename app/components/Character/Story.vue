@@ -3,7 +3,7 @@ import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
 import useDataParser from "@/composables/useDataParser";
-const { parseDescriptionText, parseStoryContent } = useDataParser();
+const { parseStoryContent } = useDataParser();
 
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
@@ -25,9 +25,7 @@ const store = useUserStore();
       >
         <p
           class="text-lg dark:text-zinc-700!"
-          v-html="
-            parseStoryContent(parseDescriptionText(story.text), store.name, store.playerGender)
-          "
+          v-html="parseStoryContent(story.text, store.name, store.playerGender)"
         ></p>
       </Panel>
     </div>
