@@ -312,7 +312,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       <div class="flex flex-col gap-5">
         <p
           v-html="parseStoryContent(weaponData.story, store.name, store.playerGender)"
-          class="text-lg"
+          class="lg:text-lg"
         ></p>
       </div>
     </Dialog>

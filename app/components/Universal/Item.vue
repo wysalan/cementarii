@@ -99,7 +99,7 @@ function getNameBarColor(rarity: number | undefined) {
           class="flex flex-row justify-between items-center px-5 py-2 rounded-t-lg"
           :class="getNameBarColor(materialData?.rarity)"
         >
-          <p class="text-xl font-semibold text-white">
+          <p class="text-lg lg:text-xl font-semibold text-white">
             {{ materialData?.name.CHT }}
           </p>
           <Button
@@ -107,11 +107,11 @@ function getNameBarColor(rarity: number | undefined) {
             severity="secondary"
             @click="closeCallback"
             aria-label="關閉視窗"
-            class="rounded-2xl!"
+            class="rounded-lg! w-8 h-8"
           ></Button>
         </div>
         <div
-          class="flex justify-center items-center h-60 md:h-50 relative"
+          class="flex justify-center items-center h-50 relative"
           :class="getBgColor(materialData?.rarity)"
         >
           <NuxtImg
@@ -119,13 +119,13 @@ function getNameBarColor(rarity: number | undefined) {
             class="w-45 h-45 max-md:py-5 object-contain"
           />
           <div class="absolute top-3 left-5 flex">
-            <p class="select-none text-white font-semibold opacity-90 text-lg">
+            <p class="select-none text-white font-semibold opacity-90 lg:text-lg">
               {{ materialData?.typeText }}
             </p>
           </div>
           <div class="absolute bottom-3 left-5 flex flex-row gap-1">
             <p
-              class="select-none text-yellow font-semibold text-lg"
+              class="select-none text-yellow font-semibold lg:text-lg"
               v-for="n in materialData?.rarity"
             >
               ★
@@ -138,7 +138,7 @@ function getNameBarColor(rarity: number | undefined) {
           <div class="flex flex-col gap-3">
             <p
               v-html="parseStoryContent(materialData?.description, store.name, store.playerGender)"
-              class="text-lg opacity-80"
+              class="lg:text-lg opacity-80"
             ></p>
           </div>
           <div class="flex flex-col gap-3" v-if="materialData?.sources.length">
