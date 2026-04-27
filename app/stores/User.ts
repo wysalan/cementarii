@@ -11,5 +11,7 @@ export const useUserStore = defineStore("user", {
       this.defaultTalentLevel = newLevel;
     },
   },
-  persist: true,
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage(),
+  },
 });
