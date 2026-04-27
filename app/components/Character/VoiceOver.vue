@@ -3,7 +3,7 @@ import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
 import useDataParser from "@/composables/useDataParser";
-const { parseVoiceOverContent } = useDataParser();
+const { parseStoryContent } = useDataParser();
 
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
@@ -24,7 +24,7 @@ const store = useUserStore();
         <template #content>
           <p
             class="text-lg dark:text-zinc-700!"
-            v-html="parseVoiceOverContent(voiceover.text, store.name, store.playerGender)"
+            v-html="parseStoryContent(voiceover.text, store.name, store.playerGender)"
           ></p>
         </template>
       </Card>

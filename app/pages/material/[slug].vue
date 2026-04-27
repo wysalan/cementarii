@@ -24,7 +24,7 @@ const { slug } = useRoute().params;
 const data: MaterialData | undefined = materialList.find(
   (material) => material.id.toString() === slug,
 );
-const { parseVoiceOverContent } = useDataParser();
+const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
@@ -96,12 +96,15 @@ function getNameBarColor(rarity: number | undefined) {
       <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black">
         <div class="flex flex-col gap-3">
           <p
-            v-html="parseVoiceOverContent(data?.description, store.name, store.playerGender)"
+            v-html="parseStoryContent(data?.description, store.name, store.playerGender)"
             class="text-lg opacity-80"
           ></p>
         </div>
         <div class="flex flex-col gap-3" v-if="data?.sources.length">
-          <p class="font-semibold">來源</p>
+          <div class="flex flex-row justify-start items-center gap-1">
+            <i class="pi pi-map-marker"></i>
+            <p class="font-semibold">來源</p>
+          </div>
           <div class="rounded-md border-2 border-#d2ccc1 p-3" v-for="source in data?.sources">
             <p>{{ source }}</p>
           </div>
