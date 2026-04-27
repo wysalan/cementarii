@@ -1,4 +1,28 @@
-interface Talents {
+interface Skills {
+  talents: {
+    name: string;
+    description: string;
+    descriptionBuffed: string;
+    attributes: {
+      labels: string[];
+      parameters: {
+        [key: string]: number[];
+      };
+    };
+  }[];
+  passives: {
+    name: string;
+    description: string;
+    descriptionBuffed: string;
+  }[];
+  constellation?: {
+    name: string;
+    description: string;
+    descriptionBuffed: string;
+  }[];
+}
+
+interface TalentItem {
   name: string;
   description: string;
   descriptionBuffed: string | null;
@@ -14,10 +38,11 @@ interface TalentAttributeResult {
 }
 
 interface Dictionary {
-  talentKeywords: string[];
-  constellationKeywords: string[];
   relatedEffects: Record<string, string>;
   linkToEffect: Record<string, string>;
+  linkToTalent: Record<string, string>;
+  linkToPassive: Record<string, string>;
+  linkToConstellation: Record<string, string>;
 }
 
 interface Effect {
@@ -33,11 +58,15 @@ interface Effect {
 export default function useDataParser() {
   function parseDescriptionText(
     content: string | undefined,
+    skills?: Skills | null,
     dictionary?: Dictionary | null,
   ): string {
     if (!content) return "";
     const spanStyle = "cursor: pointer; font-weight: bold";
-    const result = content
+    const talentKeywords = skills?.talents.map((talent) => talent.name);
+    const passiveKeywords = skills?.passives.map((passive) => passive.name);
+    const constellationKeywords = skills?.constellation?.map((constellation) => constellation.name);
+    let result = content
       .replace(/\\n/g, "<br>")
       .replace(
         /<color=(#[0-9a-fA-F]{6})[0-9a-fA-F]{2}>(.*?)<\/color>/g,
@@ -49,23 +78,37 @@ export default function useDataParser() {
       return result.replace(
         /\{LINK\}((?:<span[^>]*>)?(.*?)(?:<\/span>)?)\{\/LINK\}/g,
         (_, htmlContent: string, keyword: string) => {
-          if (dictionary.talentKeywords && dictionary.talentKeywords.includes(keyword)) {
+          if (talentKeywords?.includes(keyword)) {
             return `<span data-type="talent" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-          } else if (
-            dictionary.constellationKeywords &&
-            dictionary.constellationKeywords.includes(keyword)
-          ) {
+          } else if (passiveKeywords?.includes(keyword)) {
+            return `<span data-type="passive" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
+          } else if (constellationKeywords && constellationKeywords.includes(keyword)) {
             return `<span data-type="constellation" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
           } else if (
             dictionary.relatedEffects &&
-            Object.keys(dictionary.relatedEffects).includes(keyword)
+            Object.keys(dictionary.relatedEffects)?.includes(keyword)
           ) {
             return `<span data-type="effect" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
           } else if (
             dictionary.linkToEffect &&
-            Object.keys(dictionary.linkToEffect).includes(keyword)
+            Object.keys(dictionary.linkToEffect)?.includes(keyword)
           ) {
-            return `<span data-type="related" data-name="${dictionary.linkToEffect[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
+            return `<span data-type="effect" data-name="${dictionary.linkToEffect[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
+          } else if (
+            dictionary.linkToTalent &&
+            Object.keys(dictionary.linkToTalent)?.includes(keyword)
+          ) {
+            return `<span data-type="talent" data-name="${dictionary.linkToTalent[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
+          } else if (
+            dictionary.linkToPassive &&
+            Object.keys(dictionary.linkToPassive)?.includes(keyword)
+          ) {
+            return `<span data-type="passive" data-name="${dictionary.linkToPassive[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
+          } else if (
+            dictionary.linkToConstellation &&
+            Object.keys(dictionary.linkToConstellation)?.includes(keyword)
+          ) {
+            return `<span data-type="constellation" data-name="${dictionary.linkToConstellation[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
           } else {
             return `<span data-type="unknown" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
           }
@@ -90,7 +133,10 @@ export default function useDataParser() {
     }
   }
 
-  function parseTalentAttributes(talents: Talents, targetLevel: number): TalentAttributeResult[] {
+  function parseTalentAttributes(
+    talents: TalentItem,
+    targetLevel: number,
+  ): TalentAttributeResult[] {
     const labelList = talents.attributes.labels;
     const params = talents.attributes.parameters;
     return labelList.map((label) => {
@@ -114,6 +160,12 @@ export default function useDataParser() {
     if (!content) return "";
     return content
       .replace(/\\n/g, "<br>")
+      .replace(
+        /<color=(#[0-9a-fA-F]{6})[0-9a-fA-F]{2}>(.*?)<\/color>/g,
+        (_, color: string, content: string) => {
+          return `<span style="color: ${color}">${content}</span>`;
+        },
+      )
       .replace(/^#/g, "")
       .replace(/{F#妳}{M#你}/g, playerGender && (playerGender === "male" ? "你" : "妳"))
       .replace(/{NICKNAME}/g, userName);
