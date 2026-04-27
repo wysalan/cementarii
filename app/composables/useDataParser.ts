@@ -106,25 +106,17 @@ export default function useDataParser() {
     });
   }
 
-  function parseVoiceOverContent(
-    content: string | undefined,
+  function parseStoryContent(
+    content: string | undefined | null,
     userName: string,
     playerGender: string,
   ) {
     if (!content) return "";
-    if (playerGender === "male") {
-      return content
-        .replace(/\\n/g, "<br>")
-        .replace(/^#/g, "")
-        .replace(/{F#妳}{M#你}/g, "你")
-        .replace(/{NICKNAME}/g, userName);
-    } else if (playerGender === "female") {
-      return content
-        .replace(/\\n/g, "<br>")
-        .replace(/^#/g, "")
-        .replace(/{F#妳}{M#你}/g, "妳");
-    }
-    return content.replace(/\\n/g, "<br>").replace(/^#/g, "");
+    return content
+      .replace(/\\n/g, "<br>")
+      .replace(/^#/g, "")
+      .replace(/{F#妳}{M#你}/g, playerGender && (playerGender === "male" ? "你" : "妳"))
+      .replace(/{NICKNAME}/g, userName);
   }
 
   function parseEffectDescription(effect: Effect | null, targetRank: number): string | undefined {
@@ -146,7 +138,7 @@ export default function useDataParser() {
   return {
     parseDescriptionText,
     parseTalentAttributes,
-    parseVoiceOverContent,
+    parseStoryContent,
     parseEffectDescription,
   };
 }
