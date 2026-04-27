@@ -10,7 +10,9 @@ definePageMeta({
 
 const { slug } = useRoute().params;
 const { data: weaponData, status, error } = await useFetch(`/api/weapon/${slug}`);
-const { parseDescriptionText, parseEffectDescription } = useDataParser();
+const { parseEffectDescription, parseStoryContent } = useDataParser();
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
 
 useSeoMeta({
   title: `${weaponData.value?.name || "找不到武器"} | ${siteConfig.title}`,
@@ -168,7 +170,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
   <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && weaponData">
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-5">
       <div
-        class="flex justify-center items-center w-full lg:h-90dvh p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
+        class="flex justify-center items-center w-full h-50dvh lg:h-90dvh p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
@@ -308,7 +310,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
       }"
     >
       <div class="flex flex-col gap-5">
-        <p v-html="parseDescriptionText(weaponData.story || '')" class="text-lg"></p>
+        <p
+          v-html="parseStoryContent(weaponData.story, store.name, store.playerGender)"
+          class="text-lg"
+        ></p>
       </div>
     </Dialog>
   </main>
