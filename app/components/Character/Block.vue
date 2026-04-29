@@ -77,7 +77,7 @@ function getElementIcon(character: CharacterData) {
           width="30"
           height="30"
           placeholder
-          class="w-25px h-25px md:w-30px md:h-30px bg-zinc-900/60 backdrop-blur-sm rounded-lg"
+          class="w-25px h-25px md:w-30px md:h-30px bg-zinc-900/60 rounded-lg"
           v-if="data.elementType !== 'ELEMENT_NONE'"
         />
       </div>
