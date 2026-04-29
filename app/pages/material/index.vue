@@ -6,6 +6,8 @@ useSeoMeta({
   title: `素材 | ${siteConfig.title}`,
 });
 
+const loadLimit = ref(50);
+const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const materialSearchKeyword = ref("");
 
 const filter = ref<Record<string, string[]>>({
@@ -37,23 +39,27 @@ const filter = ref<Record<string, string[]>>({
 });
 
 const filteredMaterialList = computed(() => {
-  return materialList.filter((material) => {
-    return (
-      (!filter.value.raritySelected?.length ||
-        filter.value.raritySelected.includes(material.rarity.toString())) &&
-      (!filter.value.characterWeaponSelected?.length ||
-        filter.value.characterWeaponSelected.includes(material.typeText)) &&
-      (!filter.value.localSpecialtySelected?.length ||
-        filter.value.localSpecialtySelected.includes(material.typeText.replace("區域特產", ""))) &&
-      (!filter.value.otherSelected?.length ||
-        filter.value.otherSelected.includes(material.typeText)) &&
-      (!materialSearchKeyword.value ||
-        material.name.CHT.includes(materialSearchKeyword.value.toLowerCase()) ||
-        material.name.EN.toLowerCase()
-          .replace(" ", "")
-          .includes(materialSearchKeyword.value.toLowerCase().replace(" ", "")))
-    );
-  });
+  return materialList
+    .filter((material) => {
+      return (
+        (!filter.value.raritySelected?.length ||
+          filter.value.raritySelected.includes(material.rarity.toString())) &&
+        (!filter.value.characterWeaponSelected?.length ||
+          filter.value.characterWeaponSelected.includes(material.typeText)) &&
+        (!filter.value.localSpecialtySelected?.length ||
+          filter.value.localSpecialtySelected.includes(
+            material.typeText.replace("區域特產", ""),
+          )) &&
+        (!filter.value.otherSelected?.length ||
+          filter.value.otherSelected.includes(material.typeText)) &&
+        (!materialSearchKeyword.value ||
+          material.name.CHT.includes(materialSearchKeyword.value.toLowerCase()) ||
+          material.name.EN.toLowerCase()
+            .replace(" ", "")
+            .includes(materialSearchKeyword.value.toLowerCase().replace(" ", "")))
+      );
+    })
+    .slice(0, loadLimit.value);
 });
 
 const isFiltered = computed(() => {
@@ -71,6 +77,27 @@ const removeAllFilter = () => {
   filter.value.localSpecialtySelected = [];
   filter.value.otherSelected = [];
 };
+
+watch([isFiltered, materialSearchKeyword], () => {
+  if (!isFiltered.value || !materialSearchKeyword.value.length) {
+    loadLimit.value = 50;
+  }
+});
+
+onMounted(() => {
+  if (loadMoreTrigger.value) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (loadLimit.value < materialList.length) {
+            loadLimit.value += 50;
+          }
+        }
+      });
+    });
+    observer.observe(loadMoreTrigger.value);
+  }
+});
 </script>
 
 <template>
@@ -155,6 +182,7 @@ const removeAllFilter = () => {
         :data="material"
       />
     </div>
+    <div ref="loadMoreTrigger"></div>
   </main>
 </template>
 

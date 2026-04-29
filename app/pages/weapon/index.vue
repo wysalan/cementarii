@@ -6,6 +6,8 @@ useSeoMeta({
   title: `武器 | ${siteConfig.title}`,
 });
 
+const loadLimit = ref(50);
+const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const weaponSearchKeyword = ref("");
 
 const filter = ref<Record<string, string[]>>({
@@ -82,7 +84,8 @@ const filteredWeaponList = computed(() => {
           return a.id - b.id;
         }
       }
-    });
+    })
+    .slice(0, loadLimit.value);
 });
 
 const isFiltered = computed(() => {
@@ -98,6 +101,27 @@ const removeAllFilter = () => {
   filter.value.weaponSelected = [];
   filter.value.statSelected = [];
 };
+
+watch([isFiltered, weaponSearchKeyword], () => {
+  if (!isFiltered.value || !weaponSearchKeyword.value.length) {
+    loadLimit.value = 50;
+  }
+});
+
+onMounted(() => {
+  if (loadMoreTrigger.value) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (loadLimit.value < weaponList.length) {
+            loadLimit.value += 50;
+          }
+        }
+      });
+    });
+    observer.observe(loadMoreTrigger.value);
+  }
+});
 </script>
 
 <template>
@@ -167,6 +191,7 @@ const removeAllFilter = () => {
     <div class="flex flex-wrap justify-center gap-5">
       <WeaponBlock v-for="(weapon, index) in filteredWeaponList" :key="index" :data="weapon" />
     </div>
+    <div ref="loadMoreTrigger"></div>
   </main>
 </template>
 

@@ -8,6 +8,8 @@ useSeoMeta({
   title: `角色 | ${siteConfig.title}`,
 });
 
+const loadLimit = ref(100);
+const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const characterSearchKeyword = ref("");
 
 const characterFilter = ref<Record<string, string[]>>({
@@ -72,7 +74,8 @@ const filteredCharacterList = computed(() => {
           characterFilter.value.bodySelected.includes(getBodyText(character.bodyType)))
       );
     })
-    .toReversed();
+    .toReversed()
+    .slice(0, loadLimit.value);
 });
 
 const isFiltered = computed(() => {
@@ -94,6 +97,27 @@ const removeAllFilter = () => {
   characterFilter.value.bodySelected = [];
   characterFilter.value.identitySelected = [];
 };
+
+watch([isFiltered, characterSearchKeyword], () => {
+  if (!isFiltered.value || !characterSearchKeyword.value.length) {
+    loadLimit.value = 100;
+  }
+});
+
+onMounted(() => {
+  if (loadMoreTrigger.value) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (loadLimit.value < characterList.length) {
+            loadLimit.value += 50;
+          }
+        }
+      });
+    });
+    observer.observe(loadMoreTrigger.value);
+  }
+});
 </script>
 
 <template>
@@ -206,6 +230,7 @@ const removeAllFilter = () => {
     <div class="flex flex-wrap justify-center gap-5">
       <CharacterBlock v-for="(char, index) in filteredCharacterList" :key="index" :data="char" />
     </div>
+    <div ref="loadMoreTrigger"></div>
   </main>
 </template>
 
