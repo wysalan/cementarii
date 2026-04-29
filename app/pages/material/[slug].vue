@@ -77,7 +77,7 @@ function getNameBarColor(rarity: number | undefined) {
         </p>
       </div>
       <div
-        class="flex justify-center items-center h-60 md:h-50 relative"
+        class="flex justify-center items-center h-60 md:h-50 relative shadow-md"
         :class="getBgColor(data?.rarity)"
       >
         <NuxtImg
@@ -93,7 +93,7 @@ function getNameBarColor(rarity: number | undefined) {
           <p class="select-none text-yellow font-semibold text-lg" v-for="n in data?.rarity">★</p>
         </div>
       </div>
-      <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black">
+      <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black shadow-md">
         <div class="flex flex-col gap-3">
           <p
             v-html="parseStoryContent(data?.description, store.name, store.playerGender)"
