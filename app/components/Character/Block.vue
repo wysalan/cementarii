@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useListStore } from "@/stores/List";
-const store = useListStore();
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
 
 interface CharacterData {
   listIndex: number;

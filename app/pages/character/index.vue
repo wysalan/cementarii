@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
 import characterList from "@/data/characterList.json";
-import { useListStore } from "@/stores/List";
-const store = useListStore();
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
 
 useSeoMeta({
   title: `角色 | ${siteConfig.title}`,
