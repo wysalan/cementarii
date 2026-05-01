@@ -1,5 +1,10 @@
 export const useUserStore = defineStore("user", {
-  state: () => ({ name: "旅行者", playerGender: "male", defaultTalentLevel: 1 }),
+  state: () => ({
+    name: "旅行者",
+    playerGender: "male",
+    defaultTalentLevel: 1,
+    useCostumeIcon: false,
+  }),
   actions: {
     changeUserName(newName: string) {
       this.name = newName;
@@ -9,6 +14,9 @@ export const useUserStore = defineStore("user", {
     },
     changeDefaultTalentLevel(newLevel: number) {
       this.defaultTalentLevel = newLevel;
+    },
+    changeIconState() {
+      this.useCostumeIcon = !this.useCostumeIcon;
     },
   },
   persist: {
