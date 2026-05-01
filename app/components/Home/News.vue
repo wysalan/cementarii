@@ -65,12 +65,9 @@ const groupedEventList = computed(() => {
   return result.sort((a, b) => Date.parse(b.start!) - Date.parse(a.start!));
 });
 
-const eventFilter = ref("全部");
+const eventFilter = ref("活動");
 
 const filteredEventList = computed(() => {
-  if (eventFilter.value === "全部") {
-    return groupedEventList.value;
-  }
   return groupedEventList.value.filter((event) => event.type === eventFilter.value);
 });
 
@@ -92,12 +89,6 @@ function setEventDetail(eventData: GroupedEventData) {
     <h2 class="text-2xl pb-2">所有活動一覽</h2>
     <div class="flex flex-col gap-5 bg-zinc-200 rounded-md p-5 h-fit">
       <div class="flex flex-row gap-3">
-        <Button
-          label="全部"
-          @click="switchEventType('全部')"
-          :severity="eventFilter === '全部' ? 'contrast' : 'secondary'"
-          class="min-w-fit"
-        />
         <Button
           label="活動"
           @click="switchEventType('活動')"
