@@ -34,8 +34,9 @@ const recoveryTimeResult = computed(() => {
       <div>預計回滿時間：{{ recoveryTimeResult }}</div>
     </div>
     <NuxtLink
-      to="/tool"
-      class="bg-zinc-300 rounded-full w-10 h-10 flex justify-center items-center absolute right-10 top-1/2 hover:ring-3 transition-shadow"
+      to="/tool/resin-calculator"
+      class="bg-zinc-300 rounded-full w-10 h-10 flex justify-center items-center absolute right-10 top-1/2 hover:ring-3 ring-zinc-950 dark:ring-white active:ring-0 transition-shadow"
+      v-tooltip.top="'前往完整版'"
       >▶</NuxtLink
     >
   </div>
