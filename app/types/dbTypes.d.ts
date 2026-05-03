@@ -28,7 +28,11 @@ declare global {
         base: number;
         curve: string;
       };
-      substat: Record<string, string>;
+      substat: {
+        text: string;
+        type: string;
+        base?: number;
+      };
       promotion: Record<string, number>[];
     };
 

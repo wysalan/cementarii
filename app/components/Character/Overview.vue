@@ -87,6 +87,7 @@ const calculatedStats = computed(() => {
     hp: data.stats?.hp.base || 0,
     atk: data.stats?.attack.base || 0,
     def: data.stats?.defense.base || 0,
+    sp: data.stats?.substat.base || 0,
   };
 
   if (data.stats?.promotion) {
@@ -107,7 +108,9 @@ const calculatedStats = computed(() => {
       baseStats.def *
         (characterCurve?.[level]?.[data.stats?.defense.curve as keyof curveItem] || 0) +
       (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.defense || 0),
-    sp: promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.specialized || 0,
+    sp:
+      baseStats.sp +
+      (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.specialized || 0),
   });
 
   return result.value;
@@ -139,7 +142,7 @@ const materialCalculationResult = computed(() => {
 function getSubstatValue(type: string | undefined, substat: number) {
   if (type) {
     if (type === "FIGHT_PROP_ELEMENT_MASTERY") {
-      return substat;
+      return substat.toFixed(0);
     }
     return (substat * 100).toFixed(1) + "%";
   }
