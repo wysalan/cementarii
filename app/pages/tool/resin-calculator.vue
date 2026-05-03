@@ -46,6 +46,7 @@ function setCustomTime(targetTime: string) {
   <main class="container mx-auto pt-5 pb-10">
     <div class="flex flex-col justify-center items-center mx-5 gap-5 text-lg text-black">
       <h2 class="text-2xl font-semibold text-black dark:text-white">樹脂計算器</h2>
+      <Message severity="secondary">一般模式的誤差值為 &plusmn; 16 分鐘</Message>
       <div class="flex flex-col justify-center items-center gap-5">
         <div
           class="flex flex-col justify-center items-center gap-3 bg-zinc-100 p-5 rounded-lg shadow-sm w-full"
@@ -60,7 +61,7 @@ function setCustomTime(targetTime: string) {
             size="large"
             placeholder="在此處輸入樹脂"
             fluid
-            :pt="{ pcInputText: { root: { class: 'text-center!' } } }"
+            :pt="{ pcInputText: { root: { class: 'text-center! dark:bg-backgroundDark!' } } }"
           >
             <template #incrementicon>
               <span class="pi pi-plus" />
@@ -87,7 +88,10 @@ function setCustomTime(targetTime: string) {
               v-model="customTime"
               timeOnly
               fluid
-              :pt="{ pcInputText: { root: { class: 'text-center!' } } }"
+              :pt="{
+                pcInputText: { root: { class: 'text-center! dark:bg-backgroundDark!' } },
+                panel: { class: 'dark:bg-backgroundDark!' },
+              }"
             />
           </div>
         </div>
@@ -95,7 +99,7 @@ function setCustomTime(targetTime: string) {
       <div class="flex flex-col justify-center items-center w-full">
         <p class="text-xl font-semibold opacity-80 mb-5 text-black dark:text-white">計算結果</p>
         <div
-          class="flex flex-col w-full sm:w-50vw"
+          class="flex flex-col w-full md:w-75vw lg:w-50vw"
           v-for="(resin, index) in getFullResinResult(
             currentResin,
             { hour: customTime.getHours(), minute: customTime.getMinutes() },
@@ -109,22 +113,19 @@ function setCustomTime(targetTime: string) {
           >
             <p>{{ resin.resin }}</p>
             <div class="flex flex-row gap-3 justify-center items-center h-5">
-              <Checkbox
-                v-model="resetResin"
-                binary
-                v-tooltip.left="'將樹脂設為 0'"
-                class="hidden! sm:group-hover:inline-block!"
-              />
-              <Button
-                label="將此時間設為起點"
-                severity="secondary"
-                class="hidden! sm:group-hover:inline-block!"
-                @click="
-                  setCustomTime(resin.time);
-                  useCustomTime = true;
-                "
-                :pt="{ root: { class: 'py-0!' } }"
-              />
+              <div class="hidden md:group-hover:flex flex-row items-center gap-2">
+                <label for="resetResin"> 將樹脂設為零 </label>
+                <Checkbox v-model="resetResin" inputId="resetResin" binary />
+                <Button
+                  label="將此時間設為起點"
+                  severity="secondary"
+                  @click="
+                    setCustomTime(resin.time);
+                    useCustomTime = true;
+                  "
+                  :pt="{ root: { class: 'py-0!' } }"
+                />
+              </div>
               <p>{{ resin.prefix }} {{ resin.time }}</p>
             </div>
           </div>
