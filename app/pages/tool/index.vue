@@ -16,7 +16,7 @@ useSeoMeta({
         <div>
           <NuxtImg src="https://assets.wysalan.com/cementarii/item-icon/UI_ItemIcon_211.webp" />
         </div>
-        <p>樹脂計算器</p>
+        <p class="text-black">樹脂計算器</p>
       </NuxtLink>
     </div>
   </main>
