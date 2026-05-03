@@ -60,6 +60,7 @@ function setCustomTime(targetTime: string) {
             size="large"
             placeholder="在此處輸入樹脂"
             fluid
+            :pt="{ pcInputText: { root: { class: 'text-center!' } } }"
           >
             <template #incrementicon>
               <span class="pi pi-plus" />
@@ -78,7 +79,9 @@ function setCustomTime(targetTime: string) {
             <ToggleSwitch v-model="useCustomTime" :pt="{ root: { class: 'scale-110!' } }" />
             <p>自訂時間</p>
           </div>
-          <div class="flex flex-col" v-if="!useCustomTime">現在時間：{{ currentTime }}</div>
+          <div class="flex flex-col" v-if="!useCustomTime" data-allow-mismatch>
+            現在時間：{{ currentTime }}
+          </div>
           <div class="flex flex-col" v-else>
             <DatePicker
               v-model="customTime"
@@ -110,12 +113,12 @@ function setCustomTime(targetTime: string) {
                 v-model="resetResin"
                 binary
                 v-tooltip.left="'將樹脂設為 0'"
-                class="hidden sm:group-hover:inline-block"
+                class="hidden! sm:group-hover:inline-block!"
               />
               <Button
                 label="將此時間設為起點"
                 severity="secondary"
-                class="hidden sm:group-hover:inline-block"
+                class="hidden! sm:group-hover:inline-block!"
                 @click="
                   setCustomTime(resin.time);
                   useCustomTime = true;
