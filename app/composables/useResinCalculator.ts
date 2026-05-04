@@ -3,6 +3,16 @@ export default function useResinCalculator() {
     return `${date.getHours().toString().padStart(2, "0")} : ${date.getMinutes().toString().padStart(2, "0")}`;
   }
 
+  function getTimeDiffPrefix(nowTime: Date, today: Date): string {
+    if (nowTime.getDay() - today.getDay() === 1) {
+      return "明天";
+    } else if (nowTime.getDay() - today.getDay() === 2) {
+      return "後天";
+    } else {
+      return "今天";
+    }
+  }
+
   function getSimpleResinResult(currentResin: number) {
     if (currentResin >= 200) return "已回滿";
 
@@ -45,7 +55,7 @@ export default function useResinCalculator() {
       nowTime.setMinutes(nowTime.getMinutes() + resinRecoveryMinutes);
       currentResin++;
       if (!(currentResin % 10) || currentResin === 200) {
-        const prefix = nowTime > today ? "明天" : "今天";
+        const prefix = getTimeDiffPrefix(nowTime, today);
         result.push({
           resin: currentResin,
           prefix: prefix,
