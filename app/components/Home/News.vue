@@ -31,7 +31,9 @@ interface GroupedEventData {
   type: string | undefined;
 }
 
-const { data } = await useFetch<NewsData>("https://gi.yatta.moe/assets/data/event.json");
+const { data, status } = await useLazyFetch<NewsData>(
+  "https://gi.yatta.moe/assets/data/event.json",
+);
 
 const eventList: EventData[] = Object.values(data.value || {});
 
@@ -108,7 +110,10 @@ function setEventDetail(eventData: GroupedEventData) {
           class="min-w-fit"
         />
       </div>
-      <div v-if="data" class="min-f-fit max-h-90 overflow-y-auto">
+      <div v-if="status === 'pending'" class="max-h-50 overflow-y-auto">
+        <Skeleton width="100%" height="12.5rem"></Skeleton>
+      </div>
+      <div v-else class="max-h-50 overflow-y-auto">
         <div
           v-for="(event, key) in filteredEventList"
           class="p-2 mb-2 bg-zinc-300 rounded-sm dark:text-black"
@@ -123,9 +128,6 @@ function setEventDetail(eventData: GroupedEventData) {
             >{{ event.name }}</span
           >
         </div>
-      </div>
-      <div v-else>
-        <p>載入中</p>
       </div>
     </div>
   </div>
