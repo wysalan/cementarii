@@ -31,7 +31,7 @@ const recoveryTimeResult = computed(() => {
           }"
         />
       </div>
-      <div>預計回滿時間：{{ recoveryTimeResult }}</div>
+      <div data-allow-mismatch>預計回滿時間：{{ recoveryTimeResult }}</div>
     </div>
     <NuxtLink
       to="/tool/resin-calculator"
