@@ -12,7 +12,14 @@ const currentResin = ref(0);
 const useCustomTime = ref(false);
 const resetResin = ref(true);
 
-const currentTime = ref("載入中");
+const currentTime = ref(
+  new Date().toLocaleTimeString("zh-TW", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }),
+);
 const customTime = ref(new Date());
 let timer: ReturnType<typeof setInterval> | null = null;
 
@@ -40,6 +47,14 @@ function setCustomTime(targetTime: string) {
   customTime.value.setMinutes(parseInt(minute));
   customTime.value = new Date(customTime.value);
 }
+
+watch(useCustomTime, () => {
+  if (useCustomTime) {
+    const nowTime = new Date();
+    customTime.value.setHours(nowTime.getHours());
+    customTime.value.setMinutes(nowTime.getMinutes());
+  }
+});
 </script>
 
 <template>
@@ -113,7 +128,7 @@ function setCustomTime(targetTime: string) {
           >
             <p>{{ resin.resin }}</p>
             <div class="flex flex-row gap-3 justify-center items-center h-5">
-              <div class="hidden md:group-hover:flex flex-row items-center gap-2">
+              <div class="hidden md:group-hover:flex flex-row items-center gap-2" v-if="index">
                 <label for="resetResin"> 將樹脂設為零 </label>
                 <Checkbox v-model="resetResin" inputId="resetResin" binary />
                 <Button
