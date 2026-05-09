@@ -9,6 +9,7 @@
       </div>
       <div class="flex flex-col gap-5">
         <HomeQuickResinCal />
+        <HomeRedeemCode />
       </div>
     </div>
   </main>
