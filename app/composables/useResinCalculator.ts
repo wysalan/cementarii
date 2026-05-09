@@ -4,9 +4,9 @@ export default function useResinCalculator() {
   }
 
   function getTimeDiffPrefix(nowTime: Date, today: Date): string {
-    if (nowTime.getDay() - today.getDay() === 1) {
+    if (nowTime.getDate() - today.getDate() === 1) {
       return "明天";
-    } else if (nowTime.getDay() - today.getDay() === 2) {
+    } else if (nowTime.getDate() - today.getDate() === 2) {
       return "後天";
     } else {
       return "今天";
