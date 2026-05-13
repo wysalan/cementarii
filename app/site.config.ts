@@ -4,6 +4,10 @@ export const siteConfig = {
   language: "zh-TW",
 };
 
+export const storageConfig = {
+  baseUrl: "https://assets.wysalan.com/cementarii",
+};
+
 export const siteLinks = [
   { name: "首頁", path: "index" },
   { name: "角色", path: "character" },
