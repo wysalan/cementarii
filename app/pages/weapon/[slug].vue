@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { siteConfig } from "@/site.config";
+import { siteConfig, storageConfig } from "@/site.config";
 import useDataParser from "@/composables/useDataParser";
 import curve from "@/data/curve.json";
 
@@ -174,11 +174,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
-          :src="
-            'https://assets.wysalan.com/cementarii/weapon-icon/' +
-            weaponData.images?.Gacha_EquipIcon +
-            '.webp'
-          "
+          :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.Gacha_EquipIcon}.webp`"
           :alt="weaponData.name"
           class="h-full rotate-20"
         />
@@ -193,13 +189,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
           </div>
           <div class="flex flex-row items-center gap-3">
             <NuxtImg
-              :src="
-                'https://assets.wysalan.com/cementarii/weapon-icon/' +
-                weaponData.images?.EquipIcon +
-                '.webp'
-              "
+              :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.EquipIcon}.webp`"
               :alt="'武器圖示：' + weaponData.name"
-              class="w-10 h-10 rounded-sm"
+              class="w-10 h-10 rounded-md"
               :class="getBgColor(weaponData.rarity)"
             />
             <h2 class="text-2xl font-semibold">{{ weaponData.name }}</h2>

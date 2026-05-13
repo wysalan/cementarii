@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { siteConfig } from "@/site.config";
+import { siteConfig, storageConfig } from "@/site.config";
 import Overview from "@/components/Character/Overview.vue";
 import Talent from "@/components/Character/Talent.vue";
 import Constellation from "@/components/Character/Constellation.vue";
@@ -45,7 +45,7 @@ const extractingImgColor = ref(true);
 onMounted(() => {
   const img = new Image();
   img.crossOrigin = "anonymous";
-  img.src = `https://assets.wysalan.com/cementarii/avatar-img/${characterData.value?.images?.AvatarImg}.webp`;
+  img.src = `${storageConfig.baseUrl}/avatar-img/${characterData.value?.images?.AvatarImg}.webp`;
   img.onload = () => {
     imageColors.value.color = getColorSync(img);
     imageColors.value.palette = getPaletteSync(img, { colorCount: 5 });
@@ -89,11 +89,7 @@ const outfitImgs = computed(() => {
   <main v-if="status === 'success' && characterData">
     <div
       class="fixed -z-1 inset-0 bg-fixed"
-      :style="
-        'background: url(https://assets.wysalan.com/cementarii/avatar-img/' +
-        outfitImgs?.AvatarImg +
-        '.webp) center center no-repeat'
-      "
+      :style="`background: url(${storageConfig.baseUrl}/avatar-img/${outfitImgs?.AvatarImg}.webp) center center no-repeat`"
     ></div>
     <div class="container mx-auto">
       <KeepAlive>

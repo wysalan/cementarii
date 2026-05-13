@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storageConfig } from "@/site.config";
 import curve from "@/data/curve.json";
 import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
@@ -159,9 +160,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
     >
       <div class="flex flex-row justify-start items-center gap-3">
         <NuxtImg
-          :src="
-            'https://assets.wysalan.com/cementarii/avatar-icon/' + outfitImgs?.AvatarIcon + '.webp'
-          "
+          :src="`${storageConfig.baseUrl}/avatar-icon/${outfitImgs?.AvatarIcon}.webp`"
           class="w-15 h-15 rounded-sm"
           :class="
             data.rarity === 4
@@ -262,9 +261,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <p class="font-semibold text-zinc-950 dark:text-white opacity-80">元素</p>
           <p class="flex flex-row justify-center items-center gap-1">
             <NuxtImg
-              :src="
-                'https://assets.wysalan.com/cementarii/elements/' + getElementIcon(data) + '.png'
-              "
+              :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
               :alt="data.element_text + '元素圖示'"
               width="30"
               height="30"

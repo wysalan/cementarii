@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storageConfig } from '@/site.config';
+
 interface WeaponData {
   id: number;
   name: string;
@@ -55,7 +57,7 @@ function getRarityRingColor(rarity: number) {
   >
     <div class="relative">
       <NuxtImg
-        :src="'https://assets.wysalan.com/cementarii/weapon-icon/' + data.icon + '.webp'"
+        :src="`${storageConfig.baseUrl}/weapon-icon/${data.icon}.webp`"
         :alt="data.name"
         width="96"
         height="96"

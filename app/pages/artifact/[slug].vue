@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { siteConfig } from "@/site.config";
+import { siteConfig, storageConfig } from "@/site.config";
 import useDataParser from "@/composables/useDataParser";
 
 definePageMeta({
@@ -71,11 +71,7 @@ function getArtifactIcon(partName: string | undefined) {
         </div>
         <div class="flex justify-center items-center relative" :class="getBgColor(maxRarity)">
           <NuxtImg
-            :src="
-              'https://assets.wysalan.com/cementarii/relic-icon/' +
-              artifactData.imgaes?.[currentPart as keyof typeof artifactData.imgaes] +
-              '.webp'
-            "
+            :src="`${storageConfig.baseUrl}/relic-icon/${artifactData.imgaes?.[currentPart as keyof typeof artifactData.imgaes]}.webp`"
             width="128"
             height="128"
             class="h-50 w-50"
@@ -103,11 +99,7 @@ function getArtifactIcon(partName: string | undefined) {
                 class="min-w-fit"
               >
                 <NuxtImg
-                  :src="
-                    'https://assets.wysalan.com/cementarii/ui-icon/' +
-                    getArtifactIcon(part) +
-                    '.png'
-                  "
+                  :src="`${storageConfig.baseUrl}/ui-icon/${getArtifactIcon(part)}.png`"
                   width="24"
                   height="24"
                 />

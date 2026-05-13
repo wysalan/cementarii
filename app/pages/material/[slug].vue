@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { siteConfig } from "@/site.config";
+import { siteConfig, storageConfig } from "@/site.config";
 import materialList from "@/data/materialList.json";
 
 interface MaterialData {
@@ -81,7 +81,7 @@ function getNameBarColor(rarity: number | undefined) {
         :class="getBgColor(data?.rarity)"
       >
         <NuxtImg
-          :src="'https://assets.wysalan.com/cementarii/item-icon/' + data?.icon + '.webp'"
+          :src="`${storageConfig.baseUrl}/item-icon/${data?.icon}.webp`"
           class="w-45 h-45 max-md:py-5 object-contain"
         />
         <div class="absolute top-3 left-5 flex">

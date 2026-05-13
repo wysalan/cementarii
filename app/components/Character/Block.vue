@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storageConfig } from "@/site.config";
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
@@ -56,10 +57,8 @@ function getElementIcon(character: CharacterData) {
   >
     <div class="relative">
       <NuxtImg
-        :src="
-          'https://assets.wysalan.com/cementarii/avatar-icon/' + getAvatarFileName(data) + '.webp'
-        "
-        :alt="data.name"
+        :src="`${storageConfig.baseUrl}/avatar-icon/${getAvatarFileName(data)}.webp`"
+        :alt="data.name['CHT']"
         width="96"
         height="96"
         class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
@@ -72,7 +71,7 @@ function getElementIcon(character: CharacterData) {
       />
       <div class="absolute top-1.25 left-1.25">
         <NuxtImg
-          :src="'https://assets.wysalan.com/cementarii/elements/' + getElementIcon(data) + '.png'"
+          :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
           :alt="data.elementText + '元素圖示'"
           width="30"
           height="30"
