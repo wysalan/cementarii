@@ -2896,5 +2896,51 @@
     "slug": "linnea",
     "avatar": "UI_AvatarIcon_Linnea",
     "costumeAvatar": ""
+  },
+  {
+    "listIndex": 126,
+    "id": 10000132,
+    "name": {
+      "CHT": "布倫妮",
+      "EN": "Prune"
+    },
+    "title": "稚夢歸心",
+    "rarity": 4,
+    "region": "蒙德",
+    "gender": "女",
+    "bodyType": "BODY_LOLI",
+    "birthday": "11/20",
+    "elementType": "ELEMENT_ANEMO",
+    "elementText": "風",
+    "weaponType": "WEAPON_POLE",
+    "weaponText": "長柄武器",
+    "substatType": "FIGHT_PROP_ATTACK_PERCENT",
+    "substatText": "攻擊力",
+    "slug": "prune",
+    "avatar": "UI_AvatarIcon_Prune",
+    "costumeAvatar": ""
+  },
+  {
+    "listIndex": 127,
+    "id": 10000131,
+    "name": {
+      "CHT": "尼可",
+      "EN": "Nicole"
+    },
+    "title": "喧寂於心",
+    "rarity": 5,
+    "region": "蒙德",
+    "gender": "女",
+    "bodyType": "BODY_LADY",
+    "birthday": "9/29",
+    "elementType": "ELEMENT_PYRO",
+    "elementText": "火",
+    "weaponType": "WEAPON_CATALYST",
+    "weaponText": "法器",
+    "substatType": "FIGHT_PROP_ATTACK_PERCENT",
+    "substatText": "攻擊力",
+    "slug": "nicole",
+    "avatar": "UI_AvatarIcon_Nicole",
+    "costumeAvatar": ""
   }
 ]
