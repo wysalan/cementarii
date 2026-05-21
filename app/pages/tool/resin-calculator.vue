@@ -41,13 +41,13 @@ onUnmounted(() => {
 /**
  * 設定變數 customTime 的時間
  * @param { boolean } autoSet 自動套用目前時間
- * @param { string } targetTime 手動指定時間（格式為 hh:mm）
+ * @param { string } [targetTime] 手動指定時間（格式為 hh:mm）
  */
 function setCustomTime(autoSet: boolean, targetTime?: string): void {
   if (autoSet && useCustomTime.value) {
-      const nowTime = new Date();
-      customTime.value.setHours(nowTime.getHours());
-      customTime.value.setMinutes(nowTime.getMinutes());
+    const nowTime = new Date();
+    customTime.value.setHours(nowTime.getHours());
+    customTime.value.setMinutes(nowTime.getMinutes());
   } else if (!autoSet && targetTime) {
     const [hour = "0", minute = "0"] = targetTime.split(" : ");
     if (resetResin.value) {
@@ -95,7 +95,11 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
           <p class="text-xl font-semibold opacity-80">設定起始時間</p>
           <div class="flex flex-row justify-center items-center gap-3">
             <p>目前時間</p>
-            <ToggleSwitch v-model="useCustomTime" :pt="{ root: { class: 'scale-110!' } }" @click="setCustomTime(true)" />
+            <ToggleSwitch
+              v-model="useCustomTime"
+              :pt="{ root: { class: 'scale-110!' } }"
+              @click="setCustomTime(true)"
+            />
             <p>自訂時間</p>
           </div>
           <div class="flex flex-col" v-if="!useCustomTime" data-allow-mismatch>
