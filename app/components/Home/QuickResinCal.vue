@@ -17,7 +17,7 @@ const recoveryTimeResult = computed(() => {
 <template>
   <div class="relative">
     <h2 class="text-2xl pb-2">快速體力試算</h2>
-    <div class="flex flex-col gap-2 bg-zinc-200 rounded-md p-5 dark:text-black">
+    <div class="flex flex-col gap-2 bg-zinc-200 dark:bg-zinc-700 rounded-md p-5 dark:text-white">
       <div class="text-lg">
         <span>目前樹脂：</span>
         <InputNumber
@@ -35,7 +35,7 @@ const recoveryTimeResult = computed(() => {
     </div>
     <NuxtLink
       to="/tool/resin-calculator"
-      class="bg-zinc-300 rounded-full w-10 h-10 flex justify-center items-center absolute right-10 top-1/2 hover:ring-3 ring-zinc-950 dark:ring-white active:ring-0 transition-shadow"
+      class="bg-zinc-300 dark:bg-zinc-950 rounded-full w-10 h-10 flex justify-center items-center absolute right-10 top-1/2 hover:ring-3 ring-zinc-950 dark:ring-white active:ring-0 transition-shadow"
       v-tooltip.top="'前往完整版'"
       >▶</NuxtLink
     >

@@ -67,7 +67,7 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
       <Message severity="secondary">一般模式的誤差值為 &plusmn; 16 分鐘</Message>
       <div class="flex flex-col justify-center items-center gap-5">
         <div
-          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 p-5 rounded-lg shadow-sm w-full"
+          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 dark:bg-zinc-700 dark:text-white p-5 rounded-lg shadow-sm w-full"
         >
           <p class="text-xl font-semibold opacity-80">輸入目前的樹脂</p>
           <InputNumber
@@ -90,14 +90,18 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
           </InputNumber>
         </div>
         <div
-          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 p-5 rounded-lg shadow-sm w-full"
+          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 dark:bg-zinc-700 dark:text-white p-5 rounded-lg shadow-sm w-full"
         >
           <p class="text-xl font-semibold opacity-80">設定起始時間</p>
           <div class="flex flex-row justify-center items-center gap-3">
             <p>目前時間</p>
             <ToggleSwitch
               v-model="useCustomTime"
-              :pt="{ root: { class: 'scale-110!' } }"
+              :pt="{
+                root: { class: 'scale-110!' },
+                slider: { class: 'dark:bg-zinc-600!' },
+                handle: { class: 'dark:bg-zinc-100!' },
+              }"
               @click="setCustomTime(true)"
             />
             <p>自訂時間</p>
@@ -130,7 +134,7 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
           :key="index"
         >
           <div
-            class="flex flex-row justify-between items-center px-5 py-3 bg-zinc-200 rounded-xl shadow-md w-full group"
+            class="flex flex-row justify-between items-center px-5 py-3 bg-zinc-200 dark:bg-zinc-700 dark:text-white rounded-xl shadow-md w-full group"
             :class="{ 'mb-5': index >= 1 }"
           >
             <p>{{ resin.resin }}</p>
