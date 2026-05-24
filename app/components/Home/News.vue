@@ -1,16 +1,4 @@
 <script setup lang="ts">
-interface NewsData {
-  [key: string]: {
-    id: number;
-    name: Record<string, string>;
-    nameFull: Record<string, string>;
-    description: Record<string, string>;
-    banner: Record<string, string>;
-    startAt: string;
-    endAt: string;
-  };
-}
-
 interface EventData {
   id: number;
   name: Record<string, string>;
@@ -31,16 +19,37 @@ interface GroupedEventData {
   type: string | undefined;
 }
 
-const { data, status } = await useLazyFetch<NewsData>(
-  "https://gi.yatta.moe/assets/data/event.json",
+const { data, status } = await useAsyncData(
+  "events",
+  () => $fetch<EventData[]>("https://gi.yatta.moe/assets/data/event.json"),
+  {
+    transform: (res) => {
+      const eventList: EventData[] = Object.values(res || {});
+      if (eventList) {
+        const result: GroupedEventData[] = [];
+        eventList.map((event) => {
+          result.push({
+            id: event.id,
+            name: event.nameFull["CHT"],
+            description: event.description["CHT"],
+            banner: event.banner["CHT"],
+            start: event.startAt,
+            end: event.endAt,
+            type: getEventType(event.nameFull["CHT"]),
+          });
+        });
+        return result;
+      }
+    },
+  },
 );
-
-const eventList: EventData[] = Object.values(data.value || {});
 
 function getEventType(name: string | undefined) {
   if (name) {
-    if (name.includes("活動") || name.includes("任務")) {
+    if (name.includes("活動")) {
       return "活動";
+    } else if (name.includes("任務")) {
+      return "任務";
     } else if (name.includes("祈願")) {
       return "祈願";
     } else {
@@ -49,37 +58,13 @@ function getEventType(name: string | undefined) {
   }
 }
 
-const groupedEventList = computed(() => {
-  const result: GroupedEventData[] = [];
-  if (eventList) {
-    eventList.map((news: EventData) => {
-      result.push({
-        id: news.id,
-        name: news.nameFull["CHT"],
-        description: news.description["CHT"],
-        banner: news.banner["CHT"],
-        start: news.startAt,
-        end: news.endAt,
-        type: getEventType(news.nameFull["CHT"]),
-      });
-    });
-  }
-  return result.sort((a, b) => Date.parse(b.start!) - Date.parse(a.start!));
-});
-
 const eventFilter = ref("活動");
+const dialogVisible = ref(false);
+const eventDetail = ref();
 
 const filteredEventList = computed(() => {
-  return groupedEventList.value.filter((event) => event.type === eventFilter.value);
+  return data.value?.filter((event) => event.type === eventFilter.value);
 });
-
-function switchEventType(type: string) {
-  eventFilter.value = type;
-}
-
-const dialogVisible = ref(false);
-
-const eventDetail = ref();
 
 function setEventDetail(eventData: GroupedEventData) {
   eventDetail.value = eventData;
@@ -88,24 +73,30 @@ function setEventDetail(eventData: GroupedEventData) {
 
 <template>
   <div>
-    <h2 class="text-2xl pb-2">所有活動一覽</h2>
-    <div class="flex flex-col gap-5 bg-zinc-200 rounded-md p-5 h-fit">
+    <h2 class="text-2xl pb-2">活動一覽</h2>
+    <div class="flex flex-col gap-5 bg-zinc-200 dark:bg-zinc-700 rounded-md p-5 h-fit">
       <div class="flex flex-row gap-3">
         <Button
           label="活動"
-          @click="switchEventType('活動')"
+          @click="eventFilter = '活動'"
           :severity="eventFilter === '活動' ? 'contrast' : 'secondary'"
           class="min-w-fit"
         />
         <Button
+          label="任務"
+          @click="eventFilter = '任務'"
+          :severity="eventFilter === '任務' ? 'contrast' : 'secondary'"
+          class="min-w-fit"
+        />
+        <Button
           label="祈願"
-          @click="switchEventType('祈願')"
+          @click="eventFilter = '祈願'"
           :severity="eventFilter === '祈願' ? 'contrast' : 'secondary'"
           class="min-w-fit"
         />
         <Button
           label="其他"
-          @click="switchEventType('其他')"
+          @click="eventFilter = '其他'"
           :severity="eventFilter === '其他' ? 'contrast' : 'secondary'"
           class="min-w-fit"
         />
@@ -116,7 +107,7 @@ function setEventDetail(eventData: GroupedEventData) {
       <div v-else class="max-h-50 overflow-y-auto">
         <div
           v-for="(event, key) in filteredEventList"
-          class="p-2 mb-2 bg-zinc-300 rounded-sm dark:text-black"
+          class="p-2 mb-2 bg-zinc-300 dark:bg-zinc-950 rounded-sm dark:text-white"
           :key="key"
         >
           <span
