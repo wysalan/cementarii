@@ -25,6 +25,8 @@ const characterFilter = ref<Record<string, string[]>>({
   identitySelected: [],
   body: ["女孩", "少女", "成女", "少年", "成男"],
   bodySelected: [],
+  birthMonth: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+  birthMonthSelected: [],
 });
 
 function getBodyText(bodyType: string) {
@@ -71,7 +73,11 @@ const filteredCharacterList = computed(() => {
             .replace(" ", "")
             .includes(characterSearchKeyword.value.toLowerCase().replace(" ", ""))) &&
         (!characterFilter.value.bodySelected?.length ||
-          characterFilter.value.bodySelected.includes(getBodyText(character.bodyType)))
+          characterFilter.value.bodySelected.includes(getBodyText(character.bodyType))) &&
+        (!characterFilter.value.birthMonthSelected?.length ||
+          characterFilter.value.birthMonthSelected.includes(
+            character.birthday.split("/")[0] || "0",
+          ))
       );
     })
     .toReversed()
@@ -85,7 +91,8 @@ const isFiltered = computed(() => {
     characterFilter.value.weaponSelected?.length ||
     characterFilter.value.regionSelected?.length ||
     characterFilter.value.bodySelected?.length ||
-    characterFilter.value.identitySelected?.length
+    characterFilter.value.identitySelected?.length ||
+    characterFilter.value.birthMonthSelected?.length
   );
 });
 
@@ -96,6 +103,7 @@ const removeAllFilter = () => {
   characterFilter.value.regionSelected = [];
   characterFilter.value.bodySelected = [];
   characterFilter.value.identitySelected = [];
+  characterFilter.value.birthMonthSelected = [];
 };
 
 watch([isFiltered, characterSearchKeyword], () => {
@@ -200,6 +208,17 @@ onMounted(() => {
                   <SelectButton
                     v-model="characterFilter.identitySelected"
                     :options="characterFilter.identity"
+                    class="flex flex-wrap justify-center items-center"
+                    multiple
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col justify-center items-center gap-2">
+                <p class="text-lg font-semibold">生日月份</p>
+                <div class="flex flex-col md:flex-row gap-2 w-fit">
+                  <SelectButton
+                    v-model="characterFilter.birthMonthSelected"
+                    :options="characterFilter.birthMonth"
                     class="flex flex-wrap justify-center items-center"
                     multiple
                   />
