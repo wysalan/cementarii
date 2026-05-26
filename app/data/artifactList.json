@@ -411,5 +411,19 @@
     "name": "風起之日",
     "rarityList": [4, 5],
     "icon": "UI_RelicIcon_15044_4"
+  },
+  {
+    "id": 15045,
+    "slug": "celestial-gift",
+    "name": "天之美賜",
+    "rarityList": [4, 5],
+    "icon": "UI_RelicIcon_15045_4"
+  },
+  {
+    "id": 15046,
+    "slug": "disenchantment-in-deep-shadow",
+    "name": "影中沉凝的幻滅",
+    "rarityList": [4, 5],
+    "icon": "UI_RelicIcon_15046_4"
   }
 ]
