@@ -1474,6 +1474,17 @@
     "icon": "UI_EquipIcon_Pole_Gewalt"
   },
   {
+    "id": 14523,
+    "name": "塵光七諭",
+    "slug": "angelos-heptades",
+    "rarity": 5,
+    "weaponType": "WEAPON_CATALYST",
+    "weaponText": "法器",
+    "mainStatType": "FIGHT_PROP_ATTACK_PERCENT",
+    "mainStatText": "攻擊力",
+    "icon": "UI_EquipIcon_Catalyst_FairyGarden"
+  },
+  {
     "id": 14522,
     "name": "帷間夜曲",
     "slug": "nocturnes-curtain-call",
