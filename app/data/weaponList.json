@@ -1034,6 +1034,17 @@
     "icon": "UI_EquipIcon_Claymore_Aniki"
   },
   {
+    "id": 13517,
+    "name": "災悔",
+    "slug": "disaster-and-remorse",
+    "rarity": 5,
+    "weaponType": "WEAPON_POLE",
+    "weaponText": "長柄武器",
+    "mainStatType": "FIGHT_PROP_CRITICAL",
+    "mainStatText": "暴擊率",
+    "icon": "UI_EquipIcon_Pole_Carbine"
+  },
+  {
     "id": 13516,
     "name": "血染荒城",
     "slug": "bloodsoaked-ruins",

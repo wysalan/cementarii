@@ -2942,5 +2942,28 @@
     "slug": "nicole",
     "avatar": "UI_AvatarIcon_Nicole",
     "costumeAvatar": ""
+  },
+  {
+    "listIndex": 128,
+    "id": 10000129,
+    "name": {
+      "CHT": "洛恩",
+      "EN": "Lohen"
+    },
+    "title": "恣銳鋒鏃 ",
+    "rarity": 5,
+    "region": "蒙德",
+    "gender": "男",
+    "bodyType": "BODY_BOY",
+    "birthday": "4/3",
+    "elementType": "ELEMENT_CRYO",
+    "elementText": "冰",
+    "weaponType": "WEAPON_POLE",
+    "weaponText": "長柄武器",
+    "substatType": "FIGHT_PROP_CRITICAL_HURT",
+    "substatText": "暴擊傷害",
+    "slug": "lohen",
+    "avatar": "UI_AvatarIcon_Lohen",
+    "costumeAvatar": ""
   }
 ]
