@@ -41,7 +41,7 @@
 
 /* 語意色彩：淺色＝羊皮紙、深色＝深藍板岩 */
 :root {
-  --ui-bg: var(--color-parchment-50);
+  --ui-bg: #fafafa;
   --ui-bg-muted: var(--color-parchment-100);
   --ui-bg-elevated: var(--color-parchment-200);
   --ui-bg-accented: var(--color-parchment-300);

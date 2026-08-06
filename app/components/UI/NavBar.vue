@@ -28,44 +28,46 @@ function saveSettings() {
 </script>
 
 <template>
-  <header
-    class="sticky top-0 z-50 border-b border-gold-500/40 bg-navy-900/90 backdrop-blur-md shadow-md"
-  >
-    <div class="container mx-auto flex items-center gap-2 px-4 sm:px-6 h-14">
-      <NuxtLink to="/" class="hidden md:block shrink-0 mr-2">
+  <header class="container mx-auto px-4 sm:px-6 py-3 sticky top-0 z-50">
+    <div class="flex items-center justify-center gap-4">
+      <NuxtLink to="/" class="hidden md:block shrink-0">
         <img
           src="@/assets/favicon.svg"
-          width="36"
-          height="36"
+          width="40"
+          height="40"
           class="block"
           alt="Cementarii's Logo"
         />
       </NuxtLink>
-      <nav class="flex-1 min-w-0 overflow-x-auto">
-        <ul class="flex items-center gap-1 md:justify-center">
-          <li v-for="link in siteLinks" :key="link.path">
-            <NuxtLink
-              :to="{ name: link.path }"
-              class="nav-link block px-3 py-1.5 rounded-full text-sm lg:text-base whitespace-nowrap transition-colors"
-            >
-              {{ link.name }}
-            </NuxtLink>
-          </li>
-        </ul>
-      </nav>
-      <div class="flex items-center gap-1 shrink-0">
-        <UColorModeButton
-          variant="ghost"
-          class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
-          aria-label="切換深淺色模式"
-        />
-        <UButton
-          icon="i-lucide-settings"
-          variant="ghost"
-          class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
-          aria-label="設定"
-          @click="dialogVisible = true"
-        />
+      <div
+        class="flex items-center gap-1 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/40 shadow-md px-3 h-11 max-w-[92vw] md:max-w-full"
+      >
+        <nav class="shrink-0">
+          <ul class="flex items-center gap-1">
+            <li v-for="link in siteLinks" :key="link.path">
+              <NuxtLink
+                :to="{ name: link.path }"
+                class="nav-link block px-3 py-1.5 rounded-full text-sm lg:text-base whitespace-nowrap transition-colors"
+              >
+                {{ link.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+        <div class="flex items-center gap-1 shrink-0">
+          <UColorModeButton
+            variant="ghost"
+            class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
+            aria-label="切換深淺色模式"
+          />
+          <UButton
+            icon="i-lucide-settings"
+            variant="ghost"
+            class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
+            aria-label="設定"
+            @click="dialogVisible = true"
+          />
+        </div>
       </div>
     </div>
   </header>
