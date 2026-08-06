@@ -11,14 +11,14 @@
 - 實用工具
   - 樹脂計算器
 
-*（部分角色、武器和聖遺物資料仍未匯入資料庫）*
+_（部分角色、武器和聖遺物資料仍未匯入資料庫）_
 
 ### 待實現
 
 #### 網站功能
 
 - [ ] 首頁：每日開啟秘境列表
-- [ ] 角色：更新版面設計
+- [x] 角色：更新版面設計
 - [ ] 樹脂計算器：背景提醒
 - [ ] 樹脂計算器：HoYoLab 連動功能（取得目前樹脂）
 - [ ] 角色傷害計算工具
@@ -28,18 +28,18 @@
 
 #### 網站技術
 
-- [ ] 更換 UI 框架（TBD）
+- [x] 更換 UI 框架（Nuxt UI）
 
 ## 使用技術
 
 ### 前端
 
-+ [Vue 3](https://vuejs.org/) / [Nuxt 4](https://nuxt.com/)
-+ [UnoCSS](https://unocss.dev/)
-+ [PrimeVue](https://primevue.org/)
+- [Vue 3](https://vuejs.org/) / [Nuxt 4](https://nuxt.com/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Nuxt UI](https://ui.nuxt.com/)
 
 ### 後端
 
-+ [Nitro](https://nitro.build/)
-+ [Prisma ORM](https://www.prisma.io/)
-+ [Neon Database (PostgreSQL)](https://neon.com/)
+- [Nitro](https://nitro.build/)
+- [Prisma ORM](https://www.prisma.io/)
+- [Neon Database (PostgreSQL)](https://neon.com/)
