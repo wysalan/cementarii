@@ -15,6 +15,26 @@ const genderOptions = [
 const levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const reloadAfterSetting = ref(false);
 
+// 連結區捲動提示箭頭
+const navScroll = useTemplateRef("navScroll");
+const canScrollLeft = ref(false);
+const canScrollRight = ref(false);
+
+function updateScrollHint() {
+  const el = navScroll.value;
+  if (!el) return;
+  canScrollLeft.value = el.scrollLeft > 2;
+  canScrollRight.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+}
+
+onMounted(() => {
+  updateScrollHint();
+  window.addEventListener("resize", updateScrollHint);
+});
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScrollHint);
+});
+
 function saveSettings() {
   if (!newUserName.value) return;
   store.changeUserName(newUserName.value);
@@ -40,20 +60,43 @@ function saveSettings() {
         />
       </NuxtLink>
       <div
-        class="flex items-center gap-1 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/40 shadow-md px-3 h-11 max-w-[92vw] md:max-w-full"
+        class="flex items-center gap-1 md:gap-3 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/40 shadow-md px-3 md:px-6 h-11 max-w-[92vw] md:max-w-full"
       >
-        <nav class="shrink-0">
-          <ul class="flex items-center gap-1">
-            <li v-for="link in siteLinks" :key="link.path">
-              <NuxtLink
-                :to="{ name: link.path }"
-                class="nav-link block px-3 py-1.5 rounded-full text-sm lg:text-base whitespace-nowrap transition-colors"
-              >
-                {{ link.name }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </nav>
+        <div class="relative min-w-0">
+          <nav
+            ref="navScroll"
+            class="nav-scroll overflow-x-auto"
+            :class="{ 'fade-left': canScrollLeft, 'fade-right': canScrollRight }"
+            @scroll.passive="updateScrollHint"
+          >
+            <ul class="flex items-center gap-1 md:gap-4 w-max">
+              <li v-for="link in siteLinks" :key="link.path">
+                <NuxtLink
+                  :to="{ name: link.path }"
+                  class="nav-link block px-3 py-1.5 rounded-full text-sm lg:text-base whitespace-nowrap transition-colors"
+                >
+                  {{ link.name }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </nav>
+          <Transition name="arrow-fade">
+            <div
+              v-if="canScrollLeft"
+              class="pointer-events-none absolute inset-y-0 left-0 flex items-center"
+            >
+              <UIcon name="i-lucide-chevron-left" class="size-4 text-gold-300" />
+            </div>
+          </Transition>
+          <Transition name="arrow-fade">
+            <div
+              v-if="canScrollRight"
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center"
+            >
+              <UIcon name="i-lucide-chevron-right" class="size-4 text-gold-300" />
+            </div>
+          </Transition>
+        </div>
         <div class="flex items-center gap-1 shrink-0">
           <UColorModeButton
             variant="ghost"
@@ -104,6 +147,36 @@ function saveSettings() {
 </template>
 
 <style scoped>
+.nav-scroll {
+  scrollbar-width: none;
+}
+.nav-scroll::-webkit-scrollbar {
+  display: none;
+}
+/* 可捲動側：文字向外側淡出，露出膠囊底色（深淺色皆適用） */
+.nav-scroll.fade-left {
+  mask-image: linear-gradient(to right, transparent 0, black 2.5rem);
+}
+.nav-scroll.fade-right {
+  mask-image: linear-gradient(to left, transparent 0, black 2.5rem);
+}
+.nav-scroll.fade-left.fade-right {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 2.5rem,
+    black calc(100% - 2.5rem),
+    transparent 100%
+  );
+}
+.arrow-fade-enter-active,
+.arrow-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.arrow-fade-enter-from,
+.arrow-fade-leave-to {
+  opacity: 0;
+}
 .nav-link {
   color: color-mix(in srgb, var(--color-parchment-200) 85%, transparent);
 }
