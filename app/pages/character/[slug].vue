@@ -19,19 +19,15 @@ useSeoMeta({
 });
 
 // Tabs
-const tabs: Record<string, Component> = {
-  總覽: Overview,
-  天賦: Talent,
-  命之座: Constellation,
-  故事: Story,
-  語音: VoiceOver,
+const tabs: Record<string, { component: Component; icon: string }> = {
+  總覽: { component: Overview, icon: "i-lucide-user-round" },
+  天賦: { component: Talent, icon: "i-lucide-sparkles" },
+  命之座: { component: Constellation, icon: "i-lucide-star" },
+  故事: { component: Story, icon: "i-lucide-book-open" },
+  語音: { component: VoiceOver, icon: "i-lucide-mic" },
 };
 
 const currentTab = ref("總覽");
-
-function tabSwitcher(tabName: string) {
-  currentTab.value = tabName;
-}
 
 // Extract Image Color
 import { getColorSync, getPaletteSync } from "colorthief";
@@ -50,9 +46,6 @@ onMounted(() => {
     imageColors.value.color = getColorSync(img);
     imageColors.value.palette = getPaletteSync(img, { colorCount: 5 });
     extractingImgColor.value = false;
-    console.log("Image color extracted.");
-    console.log("color: " + imageColors.value.color);
-    console.log("palette: " + imageColors.value.palette);
   };
 });
 
@@ -87,14 +80,20 @@ const outfitImgs = computed(() => {
 <template>
   <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
   <main v-if="status === 'success' && characterData">
+    <!-- 全螢幕立繪背景 -->
     <div
-      class="fixed -z-1 inset-0 bg-fixed"
-      :style="`background: url(${storageConfig.baseUrl}/avatar-img/${outfitImgs?.AvatarImg}.webp) center center no-repeat`"
+      class="fixed -z-1 inset-0 bg-fixed bg-cover bg-center"
+      :style="`background-image: url(${storageConfig.baseUrl}/avatar-img/${outfitImgs?.AvatarImg}.webp)`"
     ></div>
+    <!-- 漸層壓暗，確保面板可讀性 -->
+    <div
+      class="fixed -z-1 inset-0 bg-linear-to-t from-black/50 via-transparent to-black/30 pointer-events-none"
+    ></div>
+
     <div class="container mx-auto">
       <KeepAlive>
         <component
-          :is="tabs[currentTab]"
+          :is="tabs[currentTab]?.component"
           :data="characterData"
           v-model:outfitList="outfitList"
           v-model:selectedOutfit="selectedOutfit"
@@ -102,49 +101,72 @@ const outfitImgs = computed(() => {
         />
       </KeepAlive>
     </div>
-    <nav class="fixed bottom-5 left-1/2 -translate-x-1/2 flex justify-center items-center">
-      <Toolbar class="rounded-xl bg-white/80 backdrop-blur-sm">
-        <template #center>
-          <div
-            class="flex flex-row md:justify-center items-center gap-5 w-80vw md:w-full overflow-x-auto"
-          >
-            <Button
-              label="總覽"
-              @click="tabSwitcher('總覽')"
-              :severity="currentTab === '總覽' ? 'contrast' : 'secondary'"
-              class="min-w-fit"
-            />
-            <Button
-              label="天賦"
-              @click="tabSwitcher('天賦')"
-              :severity="currentTab === '天賦' ? 'contrast' : 'secondary'"
-              class="min-w-fit"
-            />
-            <Button
-              label="命之座"
-              @click="tabSwitcher('命之座')"
-              :severity="currentTab === '命之座' ? 'contrast' : 'secondary'"
-              class="min-w-fit"
-            />
-            <Button
-              label="故事"
-              @click="tabSwitcher('故事')"
-              :severity="currentTab === '故事' ? 'contrast' : 'secondary'"
-              class="min-w-fit"
-            />
-            <Button
-              label="語音"
-              @click="tabSwitcher('語音')"
-              :severity="currentTab === '語音' ? 'contrast' : 'secondary'"
-              class="min-w-fit"
-            />
-          </div>
-        </template>
-      </Toolbar>
+
+    <!-- 桌面版：右側菱形導覽軌（模仿遊戲內角色介面） -->
+    <nav
+      class="hidden xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
+      aria-label="角色頁面分頁"
+    >
+      <button
+        v-for="(tab, name) in tabs"
+        :key="name"
+        type="button"
+        class="group flex items-center justify-end gap-3 cursor-pointer"
+        :aria-current="currentTab === name ? 'page' : undefined"
+        @click="currentTab = name"
+      >
+        <span
+          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity"
+          :class="
+            currentTab === name
+              ? 'text-gold-300 opacity-100'
+              : 'text-white/80 opacity-0 group-hover:opacity-100'
+          "
+        >
+          {{ name }}
+        </span>
+        <span
+          class="flex items-center justify-center w-10 h-10 rotate-45 rounded-xs border-2 backdrop-blur-sm transition-colors"
+          :class="
+            currentTab === name
+              ? 'bg-gold-400 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
+              : 'bg-navy-900/70 border-white/40 group-hover:border-gold-300'
+          "
+        >
+          <UIcon
+            :name="tab.icon"
+            class="-rotate-45 size-5"
+            :class="currentTab === name ? 'text-navy-900' : 'text-white/90'"
+          />
+        </span>
+      </button>
+    </nav>
+
+    <!-- 手機／平板版：底部膠囊導覽列 -->
+    <nav
+      class="xl:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-20 max-w-[94vw]"
+      aria-label="角色頁面分頁"
+    >
+      <div
+        class="flex items-center gap-1 px-2 py-1.5 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/50 shadow-lg overflow-x-auto"
+      >
+        <button
+          v-for="(tab, name) in tabs"
+          :key="name"
+          type="button"
+          class="flex flex-col items-center min-w-fit px-3.5 py-1 rounded-full transition-colors cursor-pointer"
+          :class="currentTab === name ? 'bg-gold-400 text-navy-900' : 'text-white/85'"
+          :aria-current="currentTab === name ? 'page' : undefined"
+          @click="currentTab = name"
+        >
+          <UIcon :name="tab.icon" class="size-5" />
+          <span class="text-xs font-semibold whitespace-nowrap">{{ name }}</span>
+        </button>
+      </div>
     </nav>
   </main>
   <main v-else>
-    <div class="container mx-auto pt-5 pb-10">
+    <div class="container mx-auto pt-5 pb-10 px-4">
       <p>目前無此角色資料，或是連接資料庫時發生錯誤</p>
       <p v-if="error">
         錯誤訊息：{{ error?.statusMessage }} (Status code: {{ error?.statusCode }})

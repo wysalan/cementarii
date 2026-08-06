@@ -10,24 +10,30 @@ const store = useUserStore();
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-85vh justify-start items-center mt-5 overflow-y-auto">
-    <div class="flex flex-col gap-5 w-full mb-20 md:mb-15">
-      <Panel
-        :header="story.title"
-        toggleable
-        collapsed
-        class="rounded-xl"
+  <div class="flex flex-col w-full h-[85vh] justify-start items-center mt-5 overflow-y-auto px-4">
+    <div class="flex flex-col gap-5 w-full mb-24 md:mb-20">
+      <UCollapsible
         v-for="(story, key) in data.profile?.story"
-        :pt="{
-          root: { class: 'w-full bg-white/80! backdrop-blur-sm py-2 shadow-md' },
-          header: { class: 'text-xl dark:text-zinc-700!' },
-        }"
+        :key="key"
+        class="bg-parchment-100/90 backdrop-blur-sm rounded-lg shadow-md border border-gold-600/30 w-full"
       >
-        <p
-          class="text-lg dark:text-zinc-700!"
-          v-html="parseStoryContent(story.text, store.name, store.playerGender)"
-        ></p>
-      </Panel>
+        <button
+          type="button"
+          class="flex w-full items-center justify-between px-5 py-4 cursor-pointer group"
+        >
+          <span class="gi-diamond text-xl font-semibold text-navy-800">{{ story.title }}</span>
+          <UIcon
+            name="i-lucide-chevron-down"
+            class="size-5 text-navy-600 transition-transform group-data-[state=open]:rotate-180"
+          />
+        </button>
+        <template #content>
+          <p
+            class="text-lg text-navy-700 px-5 pb-5"
+            v-html="parseStoryContent(story.text, store.name, store.playerGender)"
+          ></p>
+        </template>
+      </UCollapsible>
     </div>
   </div>
 </template>

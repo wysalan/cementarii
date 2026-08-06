@@ -77,46 +77,42 @@ const handleInsideClick = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-85vh justify-start items-center overflow-y-auto mt-5">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-20 md:mb-15">
-      <Card
+  <div class="flex flex-col w-full h-[85vh] justify-start items-center overflow-y-auto mt-5 px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-24 md:mb-20">
+      <section
         v-for="(constellation, key) in data.constellation?.list"
         :key="key"
-        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg shadow-md' } }"
-        class="w-full"
+        class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100 w-full"
       >
-        <template #title>
-          <h2 class="text-white text-2xl py-2">{{ key + 1 }}. {{ constellation.name }}</h2>
-        </template>
-        <template #content>
-          <div class="flex text-white">
-            <p
-              v-html="parseDescriptionText(constellation.description, skills, dictionary)"
-              @click="handleInsideClick"
-              class="text-lg"
-            ></p>
-          </div>
-        </template>
-      </Card>
-    </div>
-    <Dialog
-      v-model:visible="dialogVisible"
-      modal
-      :header="popupData.title"
-      class="w-75vw lg:w-50vw text-white!"
-      :pt="{
-        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
-        header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
-      }"
-    >
-      <div class="flex flex-col gap-5">
-        <h2 class="text-2xl font-semibold">{{ popupData.name }}</h2>
+        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">
+          {{ key + 1 }}. {{ constellation.name }}
+        </h2>
         <p
-          v-html="parseDescriptionText(popupData.description, skills, dictionary)"
+          v-html="parseDescriptionText(constellation.description, skills, dictionary)"
+          @click="handleInsideClick"
           class="text-lg"
         ></p>
-      </div>
-    </Dialog>
+      </section>
+    </div>
+    <UModal
+      v-model:open="dialogVisible"
+      :title="popupData.title"
+      :ui="{
+        content:
+          'max-w-[75vw] lg:max-w-[50vw] bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
+        title: 'text-gold-300',
+      }"
+    >
+      <template #body>
+        <div class="flex flex-col gap-5">
+          <h2 class="text-2xl font-semibold text-white">{{ popupData.name }}</h2>
+          <p
+            v-html="parseDescriptionText(popupData.description, skills, dictionary)"
+            class="text-lg"
+          ></p>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 

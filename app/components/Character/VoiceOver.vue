@@ -10,24 +10,19 @@ const store = useUserStore();
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-85vh justify-start items-center mt-5 overflow-y-auto">
-    <div class="flex flex-col gap-5 mb-20 md:mb-15">
-      <Card
+  <div class="flex flex-col w-full h-[85vh] justify-start items-center mt-5 overflow-y-auto px-4">
+    <div class="flex flex-col gap-5 w-full mb-24 md:mb-20">
+      <section
         v-for="(voiceover, key) in data.profile?.voiceover"
         :key="key"
-        :pt="{ root: { class: 'bg-white/80! backdrop-blur-sm shadow-md' } }"
-        class="w-full"
+        class="bg-parchment-100/90 backdrop-blur-sm rounded-lg shadow-md border border-gold-600/30 p-5 w-full"
       >
-        <template #title>
-          <h2 class="text-2xl py-2 dark:text-zinc-700!">{{ voiceover.title }}</h2>
-        </template>
-        <template #content>
-          <p
-            class="text-lg dark:text-zinc-700!"
-            v-html="parseStoryContent(voiceover.text, store.name, store.playerGender)"
-          ></p>
-        </template>
-      </Card>
+        <h2 class="gi-diamond text-xl font-semibold text-navy-800 pb-3">{{ voiceover.title }}</h2>
+        <p
+          class="text-lg text-navy-700"
+          v-html="parseStoryContent(voiceover.text, store.name, store.playerGender)"
+        ></p>
+      </section>
     </div>
   </div>
 </template>

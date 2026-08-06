@@ -106,107 +106,97 @@ const needMaterials = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-85vh justify-start items-center overflow-y-auto mt-5">
+  <div class="flex flex-col w-full h-[85vh] justify-start items-center overflow-y-auto mt-5 px-4">
     <div class="flex flex-col gap-5 w-full">
-      <Card
+      <section
         v-for="(talent, index) in talentsList"
         :key="index"
-        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg shadow-md px-3' } }"
+        class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100"
       >
-        <template #title>
-          <h2 class="text-white text-2xl py-2">{{ talent.name }}</h2>
-        </template>
-        <template #content>
-          <div class="grid grid-cols-1 xl:grid-cols-2 gap-10 items-center text-white">
-            <p
-              v-html="parseDescriptionText(talent.description, skills, dictionary)"
-              class="lg:text-lg"
-              @click="handleInsideClick"
-            ></p>
-            <div class="flex flex-col gap-3">
+        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">{{ talent.name }}</h2>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-10 items-center">
+          <p
+            v-html="parseDescriptionText(talent.description, skills, dictionary)"
+            class="lg:text-lg"
+            @click="handleInsideClick"
+          ></p>
+          <div class="flex flex-col gap-3">
+            <div
+              class="flex flex-row items-center gap-5"
+              v-if="!talentsNameList[index]?.includes('Special')"
+            >
               <div
-                class="flex flex-row items-center gap-5"
-                v-if="!talentsNameList[index]?.includes('Special')"
+                class="bg-gold-400 rounded-sm p-2 w-20 text-center select-none font-semibold text-navy-900"
               >
-                <div
-                  class="bg-zinc-300 rounded-sm p-2 w-20 text-center select-none font-semibold text-black"
-                >
-                  Lv. <span class="font-bold">{{ talentsLevel[index] }}</span>
-                </div>
-                <Slider v-model="talentsLevel[index]" :min="1" :max="15" :step="1" class="w-full" />
+                Lv. <span class="font-bold">{{ talentsLevel[index] }}</span>
               </div>
+              <USlider v-model="talentsLevel[index]" :min="1" :max="15" :step="1" class="w-full" />
+            </div>
+            <div
+              class="flex flex-row justify-between text-sm lg:text-lg gap-10"
+              v-for="prop in parseTalentAttributes(talent, talentsLevel[index] || 1)"
+            >
+              <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
+              <p class="text-white">{{ prop.value }}</p>
+            </div>
+            <div
+              class="flex flex-col w-full gap-3"
+              v-if="!talentsNameList[index]?.includes('Special')"
+            >
+              <USeparator />
+              <p class="text-lg font-semibold text-white">所需素材</p>
               <div
-                class="flex flex-row justify-between text-sm lg:text-lg gap-10"
-                v-for="prop in parseTalentAttributes(talent, talentsLevel[index] || 1)"
+                class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
+                v-if="needMaterials(talentsLevel[index])?.toString().length"
               >
-                <p class="font-semibold text-white opacity-80">{{ prop.text }}</p>
-                <p>{{ prop.value }}</p>
+                <UniversalItem
+                  v-for="(item, key) in needMaterials(talentsLevel[index])"
+                  :data="item"
+                  :key="key"
+                />
               </div>
-              <div
-                class="flex flex-col w-full gap-3"
-                v-if="!talentsNameList[index]?.includes('Special')"
-              >
-                <Divider align="center" :pt="{ root: { class: 'm-0' } }" />
-                <p class="text-lg font-semibold">所需素材</p>
-                <div
-                  class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
-                  v-if="needMaterials(talentsLevel[index])?.toString().length"
-                >
-                  <UniversalItem
-                    v-for="(item, key) in needMaterials(talentsLevel[index])"
-                    :data="item"
-                    :key="key"
-                  />
-                </div>
-                <div v-else>
-                  <p>無</p>
-                </div>
+              <div v-else>
+                <p>無</p>
               </div>
             </div>
           </div>
-        </template>
-      </Card>
+        </div>
+      </section>
     </div>
     <!-- 被動技能 -->
-    <div class="flex flex-col gap-5 w-full mt-5 mb-20 md:mb-15">
-      <Card
+    <div class="flex flex-col gap-5 w-full mt-5 mb-24 md:mb-20">
+      <section
         v-for="(passive, key) in data.passives"
         :key="key"
-        :pt="{ root: { class: 'bg-zinc-600/70! backdrop-blur-lg' } }"
-        class="min-w-full"
+        class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100 min-w-full"
       >
-        <template #title>
-          <h2 class="text-white! text-2xl py-2">{{ passive.name }}</h2>
-        </template>
-        <template #content>
-          <div class="flex gap-10 items-center text-white!">
-            <p
-              v-html="parseDescriptionText(passive.description, skills, dictionary)"
-              class="text-lg"
-              @click="handleInsideClick"
-            ></p>
-          </div>
-        </template>
-      </Card>
+        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">{{ passive.name }}</h2>
+        <p
+          v-html="parseDescriptionText(passive.description, skills, dictionary)"
+          class="text-lg"
+          @click="handleInsideClick"
+        ></p>
+      </section>
     </div>
-    <Dialog
-      v-model:visible="dialogVisible"
-      modal
-      :header="popupData.title"
-      class="w-75vw lg:w-50vw text-white!"
-      :pt="{
-        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
-        header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
+    <UModal
+      v-model:open="dialogVisible"
+      :title="popupData.title"
+      :ui="{
+        content:
+          'max-w-[75vw] lg:max-w-[50vw] bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
+        title: 'text-gold-300',
       }"
     >
-      <div class="flex flex-col gap-5">
-        <h2 class="text-2xl font-semibold">{{ popupData.name }}</h2>
-        <p
-          v-html="parseDescriptionText(popupData.description, skills, dictionary)"
-          class="text-lg"
-        ></p>
-      </div>
-    </Dialog>
+      <template #body>
+        <div class="flex flex-col gap-5">
+          <h2 class="text-2xl font-semibold text-white">{{ popupData.name }}</h2>
+          <p
+            v-html="parseDescriptionText(popupData.description, skills, dictionary)"
+            class="text-lg"
+          ></p>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 
