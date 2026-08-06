@@ -78,11 +78,11 @@ const calculatedStats = computed(() => {
 
 // Weapon Refinement Rank
 const refinementRankList = ref([
-  { title: "精煉 1 階", rank: 1 },
-  { title: "精煉 2 階", rank: 2 },
-  { title: "精煉 3 階", rank: 3 },
-  { title: "精煉 4 階", rank: 4 },
-  { title: "精煉 5 階", rank: 5 },
+  { label: "精煉 1 階", value: 1 },
+  { label: "精煉 2 階", value: 2 },
+  { label: "精煉 3 階", value: 3 },
+  { label: "精煉 4 階", value: 4 },
+  { label: "精煉 5 階", value: 5 },
 ]);
 const selectedRefinementRank = ref(1);
 
@@ -117,15 +117,15 @@ function getBgColor(rarity: number | null) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "bg-linear-to-b from-#6a6d74 to-#868586";
+        return "bg-linear-to-b from-[#6a6d74] to-[#868586]";
       case 2:
-        return "bg-linear-to-b from-#4b6c67 to-#519072";
+        return "bg-linear-to-b from-[#4b6c67] to-[#519072]";
       case 3:
-        return "bg-linear-to-b from-#567496 to-#5392b8";
+        return "bg-linear-to-b from-[#567496] to-[#5392b8]";
       case 4:
-        return "bg-linear-to-b from-#5e5789 to-#9c75b7";
+        return "bg-linear-to-b from-[#5e5789] to-[#9c75b7]";
       case 5:
-        return "bg-linear-to-b from-#945c2c to-#b27330";
+        return "bg-linear-to-b from-[#945c2c] to-[#b27330]";
     }
   }
 }
@@ -168,9 +168,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
 
 <template>
   <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && weaponData">
-    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-5">
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
       <div
-        class="flex justify-center items-center w-full h-50dvh lg:h-90dvh p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
+        class="flex justify-center items-center w-full h-[50dvh] lg:h-[90dvh] p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
@@ -180,12 +180,14 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div
-        class="flex flex-col gap-5 w-full lg:h-90dvh rounded-xl p-6 lg:col-span-4 xl:col-span-3 bg-zinc-200 overflow-y-auto dark:text-black"
+        class="flex flex-col gap-5 w-full lg:h-[90dvh] rounded-xl p-6 lg:col-span-4 xl:col-span-3 gi-panel overflow-y-auto"
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
             <p class="font-semibold text-lg">{{ weaponData.weapon_text }}</p>
-            <Tag severity="contrast" class="select-none">Ver. {{ weaponData.version }}</Tag>
+            <UBadge color="primary" variant="soft" class="select-none">
+              Ver. {{ weaponData.version }}
+            </UBadge>
           </div>
           <div class="flex flex-row items-center gap-3">
             <NuxtImg
@@ -194,7 +196,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
               class="w-10 h-10 rounded-md"
               :class="getBgColor(weaponData.rarity)"
             />
-            <h2 class="text-2xl font-semibold">{{ weaponData.name }}</h2>
+            <h2 class="text-2xl font-semibold text-highlighted">{{ weaponData.name }}</h2>
           </div>
         </div>
         <div class="flex flex-col gap-3">
@@ -214,10 +216,12 @@ function getSubstatValue(type: string | undefined, substat: number) {
           </div>
         </div>
         <div class="flex flex-row items-center gap-5">
-          <div class="bg-zinc-300 rounded-sm p-2 w-25 text-center select-none font-semibold">
+          <div
+            class="bg-gold-400 text-navy-900 rounded-sm p-2 w-25 text-center select-none font-semibold"
+          >
             Lv. <span class="font-bold">{{ actualLevel }}</span>
           </div>
-          <Slider
+          <USlider
             v-model="levelIndex"
             :min="0"
             :max="levelTicks.length - 1"
@@ -227,23 +231,22 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
         <div class="flex flex-col justify-start items-center gap-3">
           <div class="flex flex-row justify-between items-center w-full">
-            <h2 class="text-xl font-semibold">
+            <h2 class="gi-diamond text-xl font-semibold text-highlighted flex items-center gap-1">
               所需素材
-              <i
-                class="pi pi-question-circle"
-                v-tooltip.top="{
-                  value:
-                    materialCalculationMethod === '單一'
-                      ? `將武器從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
-                      : `將武器從 1 級升至 ${actualLevel} 級所需要的素材`,
-                  pt: { text: 'text-center' },
-                }"
-              ></i>
+              <UTooltip
+                :text="
+                  materialCalculationMethod === '單一'
+                    ? `將武器從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
+                    : `將武器從 1 級升至 ${actualLevel} 級所需要的素材`
+                "
+              >
+                <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
+              </UTooltip>
             </h2>
-            <Select
+            <USelect
               v-model="materialCalculationMethod"
-              :options="materialCalculationOption"
-              placeholder="選擇計算方式"
+              :items="materialCalculationOption"
+              aria-label="選擇計算方式"
             />
           </div>
           <div
@@ -262,13 +265,13 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
         <div class="flex flex-col gap-3">
           <div class="flex flex-row justify-between items-center w-full">
-            <h3 class="text-xl font-semibold">{{ weaponData.effect?.text.name }}</h3>
-            <Select
+            <h3 class="gi-diamond text-xl font-semibold text-highlighted">
+              {{ weaponData.effect?.text.name }}
+            </h3>
+            <USelect
               v-model="selectedRefinementRank"
-              :options="refinementRankList"
-              optionLabel="title"
-              optionValue="rank"
-              placeholder="選擇精煉等階"
+              :items="refinementRankList"
+              aria-label="選擇精煉等階"
               class="w-fit"
             />
           </div>
@@ -281,33 +284,33 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <p class="opacity-90">{{ weaponData.description }}</p>
         </div>
         <div>
-          <Button
+          <UButton
             label="故事"
-            icon="pi pi-exclamation-circle"
-            fluid
+            icon="i-lucide-book-open"
+            color="primary"
+            variant="solid"
+            block
             @click="dialogVisible = !dialogVisible"
           />
         </div>
       </div>
     </div>
-    <Dialog
-      v-model:visible="dialogVisible"
-      modal
-      header="故事"
-      class="w-90vw lg:max-w-fit text-white!"
-      :pt="{
-        root: { class: 'bg-zinc-600/70! backdrop-blur-lg' },
-        header: { class: 'border-b-2 opacity-80 mb-5 py-2' },
-        pcCloseButton: { root: { class: 'text-white! hover:bg-zinc-400!' } },
+    <UModal
+      v-model:open="dialogVisible"
+      title="故事"
+      :ui="{
+        content:
+          'max-w-[90vw] lg:max-w-3xl bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
+        title: 'text-gold-300',
       }"
     >
-      <div class="flex flex-col gap-5">
+      <template #body>
         <p
           v-html="parseStoryContent(weaponData.story, store.name, store.playerGender)"
           class="lg:text-lg"
         ></p>
-      </div>
-    </Dialog>
+      </template>
+    </UModal>
   </main>
   <main v-else>
     <div class="container mx-auto pt-5 pb-10">

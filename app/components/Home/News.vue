@@ -73,82 +73,61 @@ function setEventDetail(eventData: GroupedEventData) {
 
 <template>
   <div>
-    <h2 class="text-2xl pb-2">活動一覽</h2>
-    <div class="flex flex-col gap-5 bg-zinc-200 dark:bg-zinc-700 rounded-md p-5 h-fit">
-      <div class="flex flex-row gap-3">
-        <Button
-          label="活動"
-          @click="eventFilter = '活動'"
-          :severity="eventFilter === '活動' ? 'contrast' : 'secondary'"
-          class="min-w-fit"
-        />
-        <Button
-          label="任務"
-          @click="eventFilter = '任務'"
-          :severity="eventFilter === '任務' ? 'contrast' : 'secondary'"
-          class="min-w-fit"
-        />
-        <Button
-          label="祈願"
-          @click="eventFilter = '祈願'"
-          :severity="eventFilter === '祈願' ? 'contrast' : 'secondary'"
-          class="min-w-fit"
-        />
-        <Button
-          label="其他"
-          @click="eventFilter = '其他'"
-          :severity="eventFilter === '其他' ? 'contrast' : 'secondary'"
-          class="min-w-fit"
+    <h2 class="gi-diamond text-2xl pb-2 text-highlighted">活動一覽</h2>
+    <div class="flex flex-col gap-5 gi-panel p-5 h-fit">
+      <div class="flex flex-row flex-wrap gap-2">
+        <UButton
+          v-for="type in ['活動', '任務', '祈願', '其他']"
+          :key="type"
+          :label="type"
+          :color="eventFilter === type ? 'primary' : 'neutral'"
+          :variant="eventFilter === type ? 'solid' : 'soft'"
+          class="min-w-fit rounded-full"
+          @click="eventFilter = type"
         />
       </div>
       <div v-if="status === 'pending'" class="max-h-50 overflow-y-auto">
-        <Skeleton width="100%" height="12.5rem"></Skeleton>
+        <USkeleton class="w-full h-50" />
       </div>
       <div v-else class="max-h-50 overflow-y-auto">
-        <div
+        <button
           v-for="(event, key) in filteredEventList"
-          class="p-2 mb-2 bg-zinc-300 dark:bg-zinc-950 rounded-sm dark:text-white"
+          type="button"
+          class="block w-full text-left p-2 mb-2 bg-parchment-100 dark:bg-navy-950 rounded-sm cursor-pointer hover:ring-1 ring-gold-500 transition-shadow"
           :key="key"
+          @click="
+            dialogVisible = true;
+            setEventDetail(event);
+          "
         >
-          <span
-            class="cursor-pointer"
-            @click="
-              dialogVisible = true;
-              setEventDetail(event);
-            "
-            >{{ event.name }}</span
-          >
-        </div>
+          {{ event.name }}
+        </button>
       </div>
     </div>
   </div>
 
-  <Dialog
-    v-model:visible="dialogVisible"
-    modal
-    :header="eventDetail?.name"
-    :pt="{
-      root: { class: 'bg-white/90! dark:bg-zinc-700/80! backdrop-blur-md' },
-      header: { class: 'text-zinc-700! dark:text-white!' },
-    }"
-    class="w-95vw lg:w-50vw"
+  <UModal
+    v-model:open="dialogVisible"
+    :title="eventDetail?.name"
+    :ui="{ content: 'max-w-[95vw] lg:max-w-[50vw]' }"
   >
-    <div class="flex flex-col gap-5">
-      <NuxtImg :src="eventDetail?.banner" class="w-full rounded-sm" />
-      <div
-        class="event-content flex flex-col gap-1 text-zinc-700! dark:text-white!"
-        v-html="eventDetail?.description"
-      ></div>
-    </div>
-  </Dialog>
+    <template #body>
+      <div class="flex flex-col gap-5">
+        <NuxtImg :src="eventDetail?.banner" class="w-full rounded-sm" />
+        <div class="event-content flex flex-col gap-1" v-html="eventDetail?.description"></div>
+      </div>
+    </template>
+  </UModal>
 </template>
 
 <style scoped>
 .event-content :deep(table) {
-  @apply min-w-full border-2 border-zinc-600 text-center;
-  tbody tr,
-  tbody td {
-    @apply border-2 border-zinc-600;
-  }
+  min-width: 100%;
+  border: 2px solid var(--ui-border-accented);
+  text-align: center;
+}
+.event-content :deep(table tbody tr),
+.event-content :deep(table tbody td) {
+  border: 2px solid var(--ui-border-accented);
 }
 </style>

@@ -129,124 +129,54 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="container mx-auto pt-5 pb-10">
-    <div class="flex flex-col items-center pb-5">
-      <Panel toggleable collapsed class="mx-3 w-75vw md:w-full rounded-xl">
-        <template #header>
-          <div class="flex flex-row items-center gap-2">
-            <p class="font-semibold">篩選</p>
-            <Button
-              label="清除篩選條件"
-              rounded
-              class="h-7"
-              v-if="isFiltered"
-              @click="removeAllFilter"
-            />
-          </div>
-        </template>
-        <div class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">星級</p>
-            <div class="flex flex-row gap-2">
-              <SelectButton
-                v-model="characterFilter.raritySelected"
-                :options="characterFilter.rarity"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">元素</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="characterFilter.elementSelected"
-                :options="characterFilter.element"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">武器</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="characterFilter.weaponSelected"
-                :options="characterFilter.weapon"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">地區</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="characterFilter.regionSelected"
-                :options="characterFilter.region"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <Panel header="進階篩選" toggleable collapsed class="mx-3 rounded-xl">
-            <div class="flex flex-col gap-5">
-              <div class="flex flex-col justify-center items-center gap-2">
-                <p class="text-lg font-semibold">體型</p>
-                <div class="flex flex-col md:flex-row gap-2 w-fit">
-                  <SelectButton
-                    v-model="characterFilter.bodySelected"
-                    :options="characterFilter.body"
-                    class="flex flex-wrap justify-center items-center"
-                    multiple
-                  />
-                </div>
-              </div>
-              <div class="flex flex-col justify-center items-center gap-2">
-                <p class="text-lg font-semibold">特殊身分</p>
-                <div class="flex flex-col md:flex-row gap-2 w-fit">
-                  <SelectButton
-                    v-model="characterFilter.identitySelected"
-                    :options="characterFilter.identity"
-                    class="flex flex-wrap justify-center items-center"
-                    multiple
-                  />
-                </div>
-              </div>
-              <div class="flex flex-col justify-center items-center gap-2">
-                <p class="text-lg font-semibold">生日月份</p>
-                <div class="flex flex-col md:flex-row gap-2 w-fit">
-                  <SelectButton
-                    v-model="characterFilter.birthMonthSelected"
-                    :options="characterFilter.birthMonth"
-                    class="flex flex-wrap justify-center items-center"
-                    multiple
-                  />
-                </div>
-              </div>
-            </div>
-          </Panel>
-          <Panel header="其他設定" toggleable collapsed class="mx-3 rounded-xl">
-            <div class="flex flex-col md:flex-row justify-center items-center gap-2">
-              <p class="text-center">將大頭照切換為衣裝版本</p>
-              <ToggleSwitch v-model="store.useCostumeIcon" />
-            </div>
-          </Panel>
+  <main class="container mx-auto pt-5 pb-10 px-4">
+    <div class="flex flex-col items-center pb-5 gap-5">
+      <UIFilterPanel :is-filtered="!!isFiltered" @clear="removeAllFilter" class="max-w-3xl">
+        <UIFilterChips
+          label="星級"
+          :options="characterFilter.rarity!"
+          v-model="characterFilter.raritySelected"
+        />
+        <UIFilterChips
+          label="元素"
+          :options="characterFilter.element!"
+          v-model="characterFilter.elementSelected"
+        />
+        <UIFilterChips
+          label="武器"
+          :options="characterFilter.weapon!"
+          v-model="characterFilter.weaponSelected"
+        />
+        <UIFilterChips
+          label="地區"
+          :options="characterFilter.region!"
+          v-model="characterFilter.regionSelected"
+        />
+        <USeparator label="進階篩選" />
+        <UIFilterChips
+          label="體型"
+          :options="characterFilter.body!"
+          v-model="characterFilter.bodySelected"
+        />
+        <UIFilterChips
+          label="特殊身分"
+          :options="characterFilter.identity!"
+          v-model="characterFilter.identitySelected"
+        />
+        <UIFilterChips
+          label="生日月份"
+          :options="characterFilter.birthMonth!"
+          v-model="characterFilter.birthMonthSelected"
+        />
+        <USeparator label="其他設定" />
+        <div class="flex flex-col md:flex-row justify-center items-center gap-2">
+          <p class="text-center">將大頭照切換為衣裝版本</p>
+          <USwitch v-model="store.useCostumeIcon" />
         </div>
-      </Panel>
-      <div class="flex justify-center items-center pt-5">
-        <IconField>
-          <InputIcon class="pi pi-search" />
-          <InputText v-model="characterSearchKeyword" placeholder="搜尋角色" />
-          <InputIcon
-            class="pi pi-times"
-            @click="characterSearchKeyword = ''"
-            v-if="characterSearchKeyword"
-          />
-        </IconField>
-      </div>
+      </UIFilterPanel>
+      <UISearchBar v-model="characterSearchKeyword" placeholder="搜尋角色" />
     </div>
-    <div class="flex flex-wrap justify-center gap-5">
+    <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
       <CharacterBlock v-for="(char, index) in filteredCharacterList" :key="index" :data="char" />
     </div>
     <div ref="loadMoreTrigger"></div>
