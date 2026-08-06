@@ -60,7 +60,7 @@ function saveSettings() {
         />
       </NuxtLink>
       <div
-        class="flex items-center gap-1 md:gap-3 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/40 shadow-md px-3 md:px-6 h-11 max-w-[92vw] md:max-w-full"
+        class="flex items-center gap-1 md:gap-3 rounded-full bg-parchment-100/90 dark:bg-navy-900/85 backdrop-blur-md border border-gold-600/40 dark:border-gold-500/40 shadow-md px-3 md:px-6 h-11 max-w-[92vw] md:max-w-full"
       >
         <div class="relative min-w-0">
           <nav
@@ -85,7 +85,7 @@ function saveSettings() {
               v-if="canScrollLeft"
               class="pointer-events-none absolute inset-y-0 left-0 flex items-center"
             >
-              <UIcon name="i-lucide-chevron-left" class="size-4 text-gold-300" />
+              <UIcon name="i-lucide-chevron-left" class="size-4 text-gold-700 dark:text-gold-300" />
             </div>
           </Transition>
           <Transition name="arrow-fade">
@@ -93,20 +93,23 @@ function saveSettings() {
               v-if="canScrollRight"
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center"
             >
-              <UIcon name="i-lucide-chevron-right" class="size-4 text-gold-300" />
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 text-gold-700 dark:text-gold-300"
+              />
             </div>
           </Transition>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <UColorModeButton
             variant="ghost"
-            class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
+            class="text-navy-700 dark:text-parchment-200 hover:text-gold-700 dark:hover:text-gold-300 hover:bg-gold-400/15 dark:hover:bg-gold-400/10"
             aria-label="切換深淺色模式"
           />
           <UButton
             icon="i-lucide-settings"
             variant="ghost"
-            class="text-parchment-200 hover:text-gold-300 hover:bg-gold-400/10"
+            class="text-navy-700 dark:text-parchment-200 hover:text-gold-700 dark:hover:text-gold-300 hover:bg-gold-400/15 dark:hover:bg-gold-400/10"
             aria-label="設定"
             @click="dialogVisible = true"
           />
@@ -178,12 +181,22 @@ function saveSettings() {
   opacity: 0;
 }
 .nav-link {
-  color: color-mix(in srgb, var(--color-parchment-200) 85%, transparent);
+  color: color-mix(in srgb, var(--color-navy-700) 90%, transparent);
 }
 .nav-link:hover {
-  color: var(--color-gold-300);
+  color: var(--color-gold-700);
 }
 .nav-link.router-link-active {
+  color: var(--color-gold-700);
+  background-color: color-mix(in srgb, var(--color-gold-500) 20%, transparent);
+}
+.dark .nav-link {
+  color: color-mix(in srgb, var(--color-parchment-200) 85%, transparent);
+}
+.dark .nav-link:hover {
+  color: var(--color-gold-300);
+}
+.dark .nav-link.router-link-active {
   color: var(--color-gold-300);
   background-color: color-mix(in srgb, var(--color-gold-400) 15%, transparent);
 }

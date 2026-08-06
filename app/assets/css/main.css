@@ -43,7 +43,7 @@
 :root {
   --ui-bg: #fafafa;
   --ui-bg-muted: var(--color-parchment-100);
-  --ui-bg-elevated: var(--color-parchment-200);
+  --ui-bg-elevated: #f5f1eb;
   --ui-bg-accented: var(--color-parchment-300);
   --ui-border: #d9cdb2;
   --ui-border-muted: #e3dac4;

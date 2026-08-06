@@ -28,7 +28,7 @@ const { data, status } = await useAsyncData(
       </div>
       <div v-else class="flex flex-col gap-2 max-h-50 overflow-y-auto">
         <div
-          class="flex bg-parchment-100 dark:bg-navy-950 rounded-md p-3 hover:ring-1 ring-inset ring-gold-500 transition-shadow"
+          class="flex bg-parchment-200 dark:bg-navy-950 rounded-md p-3 hover:ring-1 ring-inset ring-gold-500 transition-shadow"
           v-for="code in data"
         >
           <NuxtLink
