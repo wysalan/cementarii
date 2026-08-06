@@ -16,8 +16,8 @@ const recoveryTimeResult = computed(() => {
 
 <template>
   <div class="relative">
-    <h2 class="gi-diamond text-2xl pb-2 text-highlighted">快速體力試算</h2>
     <div class="flex flex-col gap-3 gi-panel p-5 max-sm:pr-16">
+      <h2 class="text-2xl text-highlighted">快速體力試算</h2>
       <div class="flex items-center gap-2 text-lg">
         <span>目前樹脂：</span>
         <UInputNumber v-model="currentResin" :min="0" :max="200" class="w-32" />

@@ -21,8 +21,8 @@ const { data, status } = await useAsyncData(
 
 <template>
   <div class="relative">
-    <h2 class="gi-diamond text-2xl pb-2 text-highlighted">兌換碼一覽</h2>
     <div class="gi-panel p-5">
+      <h2 class="text-2xl text-highlighted pb-4">兌換碼一覽</h2>
       <div class="flex rounded-md" v-if="status === 'pending'">
         <USkeleton class="w-full h-50" />
       </div>

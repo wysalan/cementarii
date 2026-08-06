@@ -73,8 +73,8 @@ function setEventDetail(eventData: GroupedEventData) {
 
 <template>
   <div>
-    <h2 class="gi-diamond text-2xl pb-2 text-highlighted">活動一覽</h2>
     <div class="flex flex-col gap-5 gi-panel p-5 h-fit">
+      <h2 class="text-2xl text-highlighted">活動一覽</h2>
       <div class="flex flex-row flex-wrap gap-2">
         <UButton
           v-for="type in ['活動', '任務', '祈願', '其他']"
