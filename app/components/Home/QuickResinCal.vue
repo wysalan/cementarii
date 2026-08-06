@@ -17,7 +17,7 @@ const recoveryTimeResult = computed(() => {
 <template>
   <div class="relative">
     <h2 class="gi-diamond text-2xl pb-2 text-highlighted">快速體力試算</h2>
-    <div class="flex flex-col gap-3 gi-panel p-5">
+    <div class="flex flex-col gap-3 gi-panel p-5 max-sm:pr-16">
       <div class="flex items-center gap-2 text-lg">
         <span>目前樹脂：</span>
         <UInputNumber v-model="currentResin" :min="0" :max="200" class="w-32" />
@@ -27,7 +27,7 @@ const recoveryTimeResult = computed(() => {
     <UTooltip text="前往完整版">
       <NuxtLink
         to="/tool/resin-calculator"
-        class="bg-gold-400 text-navy-900 rounded-full w-10 h-10 flex justify-center items-center absolute right-10 top-1/2 hover:ring-3 ring-gold-500 active:ring-0 transition-shadow"
+        class="bg-gold-400 text-navy-900 rounded-full w-10 h-10 flex justify-center items-center absolute right-4 sm:right-10 top-1/2 hover:ring-3 ring-gold-500 active:ring-0 transition-shadow"
         aria-label="前往完整版樹脂計算器"
       >
         <UIcon name="i-lucide-chevron-right" class="size-5" />

@@ -27,7 +27,10 @@ const { data, status } = await useAsyncData(
         <USkeleton class="w-full h-50" />
       </div>
       <div v-else class="flex flex-col gap-2 max-h-50 overflow-y-auto">
-        <div class="flex bg-parchment-100 dark:bg-navy-950 rounded-md p-3" v-for="code in data">
+        <div
+          class="flex bg-parchment-100 dark:bg-navy-950 rounded-md p-3 hover:ring-1 ring-inset ring-gold-500 transition-shadow"
+          v-for="code in data"
+        >
           <NuxtLink
             :to="'https://genshin.hoyoverse.com/gift?code=' + code.code"
             target="_blank"

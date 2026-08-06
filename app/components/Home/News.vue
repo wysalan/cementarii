@@ -93,7 +93,7 @@ function setEventDetail(eventData: GroupedEventData) {
         <button
           v-for="(event, key) in filteredEventList"
           type="button"
-          class="block w-full text-left p-2 mb-2 bg-parchment-100 dark:bg-navy-950 rounded-sm cursor-pointer hover:ring-1 ring-gold-500 transition-shadow"
+          class="block w-full text-left p-2 mb-2 bg-parchment-100 dark:bg-navy-950 rounded-sm cursor-pointer hover:ring-1 ring-inset ring-gold-500 transition-shadow"
           :key="key"
           @click="
             dialogVisible = true;
