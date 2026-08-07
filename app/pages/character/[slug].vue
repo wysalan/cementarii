@@ -28,6 +28,8 @@ const tabs: Record<string, { component: Component; icon: string }> = {
 };
 
 const currentTab = ref("總覽");
+// 天賦頁開啟天賦資訊時隱藏左側導覽軌
+const railHidden = ref(false);
 
 // Extract Image Color
 import { getColorSync, getPaletteSync } from "colorthief";
@@ -87,7 +89,7 @@ const outfitImgs = computed(() => {
     ></div>
     <!-- 漸層壓暗，確保面板可讀性 -->
     <div
-      class="fixed -z-1 inset-0 bg-linear-to-t from-black/50 via-transparent to-black/30 pointer-events-none"
+      class="fixed -z-1 inset-0 bg-linear-to-t from-black/25 via-transparent to-black/25 pointer-events-none"
     ></div>
 
     <div class="container mx-auto">
@@ -98,12 +100,14 @@ const outfitImgs = computed(() => {
           v-model:outfitList="outfitList"
           v-model:selectedOutfit="selectedOutfit"
           v-model:outfitImgs="outfitImgs"
+          @update:railHidden="railHidden = $event"
         />
       </KeepAlive>
     </div>
 
     <!-- 桌面版：左側菱形導覽軌（模仿遊戲內角色介面） -->
     <nav
+      v-show="!railHidden"
       class="hidden xl:flex fixed left-12 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
       aria-label="角色頁面分頁"
     >
