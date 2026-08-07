@@ -56,11 +56,11 @@ function getNameBarColor(rarity: number | undefined) {
   <UTooltip :text="data.name">
     <button
       type="button"
-      class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-20 h-full m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
+      class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-18 h-full m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
       @click="dialogVisible = !dialogVisible"
     >
       <div
-        class="flex justify-center items-center w-full h-18 rounded-t-md"
+        class="flex justify-center items-center w-full h-16 rounded-t-md"
         :class="getBgColor(materialData?.rarity)"
       >
         <NuxtImg

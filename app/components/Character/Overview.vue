@@ -259,7 +259,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
   <UModal
     v-model:open="detailOpen"
     title="詳細資訊"
-    :close="{ class: 'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20' }"
+    :close="{
+      class:
+        'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20',
+    }"
     :ui="{
       content:
         'bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
