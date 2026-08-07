@@ -103,20 +103,31 @@ onMounted(() => {
 <template>
   <main class="container mx-auto pt-5 pb-10 px-4">
     <div class="flex flex-col items-center pb-5 gap-5">
-      <UIFilterPanel :is-filtered="!!isFiltered" @clear="removeAllFilter" class="max-w-3xl">
-        <UIFilterChips label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
-        <UIFilterChips
-          label="角色與武器"
-          :options="filter.characterWeapon!"
-          v-model="filter.characterWeaponSelected"
-        />
-        <UIFilterChips
-          label="區域特產"
-          :options="filter.localSpecialty!"
-          v-model="filter.localSpecialtySelected"
-        />
-        <UIFilterChips label="其他" :options="filter.other!" v-model="filter.otherSelected" />
-      </UIFilterPanel>
+      <div class="gi-panel w-full max-w-3xl p-4 flex items-center gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1">
+          <UIFilterSelect label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
+          <UIFilterSelect
+            label="角色與武器"
+            :options="filter.characterWeapon!"
+            v-model="filter.characterWeaponSelected"
+          />
+          <UIFilterSelect
+            label="區域特產"
+            :options="filter.localSpecialty!"
+            v-model="filter.localSpecialtySelected"
+          />
+          <UIFilterSelect label="其他" :options="filter.other!" v-model="filter.otherSelected" />
+        </div>
+        <UTooltip text="清除篩選條件" v-if="isFiltered">
+          <UButton
+            icon="i-lucide-filter-x"
+            variant="ghost"
+            class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+            aria-label="清除篩選條件"
+            @click="removeAllFilter"
+          />
+        </UTooltip>
+      </div>
       <UISearchBar v-model="materialSearchKeyword" placeholder="搜尋素材" />
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">

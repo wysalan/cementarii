@@ -11,6 +11,7 @@ useSeoMeta({
 const loadLimit = ref(100);
 const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const characterSearchKeyword = ref("");
+const advancedOpen = ref(false);
 
 const characterFilter = ref<Record<string, string[]>>({
   rarity: ["4", "5"],
@@ -131,49 +132,84 @@ onMounted(() => {
 <template>
   <main class="container mx-auto pt-5 pb-10 px-4">
     <div class="flex flex-col items-center pb-5 gap-5">
-      <UIFilterPanel :is-filtered="!!isFiltered" @clear="removeAllFilter" class="max-w-3xl">
-        <UIFilterChips
-          label="星級"
-          :options="characterFilter.rarity!"
-          v-model="characterFilter.raritySelected"
-        />
-        <UIFilterChips
-          label="元素"
-          :options="characterFilter.element!"
-          v-model="characterFilter.elementSelected"
-        />
-        <UIFilterChips
-          label="武器"
-          :options="characterFilter.weapon!"
-          v-model="characterFilter.weaponSelected"
-        />
-        <UIFilterChips
-          label="地區"
-          :options="characterFilter.region!"
-          v-model="characterFilter.regionSelected"
-        />
-        <USeparator label="進階篩選" />
-        <UIFilterChips
-          label="體型"
-          :options="characterFilter.body!"
-          v-model="characterFilter.bodySelected"
-        />
-        <UIFilterChips
-          label="特殊身分"
-          :options="characterFilter.identity!"
-          v-model="characterFilter.identitySelected"
-        />
-        <UIFilterChips
-          label="生日月份"
-          :options="characterFilter.birthMonth!"
-          v-model="characterFilter.birthMonthSelected"
-        />
-        <USeparator label="其他設定" />
-        <div class="flex flex-col md:flex-row justify-center items-center gap-2">
-          <p class="text-center">將大頭照切換為衣裝版本</p>
-          <USwitch v-model="store.useCostumeIcon" />
+      <div class="gi-panel w-full max-w-3xl p-4 flex flex-col">
+        <div class="flex items-center gap-2">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1">
+            <UIFilterSelect
+              label="星級"
+              :options="characterFilter.rarity!"
+              v-model="characterFilter.raritySelected"
+            />
+            <UIFilterSelect
+              label="元素"
+              :options="characterFilter.element!"
+              v-model="characterFilter.elementSelected"
+            />
+            <UIFilterSelect
+              label="武器"
+              :options="characterFilter.weapon!"
+              v-model="characterFilter.weaponSelected"
+            />
+            <UIFilterSelect
+              label="地區"
+              :options="characterFilter.region!"
+              v-model="characterFilter.regionSelected"
+            />
+          </div>
+          <UTooltip text="清除篩選條件" v-if="isFiltered">
+            <UButton
+              icon="i-lucide-filter-x"
+              variant="ghost"
+              class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+              aria-label="清除篩選條件"
+              @click="removeAllFilter"
+            />
+          </UTooltip>
+          <UTooltip :text="advancedOpen ? '收合' : '顯示更多'">
+            <UButton
+              icon="i-lucide-chevron-down"
+              variant="ghost"
+              aria-label="展開進階篩選與其他設定"
+              :aria-expanded="advancedOpen"
+              :class="{ 'rotate-180': advancedOpen }"
+              class="transition-[transform,background-color,color] hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300"
+              @click="advancedOpen = !advancedOpen"
+            />
+          </UTooltip>
         </div>
-      </UIFilterPanel>
+        <div
+          class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+          :class="advancedOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+          :inert="!advancedOpen"
+        >
+          <div class="overflow-hidden">
+            <div class="flex flex-col gap-4 pt-4">
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <UIFilterSelect
+                  label="體型"
+                  :options="characterFilter.body!"
+                  v-model="characterFilter.bodySelected"
+                />
+                <UIFilterSelect
+                  label="特殊身分"
+                  :options="characterFilter.identity!"
+                  v-model="characterFilter.identitySelected"
+                />
+                <UIFilterSelect
+                  label="生日月份"
+                  :options="characterFilter.birthMonth!"
+                  v-model="characterFilter.birthMonthSelected"
+                />
+              </div>
+              <USeparator label="其他設定" />
+              <div class="flex flex-col md:flex-row justify-center items-center gap-2">
+                <p class="text-center">將大頭照切換為衣裝版本</p>
+                <USwitch v-model="store.useCostumeIcon" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <UISearchBar v-model="characterSearchKeyword" placeholder="搜尋角色" />
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">

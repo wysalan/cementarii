@@ -54,9 +54,24 @@ const removeAllFilter = () => {
 <template>
   <main class="container mx-auto pt-5 pb-10 px-4">
     <div class="flex flex-col items-center pb-5 gap-5">
-      <UIFilterPanel :is-filtered="!!isFiltered" @clear="removeAllFilter" class="max-w-3xl">
-        <UIFilterChips label="最大星級" :options="filter.rarity!" v-model="filter.raritySelected" />
-      </UIFilterPanel>
+      <div class="gi-panel w-full max-w-3xl p-4 flex items-center gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-1">
+          <UIFilterSelect
+            label="最大星級"
+            :options="filter.rarity!"
+            v-model="filter.raritySelected"
+          />
+        </div>
+        <UTooltip text="清除篩選條件" v-if="isFiltered">
+          <UButton
+            icon="i-lucide-filter-x"
+            variant="ghost"
+            class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+            aria-label="清除篩選條件"
+            @click="removeAllFilter"
+          />
+        </UTooltip>
+      </div>
       <UISearchBar v-model="artifactSearchKeyword" placeholder="搜尋聖遺物" />
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">

@@ -127,11 +127,22 @@ onMounted(() => {
 <template>
   <main class="container mx-auto pt-5 pb-10 px-4">
     <div class="flex flex-col items-center pb-5 gap-5">
-      <UIFilterPanel :is-filtered="!!isFiltered" @clear="removeAllFilter" class="max-w-3xl">
-        <UIFilterChips label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
-        <UIFilterChips label="類型" :options="filter.weapon!" v-model="filter.weaponSelected" />
-        <UIFilterChips label="副詞條" :options="filter.stat!" v-model="filter.statSelected" />
-      </UIFilterPanel>
+      <div class="gi-panel w-full max-w-3xl p-4 flex items-center gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-1">
+          <UIFilterSelect label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
+          <UIFilterSelect label="類型" :options="filter.weapon!" v-model="filter.weaponSelected" />
+          <UIFilterSelect label="副詞條" :options="filter.stat!" v-model="filter.statSelected" />
+        </div>
+        <UTooltip text="清除篩選條件" v-if="isFiltered">
+          <UButton
+            icon="i-lucide-filter-x"
+            variant="ghost"
+            class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+            aria-label="清除篩選條件"
+            @click="removeAllFilter"
+          />
+        </UTooltip>
+      </div>
       <UISearchBar v-model="weaponSearchKeyword" placeholder="搜尋武器" />
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
