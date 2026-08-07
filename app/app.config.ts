@@ -15,5 +15,10 @@ export default defineAppConfig({
         root: "rounded-xl",
       },
     },
+    modal: {
+      slots: {
+        title: "pr-10",
+      },
+    },
   },
 });
