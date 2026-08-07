@@ -17,9 +17,11 @@ const store = useUserStore();
         :key="key"
         class="bg-parchment-100/90 backdrop-blur-sm rounded-lg shadow-md border border-gold-600/30 p-5 w-full"
       >
-        <h2 class="gi-diamond text-xl font-semibold text-navy-800 pb-3">{{ voiceover.title }}</h2>
+        <h2 class="gi-diamond text-base md:text-lg font-semibold text-navy-800 pb-3">
+          {{ voiceover.title }}
+        </h2>
         <p
-          class="text-lg text-navy-700"
+          class="text-sm md:text-base text-navy-700"
           v-html="parseStoryContent(voiceover.text, store.name, store.playerGender)"
         ></p>
       </section>

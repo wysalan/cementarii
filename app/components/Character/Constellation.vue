@@ -84,19 +84,20 @@ const handleInsideClick = (event: MouseEvent) => {
         :key="key"
         class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100 w-full"
       >
-        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">
+        <h2 class="gi-diamond text-white text-lg md:text-xl font-semibold pb-4">
           {{ key + 1 }}. {{ constellation.name }}
         </h2>
         <p
           v-html="parseDescriptionText(constellation.description, skills, dictionary)"
           @click="handleInsideClick"
-          class="text-lg"
+          class="text-sm md:text-base"
         ></p>
       </section>
     </div>
     <UModal
       v-model:open="dialogVisible"
       :title="popupData.title"
+      :close="{ class: 'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20' }"
       :ui="{
         content:
           'max-w-[75vw] lg:max-w-[50vw] bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
@@ -105,10 +106,10 @@ const handleInsideClick = (event: MouseEvent) => {
     >
       <template #body>
         <div class="flex flex-col gap-5">
-          <h2 class="text-2xl font-semibold text-white">{{ popupData.name }}</h2>
+          <h2 class="text-lg md:text-xl font-semibold text-white">{{ popupData.name }}</h2>
           <p
             v-html="parseDescriptionText(popupData.description, skills, dictionary)"
-            class="text-lg"
+            class="text-sm md:text-base"
           ></p>
         </div>
       </template>

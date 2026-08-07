@@ -113,11 +113,13 @@ const needMaterials = computed(() => {
         :key="index"
         class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100"
       >
-        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">{{ talent.name }}</h2>
+        <h2 class="gi-diamond text-white text-lg md:text-xl font-semibold pb-4">
+          {{ talent.name }}
+        </h2>
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-10 items-center">
           <p
             v-html="parseDescriptionText(talent.description, skills, dictionary)"
-            class="lg:text-lg"
+            class="text-sm md:text-base"
             @click="handleInsideClick"
           ></p>
           <div class="flex flex-col gap-3">
@@ -133,7 +135,7 @@ const needMaterials = computed(() => {
               <USlider v-model="talentsLevel[index]" :min="1" :max="15" :step="1" class="w-full" />
             </div>
             <div
-              class="flex flex-row justify-between text-sm lg:text-lg gap-10"
+              class="flex flex-row justify-between text-sm md:text-base gap-10"
               v-for="prop in parseTalentAttributes(talent, talentsLevel[index] || 1)"
             >
               <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
@@ -144,7 +146,7 @@ const needMaterials = computed(() => {
               v-if="!talentsNameList[index]?.includes('Special')"
             >
               <USeparator />
-              <p class="text-lg font-semibold text-white">所需素材</p>
+              <p class="text-base font-semibold text-white">所需素材</p>
               <div
                 class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
                 v-if="needMaterials(talentsLevel[index])?.toString().length"
@@ -170,10 +172,12 @@ const needMaterials = computed(() => {
         :key="key"
         class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-6 text-parchment-100 min-w-full"
       >
-        <h2 class="gi-diamond text-white text-2xl font-semibold pb-4">{{ passive.name }}</h2>
+        <h2 class="gi-diamond text-white text-lg md:text-xl font-semibold pb-4">
+          {{ passive.name }}
+        </h2>
         <p
           v-html="parseDescriptionText(passive.description, skills, dictionary)"
-          class="text-lg"
+          class="text-sm md:text-base"
           @click="handleInsideClick"
         ></p>
       </section>
@@ -181,6 +185,7 @@ const needMaterials = computed(() => {
     <UModal
       v-model:open="dialogVisible"
       :title="popupData.title"
+      :close="{ class: 'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20' }"
       :ui="{
         content:
           'max-w-[75vw] lg:max-w-[50vw] bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
@@ -189,10 +194,10 @@ const needMaterials = computed(() => {
     >
       <template #body>
         <div class="flex flex-col gap-5">
-          <h2 class="text-2xl font-semibold text-white">{{ popupData.name }}</h2>
+          <h2 class="text-lg md:text-xl font-semibold text-white">{{ popupData.name }}</h2>
           <p
             v-html="parseDescriptionText(popupData.description, skills, dictionary)"
-            class="text-lg"
+            class="text-sm md:text-base"
           ></p>
         </div>
       </template>

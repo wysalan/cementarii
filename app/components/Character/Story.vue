@@ -21,7 +21,9 @@ const store = useUserStore();
           type="button"
           class="flex w-full items-center justify-between px-5 py-4 cursor-pointer group"
         >
-          <span class="gi-diamond text-xl font-semibold text-navy-800">{{ story.title }}</span>
+          <span class="gi-diamond text-base md:text-lg font-semibold text-navy-800">{{
+            story.title
+          }}</span>
           <UIcon
             name="i-lucide-chevron-down"
             class="size-5 text-navy-600 transition-transform group-data-[state=open]:rotate-180"
@@ -29,7 +31,7 @@ const store = useUserStore();
         </button>
         <template #content>
           <p
-            class="text-lg text-navy-700 px-5 pb-5"
+            class="text-sm md:text-base text-navy-700 px-5 pb-5"
             v-html="parseStoryContent(story.text, store.name, store.playerGender)"
           ></p>
         </template>
