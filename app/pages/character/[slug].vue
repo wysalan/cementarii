@@ -102,29 +102,19 @@ const outfitImgs = computed(() => {
       </KeepAlive>
     </div>
 
-    <!-- 桌面版：右側菱形導覽軌（模仿遊戲內角色介面） -->
+    <!-- 桌面版：左側菱形導覽軌（模仿遊戲內角色介面） -->
     <nav
-      class="hidden xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
+      class="hidden xl:flex fixed left-12 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
       aria-label="角色頁面分頁"
     >
       <button
         v-for="(tab, name) in tabs"
         :key="name"
         type="button"
-        class="group flex items-center justify-end gap-3 cursor-pointer"
+        class="group flex items-center justify-start gap-3 cursor-pointer"
         :aria-current="currentTab === name ? 'page' : undefined"
         @click="currentTab = name"
       >
-        <span
-          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity"
-          :class="
-            currentTab === name
-              ? 'text-gold-300 opacity-100'
-              : 'text-white/80 opacity-0 group-hover:opacity-100'
-          "
-        >
-          {{ name }}
-        </span>
         <span
           class="flex items-center justify-center w-10 h-10 rotate-45 rounded-xs border-2 backdrop-blur-sm transition-colors"
           :class="
@@ -138,6 +128,16 @@ const outfitImgs = computed(() => {
             class="-rotate-45 size-5"
             :class="currentTab === name ? 'text-navy-900' : 'text-white/90'"
           />
+        </span>
+        <span
+          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity"
+          :class="
+            currentTab === name
+              ? 'text-gold-300 opacity-100'
+              : 'text-white/80 opacity-0 group-hover:opacity-100'
+          "
+        >
+          {{ name }}
         </span>
       </button>
     </nav>

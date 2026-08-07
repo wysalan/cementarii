@@ -117,6 +117,8 @@ const calculatedStats = computed(() => {
   return result.value;
 });
 
+const detailOpen = ref(false);
+
 const materialCalculationMethod = ref("累計");
 const materialCalculationOption = ref(["單一", "累計"]);
 const costsValue = Object.values(data!.costs!);
@@ -153,7 +155,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
 <template>
   <!-- 右側：角色數值（模仿遊戲內屬性面板） -->
   <div
-    class="xl:absolute xl:right-20 xl:top-1/2 xl:-translate-y-1/2 xl:z-10 max-xl:mt-[36vh] max-xl:mx-4 xl:max-h-[88vh] overflow-y-auto"
+    class="xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 max-xl:mt-[36vh] max-xl:mx-4 xl:max-h-[85vh] overflow-y-auto max-xl:mb-30"
   >
     <div
       class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-100 p-5 gap-5 shadow-lg text-parchment-100"
@@ -169,11 +171,14 @@ function getSubstatValue(type: string | undefined, substat: number) {
           "
         />
         <div class="text-left">
-          <h2 class="text-2xl font-semibold text-white">{{ data.name }}</h2>
-          <p class="text-lg text-gold-300">{{ data.title }}</p>
+          <h2 class="text-xl md:text-2xl font-semibold text-white">{{ data.name }}</h2>
+          <p class="text-sm md:text-base text-gold-300">{{ data.title }}</p>
         </div>
+        <UBadge color="primary" variant="soft" class="select-none ml-auto self-start">
+          Ver. {{ data.version }}
+        </UBadge>
       </div>
-      <div class="font-semibold text-left text-parchment-100/70">
+      <div class="font-semibold text-left text-parchment-100/70 text-sm md:text-base">
         {{ data.description }}
       </div>
       <div class="flex flex-row items-center gap-5">
@@ -191,19 +196,19 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div class="flex flex-col divide-y divide-white/10">
-        <div class="flex flex-row justify-between text-lg py-2.5">
+        <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
           <p class="font-semibold text-parchment-100/80">生命值上限</p>
           <p class="text-white">{{ calculatedStats.hp.toFixed(0) }}</p>
         </div>
-        <div class="flex flex-row justify-between text-lg py-2.5">
+        <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
           <p class="font-semibold text-parchment-100/80">攻擊力</p>
           <p class="text-white">{{ calculatedStats.atk.toFixed(0) }}</p>
         </div>
-        <div class="flex flex-row justify-between text-lg py-2.5">
+        <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
           <p class="font-semibold text-parchment-100/80">防禦力</p>
           <p class="text-white">{{ calculatedStats.def.toFixed(0) }}</p>
         </div>
-        <div class="flex flex-row justify-between text-lg py-2.5">
+        <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
           <p class="font-semibold text-parchment-100/80">{{ data.stats?.substat.text }}</p>
           <p class="text-white">
             {{ getSubstatValue(data.stats?.substat.type, calculatedStats.sp) }}
@@ -211,12 +216,22 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
       </div>
     </div>
+    <!-- 詳細資訊按鈕（模仿遊戲內樣式） -->
+    <button
+      type="button"
+      class="block w-full xl:w-100 mt-4 rounded-full border border-parchment-100/50 bg-navy-900/60 backdrop-blur-md py-2 text-parchment-100 font-semibold hover:bg-parchment-100/25 hover:text-white transition-colors cursor-pointer"
+      @click="detailOpen = true"
+    >
+      詳細資訊
+    </button>
     <div
-      class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-100 p-5 gap-5 mt-5 shadow-lg text-parchment-100"
+      class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-100 p-5 gap-5 mt-4 shadow-lg text-parchment-100"
     >
       <div class="flex flex-col justify-start items-center gap-3">
         <div class="flex flex-row justify-between items-center w-full">
-          <h2 class="gi-diamond text-xl font-semibold text-white flex items-center gap-1">
+          <h2
+            class="gi-diamond text-base md:text-lg font-semibold text-white flex items-center gap-1"
+          >
             升級所需素材
             <UTooltip :text="'將角色升至 ' + actualLevel + ' 級所需要的素材'">
               <UIcon name="i-lucide-circle-help" class="size-4 text-parchment-100/60" />
@@ -240,89 +255,83 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
     </div>
   </div>
-  <!-- 左側：基礎資料 -->
-  <div
-    class="xl:absolute xl:left-4 xl:top-1/2 xl:-translate-y-1/2 xl:z-10 max-xl:mt-5 max-xl:mx-4 xl:max-h-[88vh] overflow-y-auto"
+  <!-- 詳細資訊彈窗（原左欄內容） -->
+  <UModal
+    v-model:open="detailOpen"
+    title="詳細資訊"
+    :close="{ class: 'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20' }"
+    :ui="{
+      content:
+        'bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
+      title: 'text-gold-300',
+    }"
   >
-    <div
-      class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-80 2xl:w-100 p-5 gap-4 shadow-lg text-parchment-100"
-    >
-      <div class="flex flex-row justify-start items-center gap-3">
-        <div class="flex flex-row justify-between items-center w-full">
-          <h2 class="gi-diamond text-xl font-semibold text-white">基礎資料</h2>
-          <UBadge color="primary" variant="soft" class="select-none"
-            >Ver. {{ data.version }}</UBadge
-          >
-        </div>
-      </div>
-      <div class="flex flex-col divide-y divide-white/10">
-        <div class="flex flex-row justify-between items-center text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">元素</p>
-          <NuxtImg
-            :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
-            :alt="data.element_text + '元素圖示'"
-            width="30"
-            height="30"
-            placeholder
-            v-if="data.element_type !== 'ELEMENT_NONE'"
-          />
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">武器</p>
-          <p class="text-white">{{ data.weapon_text }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">所屬</p>
-          <p class="text-white">{{ data.affiliation || "無" }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">命之座</p>
-          <p class="text-white">{{ data.constellation?.name }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">生日</p>
-          <p class="text-white">{{ data.birthday?.mmdd }}</p>
-        </div>
-      </div>
-      <USeparator label="配音演員" :ui="{ label: 'text-parchment-100/90' }" />
-      <div class="flex flex-col divide-y divide-white/10">
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">華語</p>
-          <p class="text-white">{{ data.cv?.CHS }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">日語</p>
-          <p class="text-white">{{ data.cv?.JP }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">英語</p>
-          <p class="text-white">{{ data.cv?.EN }}</p>
-        </div>
-        <div class="flex flex-row justify-between text-lg py-2">
-          <p class="font-semibold text-parchment-100/80">韓語</p>
-          <p class="text-white">{{ data.cv?.KR }}</p>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-80 2xl:w-100 p-5 gap-5 mt-5 mb-30 xl:mb-0 shadow-lg text-parchment-100"
-    >
+    <template #body>
       <div class="flex flex-col gap-4">
-        <div class="flex flex-row items-center text-lg gap-5">
-          <p class="gi-diamond font-semibold text-white min-w-fit">衣裝</p>
+        <USeparator label="基本資料" :ui="{ label: 'text-parchment-100/90' }" />
+        <div class="flex flex-col divide-y divide-white/10">
+          <div class="flex flex-row justify-between items-center text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">元素</p>
+            <NuxtImg
+              :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
+              :alt="data.element_text + '元素圖示'"
+              width="30"
+              height="30"
+              placeholder
+              v-if="data.element_type !== 'ELEMENT_NONE'"
+            />
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">武器</p>
+            <p class="text-white">{{ data.weapon_text }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">所屬</p>
+            <p class="text-white">{{ data.affiliation || "無" }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">命之座</p>
+            <p class="text-white">{{ data.constellation?.name }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">生日</p>
+            <p class="text-white">{{ data.birthday?.mmdd }}</p>
+          </div>
+        </div>
+        <USeparator label="配音演員" :ui="{ label: 'text-parchment-100/90' }" />
+        <div class="flex flex-col divide-y divide-white/10">
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">華語</p>
+            <p class="text-white">{{ data.cv?.CHS }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">日語</p>
+            <p class="text-white">{{ data.cv?.JP }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">英語</p>
+            <p class="text-white">{{ data.cv?.EN }}</p>
+          </div>
+          <div class="flex flex-row justify-between text-sm md:text-base py-2">
+            <p class="font-semibold text-parchment-100/80">韓語</p>
+            <p class="text-white">{{ data.cv?.KR }}</p>
+          </div>
+        </div>
+        <USeparator label="衣裝" :ui="{ label: 'text-parchment-100/90' }" />
+        <div class="flex flex-col gap-3">
           <USelect
             v-model="selectedOutfit"
             :items="outfitList"
             placeholder="選擇衣裝"
             class="w-full"
           />
-        </div>
-        <div class="max-h-30 overflow-y-auto">
-          <p>{{ outfitsObject[selectedOutfit as keyof outfitItem]?.description }}</p>
+          <div class="max-h-30 overflow-y-auto">
+            <p>{{ outfitsObject[selectedOutfit as keyof outfitItem]?.description }}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </UModal>
 </template>
 
 <style scoped></style>
