@@ -35,7 +35,7 @@ const { data, status } = await useAsyncData(
             :to="'https://genshin.hoyoverse.com/gift?code=' + code.code"
             target="_blank"
             rel="noopener"
-            class="flex flex-row items-center gap-2 group"
+            class="flex flex-row items-center gap-2 group h-5"
             aria-label="前往官網兌換頁面"
           >
             {{ code.code }}
