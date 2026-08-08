@@ -82,13 +82,13 @@ function getNameBarColor(rarity: number | undefined) {
           class="flex flex-row justify-between items-center px-5 py-2"
           :class="getNameBarColor(materialData?.rarity)"
         >
-          <p class="text-lg lg:text-xl font-semibold text-white">
+          <p class="text-base md:text-lg font-semibold text-white">
             {{ materialData?.name.CHT }}
           </p>
           <UButton
             icon="i-lucide-x"
             variant="ghost"
-            class="text-white hover:bg-white/20"
+            class="text-white hover:text-white hover:bg-white/20 active:text-white active:bg-white/30"
             aria-label="關閉視窗"
             @click="dialogVisible = false"
           />
@@ -102,13 +102,13 @@ function getNameBarColor(rarity: number | undefined) {
             class="w-45 h-45 max-md:py-5 object-contain"
           />
           <div class="absolute top-3 left-5 flex">
-            <p class="select-none text-white font-semibold opacity-90 lg:text-lg">
+            <p class="select-none text-white font-semibold opacity-90 text-sm md:text-base">
               {{ materialData?.typeText }}
             </p>
           </div>
           <div class="absolute bottom-3 left-5 flex flex-row gap-1">
             <p
-              class="select-none text-yellow-400 font-semibold lg:text-lg"
+              class="select-none text-yellow-400 font-semibold text-sm md:text-base"
               v-for="n in materialData?.rarity"
             >
               ★
@@ -121,18 +121,18 @@ function getNameBarColor(rarity: number | undefined) {
           <div class="flex flex-col gap-3">
             <p
               v-html="parseStoryContent(materialData?.description, store.name, store.playerGender)"
-              class="lg:text-lg opacity-80"
+              class="text-sm md:text-base opacity-80"
             ></p>
           </div>
           <div class="flex flex-col gap-3" v-if="materialData?.sources.length">
-            <p class="flex items-center gap-1 font-semibold">
+            <p class="flex items-center gap-1 font-semibold text-sm md:text-base">
               <UIcon name="i-lucide-map-pin" />來源
             </p>
             <div
               class="rounded-md border-2 border-parchment-300 p-3"
               v-for="source in materialData?.sources"
             >
-              <p>{{ source }}</p>
+              <p class="text-sm md:text-base">{{ source }}</p>
             </div>
           </div>
         </div>
