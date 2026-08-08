@@ -261,7 +261,7 @@ const needMaterials = computed(() => {
             </button>
           </div>
           <div ref="scrollEl" class="overflow-y-auto min-h-0">
-            <div :key="selectedItem.hasStats ? activeTab : 'intro'" class="tab-panel">
+            <div :key="selectedItem.hasStats ? activeTab : 'intro'" class="tab-pane">
               <!-- 天賦介紹 -->
               <UIHoverPopover
                 v-if="!selectedItem.hasStats || activeTab === 'intro'"
@@ -302,7 +302,7 @@ const needMaterials = computed(() => {
                   <USeparator />
                   <p class="text-base font-semibold text-white">所需素材</p>
                   <div
-                    class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
+                    class="flex flex-row justify-start min-w-full overflow-x-auto gap-1"
                     v-if="needMaterials(talentsLevel[selectedItem.index])?.toString().length"
                   >
                     <UniversalItem
@@ -312,7 +312,7 @@ const needMaterials = computed(() => {
                     />
                   </div>
                   <div v-else>
-                    <p>無</p>
+                    <p>無需素材</p>
                   </div>
                 </div>
               </div>
@@ -335,7 +335,7 @@ const needMaterials = computed(() => {
 }
 
 /* 分頁內容切換：keyed div 重新掛載時淡入並微微上移（舊內容即刻移除，高度量測才不會疊加） */
-.tab-panel {
+.tab-pane {
   animation: tab-pane-in 0.2s ease;
 }
 /* 由上方滑入：向下偏移會撐出可捲動溢位導致捲動軸閃現，上方溢位只會被裁切 */

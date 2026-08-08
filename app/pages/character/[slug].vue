@@ -87,7 +87,7 @@ const outfitImgs = computed(() => {
     ></div>
     <!-- 漸層壓暗，確保面板可讀性 -->
     <div
-      class="fixed -z-1 inset-0 bg-linear-to-t from-black/25 via-transparent to-black/25 pointer-events-none"
+      class="fixed -z-1 inset-0 bg-linear-to-t from-black/10 via-transparent to-black/10 pointer-events-none"
     ></div>
 
     <div class="container mx-auto">
