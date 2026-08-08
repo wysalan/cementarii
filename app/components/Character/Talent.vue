@@ -3,8 +3,6 @@ import { objectFromEntries } from "ts-extras";
 import type { character } from "@/generated/prisma/client";
 const { data } = defineProps<{ data: character }>();
 
-const emit = defineEmits<{ "update:railHidden": [value: boolean] }>();
-
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
@@ -58,69 +56,34 @@ const scrollToDetail = () => {
   }
 };
 
-// 開啟天賦資訊時隱藏左側導覽軌
-watch(selected, (value) => emit("update:railHidden", value !== null));
-onActivated(() => emit("update:railHidden", selected.value !== null));
-onDeactivated(() => emit("update:railHidden", false));
-
 const talentsLevel = ref([
   store.defaultTalentLevel,
   store.defaultTalentLevel,
   store.defaultTalentLevel,
 ]);
 
-const popupData = ref({
-  title: "",
-  name: "",
-  description: "",
-});
-
-const dialogVisible = ref(false);
-
-const handleInsideClick = (event: MouseEvent) => {
-  const target = (event.target as Element)?.closest("[data-name]");
-  if (!target) return;
-  const type = (target as HTMLElement).dataset.type;
-  const name = (target as HTMLElement).dataset.name;
+// 相關效果 hover popover
+const getPopupData = (type: string, name: string) => {
   const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
   const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
   const constellationList = Object.fromEntries(
     skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
   );
-  if (type && name) {
-    if (type === "talent") {
-      popupData.value = {
-        title: "相關突破天賦",
-        name: name,
-        description: talentsList[name]?.description || "",
-      };
-    } else if (type === "passive") {
-      popupData.value = {
-        title: "相關固有天賦",
-        name: name,
-        description: passivesList[name]?.description || "",
-      };
-    } else if (type === "constellation") {
-      popupData.value = {
-        title: "相關命之座",
-        name: name,
-        description: constellationList[name]?.description || "",
-      };
-    } else if (type === "effect") {
-      popupData.value = {
-        title: `相關效果 / ${name}`,
-        name: name,
-        description: dictionary?.relatedEffects[name] || "",
-      };
-    } else {
-      popupData.value = {
-        title: "錯誤",
-        name: "無法取得資料",
-        description: "尚未設定此效果說明",
-      };
-    }
-    dialogVisible.value = true;
+  if (type === "talent") {
+    return { title: "相關突破天賦", name, description: talentsList[name]?.description || "" };
+  } else if (type === "passive") {
+    return { title: "相關固有天賦", name, description: passivesList[name]?.description || "" };
+  } else if (type === "constellation") {
+    return { title: "相關命之座", name, description: constellationList[name]?.description || "" };
+  } else if (type === "effect") {
+    return { title: "相關效果", name, description: dictionary?.relatedEffects[name] || "" };
   }
+  return { title: "錯誤", name: "無法取得資料", description: "尚未設定此效果說明" };
+};
+
+const resolvePopover = (type: string, name: string) => {
+  const { title, name: popupName, description } = getPopupData(type, name);
+  return { title, name: popupName, html: parseDescriptionText(description, skills, dictionary) };
 };
 
 const needMaterials = computed(() => {
@@ -203,10 +166,8 @@ const needMaterials = computed(() => {
         v-if="selectedItem"
         :key="selected ?? -1"
         ref="detailEl"
-        class="grid grid-cols-1 gap-4 items-start scroll-mt-24 xl:absolute xl:left-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
-        :class="
-          selectedItem.hasStats ? 'md:grid-cols-2 xl:grid-cols-[1fr_1.25fr] xl:w-200' : 'xl:w-96'
-        "
+        class="grid grid-cols-1 gap-4 items-start scroll-mt-24 xl:absolute xl:left-40 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
+        :class="selectedItem.hasStats ? 'md:grid-cols-2 xl:w-210' : 'xl:w-96'"
       >
         <!-- 天賦介紹 -->
         <section
@@ -225,11 +186,12 @@ const needMaterials = computed(() => {
               <UIcon name="i-lucide-x" class="size-5" />
             </button>
           </div>
-          <p
-            v-html="parseDescriptionText(selectedItem.skill.description, skills, dictionary)"
-            class="text-sm md:text-base"
-            @click="handleInsideClick"
-          ></p>
+          <UIHoverPopover :resolve="resolvePopover">
+            <p
+              v-html="parseDescriptionText(selectedItem.skill.description, skills, dictionary)"
+              class="text-sm md:text-base"
+            ></p>
+          </UIHoverPopover>
         </section>
         <!-- 詳細屬性 -->
         <section
@@ -281,30 +243,6 @@ const needMaterials = computed(() => {
         </section>
       </div>
     </Transition>
-
-    <UModal
-      v-model:open="dialogVisible"
-      :title="popupData.title"
-      :close="{
-        class:
-          'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20',
-      }"
-      :ui="{
-        content:
-          'max-w-[75vw] lg:max-w-[50vw] bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
-        title: 'text-gold-300',
-      }"
-    >
-      <template #body>
-        <div class="flex flex-col gap-5">
-          <h2 class="text-lg md:text-xl font-semibold text-white">{{ popupData.name }}</h2>
-          <p
-            v-html="parseDescriptionText(popupData.description, skills, dictionary)"
-            class="text-sm md:text-base"
-          ></p>
-        </div>
-      </template>
-    </UModal>
   </div>
 </template>
 
