@@ -48,6 +48,21 @@ const skillItems = [
 const selected = ref<number | null>(null);
 const selectedItem = computed(() => (selected.value === null ? null : skillItems[selected.value]));
 
+// 點擊空白區域時關閉天賦資訊
+const listEl = ref<HTMLElement | null>(null);
+
+const onPointerDownOutside = (event: PointerEvent) => {
+  if (selected.value === null) return;
+  const target = event.target as Element | null;
+  // 忽略 teleport 到 body 的彈窗／popover，只處理頁面本體的點擊
+  if (!target?.closest("#site-content")) return;
+  if (detailEl.value?.contains(target) || listEl.value?.contains(target)) return;
+  selected.value = null;
+};
+
+onMounted(() => document.addEventListener("pointerdown", onPointerDownOutside));
+onBeforeUnmount(() => document.removeEventListener("pointerdown", onPointerDownOutside));
+
 // 手機／平板：資訊卡在清單下方，開啟後自動捲動至卡片
 const detailEl = ref<HTMLElement | null>(null);
 const scrollToDetail = () => {
@@ -108,6 +123,7 @@ const needMaterials = computed(() => {
   <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
     <!-- 右側：天賦清單（模仿遊戲內天賦介面，暫以菱形代替天賦圖示） -->
     <nav
+      ref="listEl"
       class="flex flex-col gap-2 xl:gap-6 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
       aria-label="天賦清單"
     >
@@ -201,7 +217,7 @@ const needMaterials = computed(() => {
           <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white pb-1">詳細屬性</h2>
           <div class="flex flex-row items-center gap-5" v-if="!selectedItem.special">
             <div
-              class="bg-gold-400 rounded-sm p-2 w-20 text-center select-none font-semibold text-navy-900"
+              class="bg-gold-400 rounded-sm p-1 w-20 text-center select-none font-semibold text-navy-900 text-sm md:text-base"
             >
               Lv. <span class="font-bold">{{ talentsLevel[selectedItem.index] }}</span>
             </div>

@@ -56,7 +56,7 @@ const cancelHide = () => clearTimeout(hideTimer);
     <Transition name="hover-popover">
       <div
         v-if="popover"
-        class="fixed z-50 w-100 max-w-[90vw] rounded-lg bg-navy-900/90 backdrop-blur-lg border border-gold-500/30 shadow-lg p-4 text-parchment-100"
+        class="fixed z-50 w-100 max-w-[90vw] rounded-lg bg-navy-900/80 backdrop-blur-lg border border-gold-500/30 shadow-lg p-4 text-parchment-100"
         :style="{
           left: popover.x + 'px',
           top: popover.y + 'px',
@@ -66,7 +66,7 @@ const cancelHide = () => clearTimeout(hideTimer);
         @mouseleave="scheduleHide"
       >
         <p class="text-xs font-semibold text-gold-300">{{ popover.data.title }}</p>
-        <h3 class="text-sm md:text-base font-semibold text-white pb-2">
+        <h3 class="text-sm md:text-base font-semibold text-white py-2">
           {{ popover.data.name }}
         </h3>
         <p v-html="popover.data.html" class="text-sm max-h-60 overflow-y-auto"></p>
