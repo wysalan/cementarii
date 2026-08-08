@@ -77,6 +77,41 @@ const talentsLevel = ref([
   store.defaultTalentLevel,
 ]);
 
+// 資訊卡分頁（模仿遊戲內 天賦介紹／詳細屬性 切換）
+const detailTabs = [
+  { key: "intro", label: "天賦介紹" },
+  { key: "stats", label: "詳細屬性" },
+] as const;
+const activeTab = ref<"intro" | "stats">("intro");
+watch(selected, () => (activeTab.value = "intro"));
+
+// 切換分頁時卡片高度的過渡動畫（FLIP：記錄前後高度再補間）
+const cardEl = ref<HTMLElement | null>(null);
+const scrollEl = ref<HTMLElement | null>(null);
+const switchTab = async (key: "intro" | "stats") => {
+  if (key === activeTab.value) return;
+  const el = cardEl.value;
+  const from = el?.offsetHeight;
+  activeTab.value = key;
+  await nextTick();
+  if (!el || from == null) return;
+  const to = el.offsetHeight;
+  if (from === to) return;
+  el.style.height = `${from}px`;
+  el.style.overflow = "hidden";
+  // 動畫期間內容高度受限，暫時隱藏捲動軸避免閃現
+  if (scrollEl.value) scrollEl.value.style.overflowY = "hidden";
+  void el.offsetHeight;
+  el.style.transition = "height 0.25s ease";
+  el.style.height = `${to}px`;
+  setTimeout(() => {
+    el.style.height = "";
+    el.style.transition = "";
+    el.style.overflow = "";
+    if (scrollEl.value) scrollEl.value.style.overflowY = "";
+  }, 260);
+};
+
 // 相關效果 hover popover
 const getPopupData = (type: string, name: string) => {
   const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
@@ -176,18 +211,18 @@ const needMaterials = computed(() => {
       </button>
     </nav>
 
-    <!-- 左側：天賦資訊（介紹與屬性左右兩張卡片） -->
-    <Transition name="talent-detail" mode="out-in" @after-enter="scrollToDetail">
+    <!-- 左側：天賦資訊（單卡＋分頁切換） -->
+    <!-- :duration 固定計時：opacity 動畫掛在 section 上（父層半透明會讓 backdrop-filter 失效） -->
+    <Transition name="talent-detail" mode="out-in" :duration="200" @after-enter="scrollToDetail">
       <div
         v-if="selectedItem"
         :key="selected ?? -1"
         ref="detailEl"
-        class="grid grid-cols-1 gap-4 items-start scroll-mt-24 xl:absolute xl:left-40 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
-        :class="selectedItem.hasStats ? 'md:grid-cols-2 xl:w-210' : 'xl:w-96'"
+        class="scroll-mt-24 xl:absolute xl:left-40 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 xl:w-110"
       >
-        <!-- 天賦介紹 -->
         <section
-          class="bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh] overflow-y-auto"
+          ref="cardEl"
+          class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
         >
           <div class="flex items-start justify-between gap-3 pb-4">
             <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white">
@@ -202,58 +237,85 @@ const needMaterials = computed(() => {
               <UIcon name="i-lucide-x" class="size-5" />
             </button>
           </div>
-          <UIHoverPopover :resolve="resolvePopover">
-            <p
-              v-html="parseDescriptionText(selectedItem.skill.description, skills, dictionary)"
-              class="text-sm md:text-base"
-            ></p>
-          </UIHoverPopover>
-        </section>
-        <!-- 詳細屬性 -->
-        <section
-          v-if="selectedItem.hasStats"
-          class="flex flex-col gap-3 bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh] overflow-y-auto"
-        >
-          <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white pb-1">詳細屬性</h2>
-          <div class="flex flex-row items-center gap-5" v-if="!selectedItem.special">
-            <div
-              class="bg-gold-400 rounded-sm p-1 w-20 text-center select-none font-semibold text-navy-900 text-sm md:text-base"
-            >
-              Lv. <span class="font-bold">{{ talentsLevel[selectedItem.index] }}</span>
-            </div>
-            <USlider
-              v-model="talentsLevel[selectedItem.index]"
-              :min="1"
-              :max="15"
-              :step="1"
-              class="w-full"
-            />
-          </div>
+          <!-- 分頁切換（模仿遊戲內樣式） -->
           <div
-            class="flex flex-row justify-between text-sm md:text-base gap-15"
-            v-for="prop in parseTalentAttributes(
-              selectedItem.skill,
-              talentsLevel[selectedItem.index] || 1,
-            )"
+            v-if="selectedItem.hasStats"
+            role="tablist"
+            class="flex rounded-md bg-black/30 p-1 mb-4"
           >
-            <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
-            <p class="text-white text-right">{{ prop.value }}</p>
-          </div>
-          <div class="flex flex-col w-full gap-3" v-if="!selectedItem.special">
-            <USeparator />
-            <p class="text-base font-semibold text-white">所需素材</p>
-            <div
-              class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
-              v-if="needMaterials(talentsLevel[selectedItem.index])?.toString().length"
+            <button
+              v-for="tab in detailTabs"
+              :key="tab.key"
+              type="button"
+              role="tab"
+              :aria-selected="activeTab === tab.key"
+              class="flex-1 py-1 rounded-sm text-xs md:text-sm font-semibold transition-colors cursor-pointer"
+              :class="
+                activeTab === tab.key
+                  ? 'bg-parchment-100 text-navy-900'
+                  : 'text-parchment-100/80 hover:text-white'
+              "
+              @click="switchTab(tab.key)"
             >
-              <UniversalItem
-                v-for="(item, key) in needMaterials(talentsLevel[selectedItem.index])"
-                :data="item"
-                :key="key"
-              />
-            </div>
-            <div v-else>
-              <p>無</p>
+              {{ tab.label }}
+            </button>
+          </div>
+          <div ref="scrollEl" class="overflow-y-auto min-h-0">
+            <div :key="selectedItem.hasStats ? activeTab : 'intro'" class="tab-panel">
+              <!-- 天賦介紹 -->
+              <UIHoverPopover
+                v-if="!selectedItem.hasStats || activeTab === 'intro'"
+                :resolve="resolvePopover"
+              >
+                <p
+                  v-html="parseDescriptionText(selectedItem.skill.description, skills, dictionary)"
+                  class="text-sm md:text-base"
+                ></p>
+              </UIHoverPopover>
+              <!-- 詳細屬性 -->
+              <div v-else class="flex flex-col gap-3">
+                <div class="flex flex-row items-center gap-5" v-if="!selectedItem.special">
+                  <div
+                    class="bg-gold-400 rounded-sm p-1 w-20 text-center select-none font-semibold text-navy-900 text-sm md:text-base"
+                  >
+                    Lv. <span class="font-bold">{{ talentsLevel[selectedItem.index] }}</span>
+                  </div>
+                  <USlider
+                    v-model="talentsLevel[selectedItem.index]"
+                    :min="1"
+                    :max="15"
+                    :step="1"
+                    class="w-full"
+                  />
+                </div>
+                <div
+                  class="flex flex-row justify-between text-sm md:text-base gap-15"
+                  v-for="prop in parseTalentAttributes(
+                    selectedItem.skill,
+                    talentsLevel[selectedItem.index] || 1,
+                  )"
+                >
+                  <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
+                  <p class="text-white text-right">{{ prop.value }}</p>
+                </div>
+                <div class="flex flex-col w-full gap-3" v-if="!selectedItem.special">
+                  <USeparator />
+                  <p class="text-base font-semibold text-white">所需素材</p>
+                  <div
+                    class="flex flex-row justify-start min-w-full overflow-x-auto gap-3"
+                    v-if="needMaterials(talentsLevel[selectedItem.index])?.toString().length"
+                  >
+                    <UniversalItem
+                      v-for="(item, key) in needMaterials(talentsLevel[selectedItem.index])"
+                      :data="item"
+                      :key="key"
+                    />
+                  </div>
+                  <div v-else>
+                    <p>無</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -263,12 +325,24 @@ const needMaterials = computed(() => {
 </template>
 
 <style scoped>
-.talent-detail-enter-active,
-.talent-detail-leave-active {
+.talent-detail-enter-active > section,
+.talent-detail-leave-active > section {
   transition: opacity 0.2s ease;
 }
-.talent-detail-enter-from,
-.talent-detail-leave-to {
+.talent-detail-enter-from > section,
+.talent-detail-leave-to > section {
   opacity: 0;
+}
+
+/* 分頁內容切換：keyed div 重新掛載時淡入並微微上移（舊內容即刻移除，高度量測才不會疊加） */
+.tab-panel {
+  animation: tab-pane-in 0.2s ease;
+}
+/* 由上方滑入：向下偏移會撐出可捲動溢位導致捲動軸閃現，上方溢位只會被裁切 */
+@keyframes tab-pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 </style>
