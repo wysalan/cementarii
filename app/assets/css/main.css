@@ -96,7 +96,8 @@ html {
     height: 0.5em;
     margin-right: 0.5em;
     background: var(--color-gold-500);
-    transform: rotate(45deg);
+    /* CJK 字形視覺中心略高於 vertical-align: middle 的基準，微調上移 */
+    transform: translateY(-0.1em) rotate(45deg);
     vertical-align: middle;
   }
 }
