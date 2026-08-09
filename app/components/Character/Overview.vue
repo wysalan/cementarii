@@ -183,7 +183,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
       <div class="flex flex-row items-center gap-5">
         <div
-          class="bg-gold-400 rounded-sm p-2 w-25 text-center select-none font-semibold text-navy-900"
+          class="bg-gold-400 rounded-sm p-1 w-25 text-center select-none font-semibold text-navy-900"
         >
           Lv. <span class="font-bold">{{ actualLevel }}</span>
         </div>
