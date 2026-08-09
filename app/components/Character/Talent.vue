@@ -241,19 +241,22 @@ const needMaterials = computed(() => {
           <div
             v-if="selectedItem.hasStats"
             role="tablist"
-            class="flex rounded-md bg-black/30 p-1 mb-4"
+            class="relative flex rounded-md bg-black/30 p-1 mb-4"
           >
+            <!-- 滑動的 active 背景指示器 -->
+            <span
+              class="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-sm bg-parchment-100 transition-transform duration-200 ease-out"
+              :class="activeTab === 'stats' ? 'translate-x-full' : ''"
+            ></span>
             <button
               v-for="tab in detailTabs"
               :key="tab.key"
               type="button"
               role="tab"
               :aria-selected="activeTab === tab.key"
-              class="flex-1 py-1 rounded-sm text-xs md:text-sm font-semibold transition-colors cursor-pointer"
+              class="relative flex-1 py-1 rounded-sm text-xs md:text-sm font-semibold transition-colors cursor-pointer"
               :class="
-                activeTab === tab.key
-                  ? 'bg-parchment-100 text-navy-900'
-                  : 'text-parchment-100/80 hover:text-white'
+                activeTab === tab.key ? 'text-navy-900' : 'text-parchment-100/80 hover:text-white'
               "
               @click="switchTab(tab.key)"
             >
