@@ -277,7 +277,8 @@ const needMaterials = computed(() => {
               </UIHoverPopover>
               <!-- 詳細屬性 -->
               <div v-else class="flex flex-col gap-3">
-                <div class="flex flex-row items-center gap-5" v-if="!selectedItem.special">
+                <!-- pr-2.5：滑桿把手在最大值時有半顆超出軌道，避免被捲動容器裁切 -->
+                <div class="flex flex-row items-center gap-5 pr-2.5" v-if="!selectedItem.special">
                   <div
                     class="bg-gold-400 rounded-sm p-1 w-20 text-center select-none font-semibold text-navy-900 text-sm md:text-base"
                   >

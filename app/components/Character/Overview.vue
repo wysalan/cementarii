@@ -329,7 +329,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
             class="w-full"
           />
           <div class="max-h-30 overflow-y-auto">
-            <p>{{ outfitsObject[selectedOutfit as keyof outfitItem]?.description }}</p>
+            <p class="text-sm md:text-base">
+              {{ outfitsObject[selectedOutfit as keyof outfitItem]?.description }}
+            </p>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ const popover = ref<{
   y: number;
   above: boolean;
 } | null>(null);
+const popEl = ref<HTMLElement | null>(null);
 let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
 const handleHover = (event: MouseEvent) => {
@@ -37,6 +38,15 @@ const handleHover = (event: MouseEvent) => {
     y: above ? rect.top - 8 : rect.bottom + 8,
     above,
   };
+  // 顯示在下方時以實際高度複查，超出視窗底部就翻到上方
+  nextTick(() => {
+    const el = popEl.value;
+    const p = popover.value;
+    if (!el || !p || p.above) return;
+    if (p.y + el.offsetHeight > window.innerHeight - 8) {
+      popover.value = { ...p, above: true, y: rect.top - 8 };
+    }
+  });
 };
 
 const scheduleHide = () => {
@@ -56,6 +66,7 @@ const cancelHide = () => clearTimeout(hideTimer);
     <Transition name="hover-popover">
       <div
         v-if="popover"
+        ref="popEl"
         class="fixed z-50 w-100 max-w-[90vw] rounded-lg bg-navy-900/80 backdrop-blur-lg border border-gold-500/30 shadow-lg p-4 text-parchment-100"
         :style="{
           left: popover.x + 'px',

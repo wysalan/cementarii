@@ -130,12 +130,8 @@ const outfitImgs = computed(() => {
           />
         </span>
         <span
-          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity"
-          :class="
-            currentTab === name
-              ? 'text-gold-300 opacity-100'
-              : 'text-white/80 opacity-0 group-hover:opacity-100'
-          "
+          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity opacity-0 group-hover:opacity-100"
+          :class="currentTab === name ? 'text-gold-300' : 'text-white/80'"
         >
           {{ name }}
         </span>
