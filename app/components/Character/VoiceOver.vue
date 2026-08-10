@@ -41,23 +41,43 @@ const onPointerDownOutside = (event: PointerEvent) => {
 onMounted(() => document.addEventListener("pointerdown", onPointerDownOutside));
 onBeforeUnmount(() => document.removeEventListener("pointerdown", onPointerDownOutside));
 
-// 手機／平板：內容卡在清單下方，開啟後自動捲動至卡片
-const scrollToDetail = () => {
-  if (window.innerWidth < 1280) {
-    detailEl.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+// 桌面版：內容卡跟隨被點擊的項目（進場時依實際高度決定頂對齊或底對齊）
+const detailTop = ref<number | null>(null);
+let itemRect: DOMRect | null = null;
+
+const selectItem = (i: number, event: MouseEvent) => {
+  selected.value = selected.value === i ? null : i;
+  if (selected.value !== null && window.innerWidth >= 1280) {
+    itemRect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    detailTop.value = itemRect.top;
   }
+};
+
+// 進場時（元素已插入、尚未顯示）量實際高度定位，避免先超出畫面再平移
+const onDetailEnter = (el: Element) => {
+  if (window.innerWidth < 1280) {
+    // 手機／平板：內容卡在清單下方，開啟後自動捲動至卡片
+    detailEl.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  if (!itemRect) return;
+  const h = (el as HTMLElement).offsetHeight;
+  // 頂對齊項目放得下就頂對齊，否則改為底對齊項目底部；再夾限於視窗內
+  const top = itemRect.top + h <= window.innerHeight - 16 ? itemRect.top : itemRect.bottom - h;
+  detailTop.value = Math.max(Math.min(top, window.innerHeight - h - 16), 84);
 };
 </script>
 
 <template>
   <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
-    <!-- 語音內容卡：獨立定位於清單左側（right-10 + 清單寬 72 + 間距 4），各自垂直置中 -->
-    <Transition name="voice-detail" mode="out-in" :duration="200" @after-enter="scrollToDetail">
+    <!-- 語音內容卡：獨立定位於清單左側（right-10 + 清單寬 72 + 間距 4），頂部跟隨選中項目 -->
+    <Transition name="voice-detail" mode="out-in" :duration="200" @enter="onDetailEnter">
       <div
         v-if="selectedItem"
         :key="selected ?? -1"
         ref="detailEl"
-        class="scroll-mt-24 max-xl:order-2 xl:absolute xl:right-86 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 xl:w-110"
+        class="scroll-mt-24 max-xl:order-2 xl:absolute xl:right-86 xl:z-10 xl:w-110"
+        :style="{ top: detailTop !== null ? detailTop + 'px' : undefined }"
       >
         <section
           class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
@@ -129,7 +149,7 @@ const scrollToDetail = () => {
               : 'bg-navy-900/70 border-white/20 hover:border-gold-300/60 hover:bg-navy-800/70'
           "
           :aria-current="selected === i ? 'true' : undefined"
-          @click="selected = selected === i ? null : i"
+          @click="selectItem(i, $event)"
         >
           <span
             class="text-sm md:text-base font-semibold transition-colors"
