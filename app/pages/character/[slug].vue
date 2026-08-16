@@ -80,9 +80,9 @@ const outfitImgs = computed(() => {
 <template>
   <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
   <main v-if="status === 'success' && characterData">
-    <!-- 全螢幕立繪背景 -->
+    <!-- 立繪背景（排除 header 列，從 68px 起算） -->
     <div
-      class="fixed -z-1 inset-0 bg-fixed bg-cover bg-center"
+      class="fixed -z-1 inset-x-0 top-17 bottom-0 bg-cover bg-center"
       :style="`background-image: url(${storageConfig.baseUrl}/avatar-img/${outfitImgs?.AvatarImg}.webp)`"
     ></div>
     <!-- 漸層壓暗，確保面板可讀性 -->
