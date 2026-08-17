@@ -63,7 +63,7 @@ function getArtifactIcon(partName: string | undefined) {
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
       <div class="flex flex-col lg:col-span-4 lg:h-[calc(100dvh-6.5rem)]">
         <div class="flex shrink-0 px-5 py-2 bg-[#bc6832] rounded-t-lg">
-          <p class="text-xl font-semibold text-white">
+          <p class="text-lg md:text-xl font-semibold text-white">
             {{
               artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]?.name
             }}
@@ -84,11 +84,11 @@ function getArtifactIcon(partName: string | undefined) {
           class="flex flex-col gap-5 bg-parchment-200 p-5 rounded-b-lg grow lg:min-h-0 lg:overflow-y-auto text-navy-800"
         >
           <div class="flex flex-row items-center">
-            <h2 class="text-2xl font-semibold">
+            <h2 class="text-xl md:text-2xl font-semibold">
               {{ artifactData.name }}
             </h2>
-            <p class="text-2xl font-bold select-none">．</p>
-            <p class="text-2xl font-semibold opacity-50">
+            <p class="text-xl md:text-2xl font-bold select-none">．</p>
+            <p class="text-xl md:text-2xl font-semibold opacity-50">
               {{
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
                   ?.relicText
@@ -121,21 +121,21 @@ function getArtifactIcon(partName: string | undefined) {
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-5">
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_1pcs">
-                <p class="text-xl font-semibold">1 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_1pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">1 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_1pcs }}</p>
               </div>
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_2pcs">
-                <p class="text-xl font-semibold">2 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_2pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">2 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_2pcs }}</p>
               </div>
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_4pcs">
-                <p class="text-xl font-semibold">4 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_4pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">4 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_4pcs }}</p>
               </div>
             </div>
           </div>
           <div>
-            <p class="text-lg font-semibold opacity-50">
+            <p class="text-sm md:text-base font-semibold opacity-50">
               {{
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
                   ?.description
@@ -147,9 +147,11 @@ function getArtifactIcon(partName: string | undefined) {
       <!-- 右側故事 -->
       <div class="flex flex-col lg:col-span-6 gi-panel lg:h-[calc(100dvh-6.5rem)]">
         <div class="flex flex-col gap-5 p-5 lg:min-h-0">
-          <p class="gi-diamond text-xl font-semibold text-highlighted shrink-0">聖遺物故事</p>
+          <p class="gi-diamond text-base md:text-lg font-semibold text-highlighted shrink-0">
+            聖遺物故事
+          </p>
           <div
-            class="text-lg lg:min-h-0 lg:overflow-y-auto"
+            class="text-sm md:text-base lg:min-h-0 lg:overflow-y-auto"
             v-html="
               parseDescriptionText(
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
