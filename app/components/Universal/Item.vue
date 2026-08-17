@@ -56,11 +56,12 @@ function getNameBarColor(rarity: number | undefined) {
   <UTooltip :text="data.name">
     <button
       type="button"
-      class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-18 h-full m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
+      class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-18 m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
       @click="dialogVisible = !dialogVisible"
     >
+      <!-- grow：按鈕被外層 flex 拉伸時由圖示區吃掉多餘高度，避免頂部露出底色 -->
       <div
-        class="flex justify-center items-center w-full h-16 rounded-t-md"
+        class="flex justify-center items-center w-full grow min-h-16 rounded-t-md"
         :class="getBgColor(materialData?.rarity)"
       >
         <NuxtImg
