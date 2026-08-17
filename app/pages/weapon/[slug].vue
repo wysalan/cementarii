@@ -167,10 +167,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
 </script>
 
 <template>
-  <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && weaponData">
+  <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && weaponData">
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
       <div
-        class="flex justify-center items-center w-full h-[50dvh] lg:h-[90dvh] p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
+        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
@@ -180,11 +180,11 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div
-        class="flex flex-col gap-5 w-full lg:h-[90dvh] rounded-xl p-6 lg:col-span-4 xl:col-span-3 gi-panel overflow-y-auto"
+        class="flex flex-col gap-5 w-full lg:h-[calc(100dvh-6.5rem)] rounded-xl p-6 lg:col-span-4 xl:col-span-3 gi-panel overflow-y-auto"
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
-            <p class="font-semibold text-lg">{{ weaponData.weapon_text }}</p>
+            <p class="font-semibold text-base md:text-lg">{{ weaponData.weapon_text }}</p>
             <UBadge color="primary" variant="soft" class="select-none">
               Ver. {{ weaponData.version }}
             </UBadge>
@@ -196,20 +196,22 @@ function getSubstatValue(type: string | undefined, substat: number) {
               class="w-10 h-10 rounded-md"
               :class="getBgColor(weaponData.rarity)"
             />
-            <h2 class="text-2xl font-semibold text-highlighted">{{ weaponData.name }}</h2>
+            <h2 class="text-xl md:text-2xl font-semibold text-highlighted">
+              {{ weaponData.name }}
+            </h2>
           </div>
         </div>
         <div class="flex flex-col gap-3">
           <div class="flex flex-row justify-between">
             <div class="flex flex-col w-30 text-left">
-              <p class="font-semibold opacity-60">基礎攻擊力</p>
-              <p class="text-2xl font-bold">{{ calculatedStats.attack.toFixed(0) }}</p>
+              <p class="font-semibold opacity-60 text-sm md:text-base">基礎攻擊力</p>
+              <p class="text-xl md:text-2xl font-bold">{{ calculatedStats.attack.toFixed(0) }}</p>
             </div>
             <div class="flex flex-col text-right w-30">
-              <p class="font-semibold opacity-60">
+              <p class="font-semibold opacity-60 text-sm md:text-base">
                 {{ getSubstatText(weaponData.stats?.type.substat) }}
               </p>
-              <p class="text-2xl font-bold">
+              <p class="text-xl md:text-2xl font-bold">
                 {{ getSubstatValue(weaponData.stats?.type.substat, calculatedStats.substat) }}
               </p>
             </div>
@@ -231,8 +233,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
         <div class="flex flex-col justify-start items-center gap-3">
           <div class="flex flex-row justify-between items-center w-full">
-            <h2 class="gi-diamond text-xl font-semibold text-highlighted flex items-center gap-1">
-              所需素材
+            <h2
+              class="gi-diamond text-base md:text-lg font-semibold text-highlighted flex items-center gap-1"
+            >
+              升級所需素材
               <UTooltip
                 :text="
                   materialCalculationMethod === '單一'
@@ -250,7 +254,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
             />
           </div>
           <div
-            class="flex flex-row justify-start max-w-full overflow-x-auto gap-3 pb-2 overflow-y-hidden"
+            class="flex flex-row justify-start max-w-full overflow-x-auto gap-1"
             v-if="materialCalculationResult?.toString().length"
           >
             <UniversalItem
@@ -260,12 +264,12 @@ function getSubstatValue(type: string | undefined, substat: number) {
             />
           </div>
           <div v-else class="w-full">
-            <p class="">無需材料</p>
+            <p>無需素材</p>
           </div>
         </div>
         <div class="flex flex-col gap-3">
           <div class="flex flex-row justify-between items-center w-full">
-            <h3 class="gi-diamond text-xl font-semibold text-highlighted">
+            <h3 class="gi-diamond text-lg md:text-xl font-semibold text-highlighted">
               {{ weaponData.effect?.text.name }}
             </h3>
             <USelect
@@ -277,11 +281,11 @@ function getSubstatValue(type: string | undefined, substat: number) {
           </div>
           <p
             v-html="parseEffectDescription(weaponData.effect, selectedRefinementRank)"
-            class="lg:text-lg"
+            class="text-sm md:text-base"
           ></p>
         </div>
         <div class="text-left">
-          <p class="opacity-90">{{ weaponData.description }}</p>
+          <p class="text-sm md:text-base opacity-90">{{ weaponData.description }}</p>
         </div>
         <div>
           <UButton
@@ -300,18 +304,18 @@ function getSubstatValue(type: string | undefined, substat: number) {
       title="故事"
       :close="{
         class:
-          'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20',
+          'text-navy-700 hover:text-navy-900 hover:bg-black/5 active:bg-black/10 dark:text-parchment-100 dark:hover:text-white dark:hover:bg-white/10 dark:active:text-white dark:active:bg-white/20',
       }"
       :ui="{
         content:
-          'max-w-[90vw] lg:max-w-3xl bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
-        title: 'text-gold-300',
+          'max-w-[90vw] lg:max-w-3xl backdrop-blur-lg bg-parchment-100/90 text-navy-700 border border-gold-600/40 divide-navy-900/10 dark:bg-navy-900/85 dark:text-parchment-100 dark:border-gold-500/30 dark:divide-white/10',
+        title: 'text-gold-700 dark:text-gold-300',
       }"
     >
       <template #body>
         <p
           v-html="parseStoryContent(weaponData.story, store.name, store.playerGender)"
-          class="lg:text-lg"
+          class="text-sm md:text-base"
         ></p>
       </template>
     </UModal>
