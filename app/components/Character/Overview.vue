@@ -249,12 +249,10 @@ function getSubstatValue(type: string | undefined, substat: number) {
             aria-label="選擇計算方式"
           />
         </div>
-        <div
-          class="flex flex-row justify-start max-w-full overflow-x-auto gap-1"
+        <UniversalItemStrip
           v-if="materialCalculationResult?.toString().length"
-        >
-          <UniversalItem v-for="(item, key) in materialCalculationResult" :key="key" :data="item" />
-        </div>
+          :items="materialCalculationResult"
+        />
         <div v-else class="w-full">
           <p>無需素材</p>
         </div>

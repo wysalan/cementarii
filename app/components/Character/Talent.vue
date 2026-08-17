@@ -305,16 +305,10 @@ const needMaterials = computed(() => {
                 <div class="flex flex-col w-full gap-3" v-if="!selectedItem.special">
                   <USeparator />
                   <p class="text-base font-semibold text-white">所需素材</p>
-                  <div
-                    class="flex flex-row justify-start min-w-full overflow-x-auto gap-1"
+                  <UniversalItemStrip
                     v-if="needMaterials(talentsLevel[selectedItem.index])?.toString().length"
-                  >
-                    <UniversalItem
-                      v-for="(item, key) in needMaterials(talentsLevel[selectedItem.index])"
-                      :data="item"
-                      :key="key"
-                    />
-                  </div>
+                    :items="needMaterials(talentsLevel[selectedItem.index])"
+                  />
                   <div v-else>
                     <p>無需素材</p>
                   </div>
