@@ -233,8 +233,14 @@ function getSubstatValue(type: string | undefined, substat: number) {
             class="gi-diamond text-base md:text-lg font-semibold text-white flex items-center gap-1"
           >
             升級所需素材
-            <UTooltip :text="'將角色升至 ' + actualLevel + ' 級所需要的素材'">
-              <UIcon name="i-lucide-circle-help" class="size-4 text-parchment-100/60" />
+            <UTooltip
+              :text="
+                materialCalculationMethod === '單一'
+                  ? `將角色從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
+                  : `將角色從 1 級升至 ${actualLevel} 級所需要的素材`
+              "
+            >
+              <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
             </UTooltip>
           </h2>
           <USelect
