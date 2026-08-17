@@ -168,9 +168,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
 
 <template>
   <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && weaponData">
-    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mx-4 sm:mx-5">
       <div
-        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-6 xl:col-span-7 overflow-hidden"
+        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-8 overflow-hidden"
         :class="getBgColor(weaponData.rarity)"
       >
         <NuxtImg
@@ -180,7 +180,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         />
       </div>
       <div
-        class="flex flex-col gap-5 w-full lg:h-[calc(100dvh-6.5rem)] rounded-xl p-6 lg:col-span-4 xl:col-span-3 gi-panel overflow-y-auto"
+        class="flex flex-col gap-5 w-full lg:h-[calc(100dvh-6.5rem)] rounded-xl p-6 lg:col-span-4 gi-panel overflow-y-auto"
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
@@ -193,7 +193,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
             <NuxtImg
               :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.EquipIcon}.webp`"
               :alt="'武器圖示：' + weaponData.name"
-              class="w-10 h-10 rounded-md"
+              class="w-10 h-10 rounded-sm"
               :class="getBgColor(weaponData.rarity)"
             />
             <h2 class="text-xl md:text-2xl font-semibold text-highlighted">
