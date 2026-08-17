@@ -59,17 +59,20 @@ function getArtifactIcon(partName: string | undefined) {
 </script>
 
 <template>
-  <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && artifactData">
+  <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && artifactData">
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
-      <div class="flex flex-col lg:col-span-4 lg:h-[90dvh] lg:overflow-y-auto">
-        <div class="flex px-5 py-2 bg-[#bc6832] rounded-t-lg">
+      <div class="flex flex-col lg:col-span-4 lg:h-[calc(100dvh-6.5rem)]">
+        <div class="flex shrink-0 px-5 py-2 bg-[#bc6832] rounded-t-lg">
           <p class="text-xl font-semibold text-white">
             {{
               artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]?.name
             }}
           </p>
         </div>
-        <div class="flex justify-center items-center relative" :class="getBgColor(maxRarity)">
+        <div
+          class="flex shrink-0 justify-center items-center relative"
+          :class="getBgColor(maxRarity)"
+        >
           <NuxtImg
             :src="`${storageConfig.baseUrl}/relic-icon/${artifactData.imgaes?.[currentPart as keyof typeof artifactData.imgaes]}.webp`"
             width="128"
@@ -77,7 +80,9 @@ function getArtifactIcon(partName: string | undefined) {
             class="h-50 w-50"
           />
         </div>
-        <div class="flex flex-col gap-5 bg-parchment-200 p-5 rounded-b-lg h-full text-navy-800">
+        <div
+          class="flex flex-col gap-5 bg-parchment-200 p-5 rounded-b-lg grow lg:min-h-0 lg:overflow-y-auto text-navy-800"
+        >
           <div class="flex flex-row items-center">
             <h2 class="text-2xl font-semibold">
               {{ artifactData.name }}
@@ -140,11 +145,11 @@ function getArtifactIcon(partName: string | undefined) {
         </div>
       </div>
       <!-- 右側故事 -->
-      <div class="flex flex-col lg:col-span-6 gi-panel lg:h-[90dvh] lg:overflow-y-auto">
-        <div class="flex flex-col gap-5 p-5">
-          <p class="gi-diamond text-xl font-semibold text-highlighted">聖遺物故事</p>
+      <div class="flex flex-col lg:col-span-6 gi-panel lg:h-[calc(100dvh-6.5rem)]">
+        <div class="flex flex-col gap-5 p-5 lg:min-h-0">
+          <p class="gi-diamond text-xl font-semibold text-highlighted shrink-0">聖遺物故事</p>
           <div
-            class="text-lg"
+            class="text-lg lg:min-h-0 lg:overflow-y-auto"
             v-html="
               parseDescriptionText(
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
