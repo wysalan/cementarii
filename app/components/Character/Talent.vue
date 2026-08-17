@@ -33,14 +33,14 @@ const skillItems = [
     name: talent.name,
     skill: talent,
     index,
-    hasStats: true,
+    hasStats: true as const,
     special: talentsNameList[index]?.includes("Special") || false,
   })),
   ...(data.passives || []).map((passive) => ({
     name: passive.name,
     skill: passive,
     index: -1,
-    hasStats: false,
+    hasStats: false as const,
     special: false,
   })),
 ];
