@@ -79,7 +79,8 @@ const outfitImgs = computed(() => {
 
 <template>
   <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
-  <main v-if="status === 'success' && characterData">
+  <!-- 固定深色：不論站台主題，角色頁元件與面板一律使用深色變數 -->
+  <main class="dark" v-if="status === 'success' && characterData">
     <!-- 立繪背景（排除 header 列，從 68px 起算） -->
     <div
       class="fixed -z-1 inset-x-0 top-17 bottom-0 bg-cover bg-center"

@@ -16,6 +16,10 @@ const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 const dialogVisible = ref(false);
+// 遮罩會傳送到 body，無法繼承祖先的 .dark；依按鈕所在區域判斷是否強制深色
+// （不可綁 dialogVisible，否則關閉動畫期間會先退回淺色）
+const btnEl = ref<HTMLElement | null>(null);
+const overlayClass = computed(() => (btnEl.value?.closest(".dark") ? "dark" : ""));
 
 function getBgColor(rarity: number | undefined) {
   if (rarity) {
@@ -55,6 +59,7 @@ function getNameBarColor(rarity: number | undefined) {
 <template>
   <UTooltip :text="data.name">
     <button
+      ref="btnEl"
       type="button"
       class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-18 m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
       @click="dialogVisible = !dialogVisible"
@@ -76,7 +81,7 @@ function getNameBarColor(rarity: number | undefined) {
       </div>
     </button>
   </UTooltip>
-  <UModal v-model:open="dialogVisible" :ui="{ content: 'max-w-lg' }">
+  <UModal v-model:open="dialogVisible" :ui="{ overlay: overlayClass, content: 'max-w-lg ring-0' }">
     <template #content>
       <div class="flex flex-col h-fit rounded-lg overflow-hidden">
         <div

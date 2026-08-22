@@ -239,6 +239,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
                   ? `將角色從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
                   : `將角色從 1 級升至 ${actualLevel} 級所需要的素材`
               "
+              :ui="{ content: 'dark' }"
             >
               <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
             </UTooltip>
@@ -247,6 +248,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
             v-model="materialCalculationMethod"
             :items="materialCalculationOption"
             aria-label="選擇計算方式"
+            :ui="{ content: 'dark' }"
           />
         </div>
         <UniversalItemStrip
@@ -268,8 +270,9 @@ function getSubstatValue(type: string | undefined, substat: number) {
         'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20',
     }"
     :ui="{
+      overlay: 'dark',
       content:
-        'bg-navy-900/85 backdrop-blur-lg text-parchment-100 border border-gold-500/30 divide-white/10',
+        'dark bg-navy-900/85 backdrop-blur-lg text-parchment-100 ring-0 border border-gold-500/30 divide-white/10',
       title: 'text-gold-300',
     }"
   >
@@ -331,6 +334,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
             :items="outfitList"
             placeholder="選擇衣裝"
             class="w-full"
+            :ui="{ content: 'dark' }"
           />
           <div class="max-h-30 overflow-y-auto">
             <p class="text-sm md:text-base">
