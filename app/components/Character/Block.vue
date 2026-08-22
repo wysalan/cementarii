@@ -61,7 +61,7 @@ function getElementIcon(character: CharacterData) {
         :alt="data.name['CHT']"
         width="96"
         height="96"
-        class="w-25 h-25 lg:w-35 lg:h-35 [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
+        class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
         :class="
           data.rarity === 4
             ? 'bg-linear-to-b from-[#5e5789] to-[#9c75b7]'
@@ -76,7 +76,7 @@ function getElementIcon(character: CharacterData) {
           width="30"
           height="30"
           placeholder
-          class="w-[25px] h-[25px] md:w-[30px] md:h-[30px] bg-navy-950/60 rounded-lg"
+          class="w-6.25 h-6.25 md:w-7.5 md:h-7.5 bg-navy-950/60 rounded-lg"
           v-if="data.elementType !== 'ELEMENT_NONE'"
         />
       </div>

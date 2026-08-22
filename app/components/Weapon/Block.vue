@@ -61,7 +61,7 @@ function getRarityRingColor(rarity: number) {
         :alt="data.name"
         width="96"
         height="96"
-        class="w-25 h-25 lg:w-35 lg:h-35 [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
+        class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
         :class="getRarityBgColor(data.rarity)"
         placeholder
       />
