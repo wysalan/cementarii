@@ -26,6 +26,7 @@
     "colorthief": "^3.3.1",
     "nuxt": "^4.4.2",
     "pg": "^8.20.0",
+    "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.3.3",
     "ts-extras": "^1.0.0",

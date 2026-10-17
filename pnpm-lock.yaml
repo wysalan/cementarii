@@ -44,6 +44,9 @@ importers:
       pg:
         specifier: ^8.20.0
         version: 8.20.0
+      pinia:
+        specifier: ^3.0.4
+        version: 3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
       pinia-plugin-persistedstate:
         specifier: ^4.7.1
         version: 4.7.1(@nuxt/kit@4.4.2(magicast@0.5.2))(@pinia/nuxt@0.11.3(magicast@0.5.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))))(pinia@3.0.4(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3)))
