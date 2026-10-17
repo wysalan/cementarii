@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { storageConfig } from '@/site.config';
+import { storageConfig } from "@/site.config";
 
 interface WeaponData {
   id: number;
@@ -18,15 +18,15 @@ function getRarityBgColor(rarity: number) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "bg-linear-to-b from-#6a6d74 to-#868586";
+        return "bg-linear-to-b from-[#6a6d74] to-[#868586]";
       case 2:
-        return "bg-linear-to-b from-#4b6c67 to-#519072";
+        return "bg-linear-to-b from-[#4b6c67] to-[#519072]";
       case 3:
-        return "bg-linear-to-b from-#567496 to-#5392b8";
+        return "bg-linear-to-b from-[#567496] to-[#5392b8]";
       case 4:
-        return "bg-linear-to-b from-#5e5789 to-#9c75b7";
+        return "bg-linear-to-b from-[#5e5789] to-[#9c75b7]";
       case 5:
-        return "bg-linear-to-b from-#945c2c to-#b27330";
+        return "bg-linear-to-b from-[#945c2c] to-[#b27330]";
     }
   }
 }
@@ -35,15 +35,15 @@ function getRarityRingColor(rarity: number) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "ring-#868586";
+        return "ring-[#868586]";
       case 2:
-        return "ring-#519072";
+        return "ring-[#519072]";
       case 3:
-        return "ring-#5392b8";
+        return "ring-[#5392b8]";
       case 4:
-        return "ring-#9c75b7";
+        return "ring-[#9c75b7]";
       case 5:
-        return "ring-#b27330";
+        return "ring-[#b27330]";
     }
   }
 }
@@ -52,7 +52,7 @@ function getRarityRingColor(rarity: number) {
 <template>
   <NuxtLink
     :to="`/weapon/${data.slug}`"
-    class="flex flex-col justify-center items-center bg-zinc-200 rounded-lg hover:scale-105% hover:ring-2 transition-shadow ease-in-out"
+    class="flex flex-col justify-center items-center bg-parchment-200 rounded-lg hover:scale-105 hover:ring-2 transition ease-in-out"
     :class="getRarityRingColor(data.rarity)"
   >
     <div class="relative">
@@ -67,7 +67,7 @@ function getRarityRingColor(rarity: number) {
       />
     </div>
     <div class="flex flex-col justify-center items-center h-10 w-full my-1">
-      <p class="break-all w-20 xl:w-30 text-center dark:text-black">{{ data.name }}</p>
+      <p class="break-all w-20 xl:w-30 text-center text-navy-800">{{ data.name }}</p>
     </div>
   </NuxtLink>
 </template>

@@ -27,15 +27,15 @@ function getBgColor(rarity: number | undefined) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "bg-linear-to-br from-#6a6d74 to-#868586";
+        return "bg-linear-to-br from-[#6a6d74] to-[#868586]";
       case 2:
-        return "bg-linear-to-br from-#4b6c67 to-#519072";
+        return "bg-linear-to-br from-[#4b6c67] to-[#519072]";
       case 3:
-        return "bg-linear-to-br from-#567496 to-#5392b8";
+        return "bg-linear-to-br from-[#567496] to-[#5392b8]";
       case 4:
-        return "bg-linear-to-br from-#5e5789 to-#9c75b7";
+        return "bg-linear-to-br from-[#5e5789] to-[#9c75b7]";
       case 5:
-        return "bg-linear-to-br from-#945c2c to-#b27330";
+        return "bg-linear-to-br from-[#945c2c] to-[#b27330]";
     }
   }
 }
@@ -59,17 +59,20 @@ function getArtifactIcon(partName: string | undefined) {
 </script>
 
 <template>
-  <main class="container mx-auto max-lg:mb-5 mt-3" v-if="status === 'success' && artifactData">
-    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-5">
-      <div class="flex flex-col lg:col-span-4 lg:h-90dvh lg:overflow-y-auto">
-        <div class="flex px-5 py-2 bg-#bc6832 rounded-t-lg">
-          <p class="text-xl font-semibold text-white">
+  <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && artifactData">
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
+      <div class="flex flex-col lg:col-span-4 lg:h-[calc(100dvh-6.5rem)]">
+        <div class="flex shrink-0 px-5 py-2 bg-[#bc6832] rounded-t-lg">
+          <p class="text-lg md:text-xl font-semibold text-white">
             {{
               artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]?.name
             }}
           </p>
         </div>
-        <div class="flex justify-center items-center relative" :class="getBgColor(maxRarity)">
+        <div
+          class="flex shrink-0 justify-center items-center relative"
+          :class="getBgColor(maxRarity)"
+        >
           <NuxtImg
             :src="`${storageConfig.baseUrl}/relic-icon/${artifactData.imgaes?.[currentPart as keyof typeof artifactData.imgaes]}.webp`"
             width="128"
@@ -77,13 +80,15 @@ function getArtifactIcon(partName: string | undefined) {
             class="h-50 w-50"
           />
         </div>
-        <div class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black">
+        <div
+          class="flex flex-col gap-5 bg-parchment-200 p-5 rounded-b-lg grow lg:min-h-0 lg:overflow-y-auto text-navy-800"
+        >
           <div class="flex flex-row items-center">
-            <h2 class="text-2xl font-semibold">
+            <h2 class="text-xl md:text-2xl font-semibold">
               {{ artifactData.name }}
             </h2>
-            <p class="text-2xl font-bold select-none">．</p>
-            <p class="text-2xl font-semibold opacity-50">
+            <p class="text-xl md:text-2xl font-bold select-none">．</p>
+            <p class="text-xl md:text-2xl font-semibold opacity-50">
               {{
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
                   ?.relicText
@@ -92,38 +97,45 @@ function getArtifactIcon(partName: string | undefined) {
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex flex-row items-center gap-2">
-              <Button
+              <button
                 v-for="part in partList"
+                :key="part"
+                type="button"
+                class="flex items-center justify-center min-w-fit p-2 rounded-lg border-2 transition-colors cursor-pointer"
+                :class="
+                  currentPart === part
+                    ? 'bg-navy-800 border-gold-400'
+                    : 'bg-navy-800/10 border-transparent hover:border-navy-800/40'
+                "
+                :aria-pressed="currentPart === part"
                 @click="currentPart = part"
-                :severity="currentPart === part ? 'contrast' : 'secondary'"
-                class="min-w-fit"
               >
                 <NuxtImg
                   :src="`${storageConfig.baseUrl}/ui-icon/${getArtifactIcon(part)}.png`"
                   width="24"
                   height="24"
                 />
-              </Button>
+              </button>
             </div>
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-5">
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_1pcs">
-                <p class="text-xl font-semibold">1 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_1pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">1 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_1pcs }}</p>
               </div>
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_2pcs">
-                <p class="text-xl font-semibold">2 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_2pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">2 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_2pcs }}</p>
               </div>
               <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_4pcs">
-                <p class="text-xl font-semibold">4 件套裝</p>
-                <p class="text-lg">{{ artifactData.effect_4pcs }}</p>
+                <p class="text-base md:text-lg font-semibold">4 件套裝</p>
+                <p class="text-sm md:text-base">{{ artifactData.effect_4pcs }}</p>
               </div>
             </div>
           </div>
           <div>
-            <p class="text-lg font-semibold opacity-50">
+            <p class="text-sm md:text-base font-semibold opacity-50">
               {{
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
                   ?.description
@@ -133,11 +145,13 @@ function getArtifactIcon(partName: string | undefined) {
         </div>
       </div>
       <!-- 右側故事 -->
-      <div class="flex flex-col lg:col-span-6 rounded-lg bg-zinc-200 lg:h-90dvh lg:overflow-y-auto">
-        <div class="flex flex-col gap-5 p-5">
-          <p class="text-xl font-semibold dark:text-black opacity-80">聖遺物故事</p>
+      <div class="flex flex-col lg:col-span-6 gi-panel lg:h-[calc(100dvh-6.5rem)]">
+        <div class="flex flex-col gap-5 p-5 lg:min-h-0">
+          <p class="gi-diamond text-base md:text-lg font-semibold text-highlighted shrink-0">
+            聖遺物故事
+          </p>
           <div
-            class="text-lg dark:text-black"
+            class="text-sm md:text-base lg:min-h-0 lg:overflow-y-auto"
             v-html="
               parseDescriptionText(
                 artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]

@@ -8,20 +8,6 @@ interface Item {
   count: number;
 }
 
-interface MaterialData {
-  id: number;
-  name: {
-    CHT: string;
-    EN: string;
-  };
-  category: string;
-  rarity: number;
-  typeText: string;
-  description: string;
-  sources: string[];
-  icon: string;
-}
-
 const { data } = defineProps<{ data: Item }>();
 const materialData = computed(() => {
   return materialList.find((material) => material.id === data.id);
@@ -30,20 +16,24 @@ const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 const dialogVisible = ref(false);
+// 遮罩會傳送到 body，無法繼承祖先的 .dark；依按鈕所在區域判斷是否強制深色
+// （不可綁 dialogVisible，否則關閉動畫期間會先退回淺色）
+const btnEl = ref<HTMLElement | null>(null);
+const overlayClass = computed(() => (btnEl.value?.closest(".dark") ? "dark" : ""));
 
 function getBgColor(rarity: number | undefined) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "bg-linear-to-br from-#6a6d74 to-#868586";
+        return "bg-linear-to-br from-[#6a6d74] to-[#868586]";
       case 2:
-        return "bg-linear-to-br from-#4b6c67 to-#519072";
+        return "bg-linear-to-br from-[#4b6c67] to-[#519072]";
       case 3:
-        return "bg-linear-to-br from-#567496 to-#5392b8";
+        return "bg-linear-to-br from-[#567496] to-[#5392b8]";
       case 4:
-        return "bg-linear-to-br from-#5e5789 to-#9c75b7";
+        return "bg-linear-to-br from-[#5e5789] to-[#9c75b7]";
       case 5:
-        return "bg-linear-to-br from-#945c2c to-#b27330";
+        return "bg-linear-to-br from-[#945c2c] to-[#b27330]";
     }
   }
 }
@@ -52,64 +42,62 @@ function getNameBarColor(rarity: number | undefined) {
   if (rarity) {
     switch (rarity) {
       case 1:
-        return "bg-#72778b";
+        return "bg-[#72778b]";
       case 2:
-        return "bg-#2a9072";
+        return "bg-[#2a9072]";
       case 3:
-        return "bg-#5180cb";
+        return "bg-[#5180cb]";
       case 4:
-        return "bg-#a156e0";
+        return "bg-[#a156e0]";
       case 5:
-        return "bg-#bc6832";
+        return "bg-[#bc6832]";
     }
   }
 }
 </script>
 
 <template>
-  <NuxtLink
-    class="flex flex-col justify-center items-center bg-#e9e5dc backdrop-blur-md rounded-md min-w-20 h-full m-1 cursor-pointer"
-    v-tooltip.top="data.name"
-    @click="dialogVisible = !dialogVisible"
-  >
-    <div
-      class="flex justify-center items-center w-full h-18 rounded-t-md"
-      :class="getBgColor(materialData?.rarity)"
+  <UTooltip :text="data.name">
+    <button
+      ref="btnEl"
+      type="button"
+      class="flex flex-col justify-center items-center bg-parchment-200 rounded-md min-w-18 m-1 cursor-pointer hover:ring-2 ring-gold-500 transition-shadow"
+      @click="dialogVisible = !dialogVisible"
     >
-      <NuxtImg
-        :src="`${storageConfig.baseUrl}/item-icon/UI_ItemIcon_${data.id}.webp`"
-        :alt="data.name"
-        class="w-15 h-15"
-        placeholder
-      />
-    </div>
-    <div class="flex flex-col justify-center items-center h-8 w-full">
-      <p class="text-black">{{ data.count }}</p>
-    </div>
-  </NuxtLink>
-  <Dialog
-    v-model:visible="dialogVisible"
-    modal
-    :header="data.name"
-    class="w-90vw lg:w-35vw"
-    :pt="{ root: { class: 'border-none!' } }"
-  >
-    <template #container="{ closeCallback }">
-      <div class="flex flex-col h-fit rounded-md">
+      <!-- grow：按鈕被外層 flex 拉伸時由圖示區吃掉多餘高度，避免頂部露出底色 -->
+      <div
+        class="flex justify-center items-center w-full grow min-h-16 rounded-t-md"
+        :class="getBgColor(materialData?.rarity)"
+      >
+        <NuxtImg
+          :src="`${storageConfig.baseUrl}/item-icon/UI_ItemIcon_${data.id}.webp`"
+          :alt="data.name"
+          class="w-15 h-15"
+          placeholder
+        />
+      </div>
+      <div class="flex flex-col justify-center items-center h-8 w-full">
+        <p class="text-navy-800">{{ data.count }}</p>
+      </div>
+    </button>
+  </UTooltip>
+  <UModal v-model:open="dialogVisible" :ui="{ overlay: overlayClass, content: 'max-w-lg ring-0' }">
+    <template #content>
+      <div class="flex flex-col h-fit rounded-lg overflow-hidden">
         <div
-          class="flex flex-row justify-between items-center px-5 py-2 rounded-t-lg"
+          class="flex flex-row justify-between items-center px-5 py-2"
           :class="getNameBarColor(materialData?.rarity)"
         >
-          <p class="text-lg lg:text-xl font-semibold text-white">
+          <p class="text-base md:text-lg font-semibold text-white">
             {{ materialData?.name.CHT }}
           </p>
-          <Button
-            icon="pi pi-times"
-            severity="secondary"
-            @click="closeCallback"
+          <UButton
+            icon="i-lucide-x"
+            variant="ghost"
+            class="text-white hover:text-white hover:bg-white/20 active:text-white active:bg-white/30"
             aria-label="關閉視窗"
-            class="rounded-lg! w-8 h-8"
-          ></Button>
+            @click="dialogVisible = false"
+          />
         </div>
         <div
           class="flex justify-center items-center h-50 relative"
@@ -120,13 +108,13 @@ function getNameBarColor(rarity: number | undefined) {
             class="w-45 h-45 max-md:py-5 object-contain"
           />
           <div class="absolute top-3 left-5 flex">
-            <p class="select-none text-white font-semibold opacity-90 lg:text-lg">
+            <p class="select-none text-white font-semibold opacity-90 text-sm md:text-base">
               {{ materialData?.typeText }}
             </p>
           </div>
           <div class="absolute bottom-3 left-5 flex flex-row gap-1">
             <p
-              class="select-none text-yellow font-semibold lg:text-lg"
+              class="select-none text-yellow-400 font-semibold text-sm md:text-base"
               v-for="n in materialData?.rarity"
             >
               ★
@@ -134,29 +122,29 @@ function getNameBarColor(rarity: number | undefined) {
           </div>
         </div>
         <div
-          class="flex flex-col gap-5 bg-#ece5d8 p-5 rounded-b-lg h-full dark:text-black max-lg:max-h-30vh max-h-50vh overflow-y-auto"
+          class="flex flex-col gap-5 bg-parchment-200 p-5 h-full text-navy-800 max-lg:max-h-[30vh] max-h-[50vh] overflow-y-auto"
         >
           <div class="flex flex-col gap-3">
             <p
               v-html="parseStoryContent(materialData?.description, store.name, store.playerGender)"
-              class="lg:text-lg opacity-80"
+              class="text-sm md:text-base opacity-80"
             ></p>
           </div>
           <div class="flex flex-col gap-3" v-if="materialData?.sources.length">
-            <p class="flex items-center gap-1 font-semibold">
-              <i class="pi pi-map-marker"></i>來源
+            <p class="flex items-center gap-1 font-semibold text-sm md:text-base">
+              <UIcon name="i-lucide-map-pin" />來源
             </p>
             <div
-              class="rounded-md border-2 border-#d2ccc1 p-3"
+              class="rounded-md border-2 border-parchment-300 p-3"
               v-for="source in materialData?.sources"
             >
-              <p>{{ source }}</p>
+              <p class="text-sm md:text-base">{{ source }}</p>
             </div>
           </div>
         </div>
       </div>
     </template>
-  </Dialog>
+  </UModal>
 </template>
 
 <style scoped></style>

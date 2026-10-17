@@ -6,11 +6,11 @@ const { progress, isLoading } = useLoadingIndicator();
   <Transition name="fade">
     <div
       v-if="isLoading"
-      class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-zinc-400/90 dark:bg-zinc-700/70 backdrop-blur-sm h-100vh"
+      class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-navy-500/80 dark:bg-navy-950/80 backdrop-blur-sm h-screen"
     >
       <img
         src="@/assets/LoadingProgressBar.webp"
-        class="w-80vw md:w-60vw xl:w-35vw h-auto transition-[clip-path] select-none"
+        class="w-[80vw] md:w-[60vw] xl:w-[35vw] h-auto transition-[clip-path] select-none"
         :style="{ clipPath: `inset(0 ${100 - progress}% 0 0)` }"
       />
     </div>

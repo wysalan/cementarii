@@ -125,70 +125,27 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="container mx-auto pt-5 pb-10">
-    <div class="flex flex-col items-center pb-5">
-      <Panel toggleable collapsed class="mx-3 w-75vw md:w-full rounded-xl">
-        <template #header>
-          <div class="flex flex-row items-center gap-2">
-            <p class="font-semibold">篩選</p>
-            <Button
-              label="清除篩選條件"
-              rounded
-              class="h-7"
-              v-if="isFiltered"
-              @click="removeAllFilter"
-            />
-          </div>
-        </template>
-        <div class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">星級</p>
-            <div class="flex flex-row gap-2">
-              <SelectButton
-                v-model="filter.raritySelected"
-                :options="filter.rarity"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">類型</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="filter.weaponSelected"
-                :options="filter.weapon"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">副詞條</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="filter.statSelected"
-                :options="filter.stat"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
+  <main class="container mx-auto pt-5 pb-10 px-4">
+    <div class="flex flex-col items-center pb-5 gap-5">
+      <div class="gi-panel w-full max-w-3xl p-4 flex items-center gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-1">
+          <UIFilterSelect label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
+          <UIFilterSelect label="類型" :options="filter.weapon!" v-model="filter.weaponSelected" />
+          <UIFilterSelect label="副詞條" :options="filter.stat!" v-model="filter.statSelected" />
         </div>
-      </Panel>
-      <div class="flex justify-center items-center pt-5">
-        <IconField>
-          <InputIcon class="pi pi-search" />
-          <InputText v-model="weaponSearchKeyword" placeholder="搜尋武器" />
-          <InputIcon
-            class="pi pi-times"
-            @click="weaponSearchKeyword = ''"
-            v-if="weaponSearchKeyword"
+        <UTooltip text="清除篩選條件" v-if="isFiltered">
+          <UButton
+            icon="i-lucide-filter-x"
+            variant="ghost"
+            class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+            aria-label="清除篩選條件"
+            @click="removeAllFilter"
           />
-        </IconField>
+        </UTooltip>
       </div>
+      <UISearchBar v-model="weaponSearchKeyword" placeholder="搜尋武器" />
     </div>
-    <div class="flex flex-wrap justify-center gap-5">
+    <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
       <WeaponBlock v-for="(weapon, index) in filteredWeaponList" :key="index" :data="weapon" />
     </div>
     <div ref="loadMoreTrigger"></div>

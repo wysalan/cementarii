@@ -41,7 +41,7 @@ declare global {
         id: number;
         name: string;
         count: number;
-      };
+      }[];
     };
 
     type characterTalents = {
@@ -153,7 +153,7 @@ declare global {
         id: number;
         name: string;
         count: number;
-      };
+      }[];
     };
 
     type weaponImages = {

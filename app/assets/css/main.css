@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "Inter Variable", "Noto Sans TC Variable", sans-serif;
+
+  /* 原神 UI 金（primary） */
+  --color-gold-50: #faf7ef;
+  --color-gold-100: #f3edd9;
+  --color-gold-200: #e7dcb9;
+  --color-gold-300: #dcc99c;
+  --color-gold-400: #d3bc8e;
+  --color-gold-500: #c3a464;
+  --color-gold-600: #b08d4b;
+  --color-gold-700: #8f6f3c;
+  --color-gold-800: #745a35;
+  --color-gold-900: #5f4a2e;
+  --color-gold-950: #362818;
+
+  /* 原神深藍板岩（neutral） */
+  --color-navy-50: #f4f5f7;
+  --color-navy-100: #e8eaee;
+  --color-navy-200: #d3d7de;
+  --color-navy-300: #aeb5c2;
+  --color-navy-400: #8791a4;
+  --color-navy-500: #6a7489;
+  --color-navy-600: #545d71;
+  --color-navy-700: #46506a;
+  --color-navy-800: #3b4255;
+  --color-navy-900: #303648;
+  --color-navy-950: #1f2333;
+
+  /* 羊皮紙 */
+  --color-parchment-50: #f9f6ee;
+  --color-parchment-100: #f2eddd;
+  --color-parchment-200: #ece5d8;
+  --color-parchment-300: #e0d6c2;
+  --color-parchment-400: #d2c5a9;
+  --color-parchment-500: #bfae8c;
+}
+
+/* 語意色彩：淺色＝羊皮紙、深色＝深藍板岩 */
+:root {
+  --ui-bg: #fafafa;
+  --ui-bg-muted: var(--color-parchment-100);
+  --ui-bg-elevated: #f5f1eb;
+  --ui-bg-accented: var(--color-parchment-300);
+  --ui-border: #d9cdb2;
+  --ui-border-muted: #e3dac4;
+  --ui-border-accented: #c9bb9c;
+  --ui-text-highlighted: var(--color-navy-800);
+  --ui-text: var(--color-navy-700);
+  --ui-text-muted: var(--color-navy-500);
+  --ui-text-dimmed: var(--color-navy-400);
+  --ui-radius: 0.5rem;
+  line-height: 1.4;
+}
+
+.dark {
+  --ui-bg: var(--color-navy-950);
+  --ui-bg-muted: #262b3d;
+  --ui-bg-elevated: var(--color-navy-900);
+  --ui-bg-accented: var(--color-navy-800);
+  --ui-border: #454f68;
+  --ui-border-muted: #3a4258;
+  --ui-border-accented: #545d71;
+  --ui-text-highlighted: var(--color-parchment-200);
+  --ui-text: #d9d3c6;
+  --ui-text-muted: #a39f92;
+  --ui-text-dimmed: #7d7b70;
+}
+
+body {
+  background-color: var(--ui-bg);
+  color: var(--ui-text);
+  transition: background-color 150ms ease;
+}
+
+#site-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+html {
+  scroll-padding-top: 5.5rem;
+  scroll-behavior: smooth;
+}
+
+/* 原神風裝飾 */
+@utility gi-diamond {
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    margin-right: 0.5em;
+    background: var(--color-gold-500);
+    /* CJK 字形視覺中心略高於 vertical-align: middle 的基準，微調上移 */
+    transform: translateY(-0.1em) rotate(45deg);
+    vertical-align: middle;
+  }
+}
+
+@utility gi-panel {
+  background-color: var(--ui-bg-elevated);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}

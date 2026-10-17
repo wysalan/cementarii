@@ -1,20 +1,11 @@
 import { siteConfig } from "./app/site.config";
-import Zoir from "./app/presets/Noir";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: [
-    "@unocss/nuxt",
-    "@nuxt/icon",
-    "@nuxt/image",
-    "@primevue/nuxt-module",
-    "@pinia/nuxt",
-    "pinia-plugin-persistedstate/nuxt",
-    "@nuxtjs/color-mode",
-  ],
+  modules: ["@nuxt/ui", "@nuxt/image", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
 
-  css: ["@/assets/css/global.css", "@/assets/css/fonts.css"],
+  css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
 
   app: {
     head: {
@@ -33,17 +24,9 @@ export default defineNuxtConfig({
       id: "site-content",
     },
   },
-  primevue: {
-    autoImport: true,
-    options: {
-      theme: {
-        preset: Zoir,
-        mergeProps: true,
-      },
-    },
-    directives: {
-      include: ["Tooltip"],
-    },
+  icon: {
+    serverBundle: { collections: ["lucide"] },
+    clientBundle: { icons: ["lucide:sun", "lucide:moon"], scan: true },
   },
   image: {
     provider: "ipx",

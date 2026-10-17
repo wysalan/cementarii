@@ -12,6 +12,16 @@ const currentResin = ref(0);
 const useCustomTime = ref(false);
 const resetResin = ref(true);
 
+const customTimeString = computed({
+  get: () => customTime.value.toTimeString().slice(0, 5),
+  set: (value: string) => {
+    const [hour = "0", minute = "0"] = value.split(":");
+    customTime.value.setHours(parseInt(hour));
+    customTime.value.setMinutes(parseInt(minute));
+    customTime.value = new Date(customTime.value);
+  },
+});
+
 const currentTime = ref(
   new Date().toLocaleTimeString("zh-TW", {
     hour: "2-digit",
@@ -61,71 +71,47 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
 </script>
 
 <template>
-  <main class="container mx-auto pt-5 pb-10">
-    <div class="flex flex-col justify-center items-center mx-5 gap-5 text-lg text-black">
-      <h2 class="text-2xl font-semibold text-black dark:text-white">樹脂計算器</h2>
-      <Message severity="secondary">一般模式的誤差值為 &plusmn; 16 分鐘</Message>
-      <div class="flex flex-col justify-center items-center gap-5">
-        <div
-          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 dark:bg-zinc-700 dark:text-white p-5 rounded-lg shadow-sm w-full"
-        >
-          <p class="text-xl font-semibold opacity-80">輸入目前的樹脂</p>
-          <InputNumber
+  <main class="container mx-auto pt-5 pb-10 px-4">
+    <div class="flex flex-col justify-center items-center gap-5 text-lg">
+      <h2 class="gi-diamond text-2xl font-semibold text-highlighted">樹脂計算器</h2>
+      <UAlert
+        color="neutral"
+        variant="soft"
+        icon="i-lucide-info"
+        title="一般模式的誤差值為 ± 16 分鐘"
+        class="w-fit"
+      />
+      <div class="flex flex-col justify-center items-center gap-5 w-full max-w-md">
+        <div class="flex flex-col justify-center items-center gap-3 gi-panel p-5 w-full">
+          <p class="text-xl font-semibold text-highlighted">輸入目前的樹脂</p>
+          <UInputNumber
             v-model="currentResin"
             :min="0"
             :max="200"
-            showButtons
-            buttonLayout="horizontal"
-            size="large"
+            size="xl"
             placeholder="在此處輸入樹脂"
-            fluid
-            :pt="{ pcInputText: { root: { class: 'text-center! dark:bg-backgroundDark!' } } }"
-          >
-            <template #incrementicon>
-              <span class="pi pi-plus" />
-            </template>
-            <template #decrementicon>
-              <span class="pi pi-minus" />
-            </template>
-          </InputNumber>
+            class="w-full"
+          />
         </div>
-        <div
-          class="flex flex-col justify-center items-center gap-3 bg-zinc-100 dark:bg-zinc-700 dark:text-white p-5 rounded-lg shadow-sm w-full"
-        >
-          <p class="text-xl font-semibold opacity-80">設定起始時間</p>
+        <div class="flex flex-col justify-center items-center gap-3 gi-panel p-5 w-full">
+          <p class="text-xl font-semibold text-highlighted">設定起始時間</p>
           <div class="flex flex-row justify-center items-center gap-3">
             <p>目前時間</p>
-            <ToggleSwitch
-              v-model="useCustomTime"
-              :pt="{
-                root: { class: 'scale-110!' },
-                slider: { class: 'dark:bg-zinc-600!' },
-                handle: { class: 'dark:bg-zinc-100!' },
-              }"
-              @click="setCustomTime(true)"
-            />
+            <USwitch v-model="useCustomTime" @change="setCustomTime(true)" />
             <p>自訂時間</p>
           </div>
           <div class="flex flex-col" v-if="!useCustomTime" data-allow-mismatch>
             現在時間：{{ currentTime }}
           </div>
           <div class="flex flex-col" v-else>
-            <DatePicker
-              v-model="customTime"
-              timeOnly
-              fluid
-              :pt="{
-                pcInputText: { root: { class: 'text-center! dark:bg-backgroundDark!' } },
-                panel: { class: 'dark:bg-backgroundDark!' },
-              }"
-            />
+            <UInput v-model="customTimeString" type="time" class="w-40 text-center" />
           </div>
         </div>
       </div>
       <div class="flex flex-col justify-center items-center w-full">
-        <p class="text-xl font-semibold opacity-80 mb-5 text-black dark:text-white">計算結果</p>
+        <p class="gi-diamond text-xl font-semibold mb-5 text-highlighted">計算結果</p>
         <div
-          class="flex flex-col w-full md:w-75vw lg:w-50vw"
+          class="flex flex-col w-full md:w-[75vw] lg:w-[50vw]"
           v-for="(resin, index) in getFullResinResult(
             currentResin,
             { hour: customTime.getHours(), minute: customTime.getMinutes() },
@@ -134,28 +120,29 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
           :key="index"
         >
           <div
-            class="flex flex-row justify-between items-center px-5 py-3 bg-zinc-200 dark:bg-zinc-700 dark:text-white rounded-xl shadow-md w-full group"
+            class="flex flex-row justify-between items-center px-5 py-3 gi-panel w-full group"
             :class="{ 'mb-5': index >= 1 }"
           >
             <p>{{ resin.resin }}</p>
             <div class="flex flex-row gap-3 justify-center items-center h-5">
               <div class="hidden md:group-hover:flex flex-row items-center gap-2" v-if="index">
-                <label for="resetResin"> 將樹脂設為零 </label>
-                <Checkbox v-model="resetResin" inputId="resetResin" binary />
-                <Button
+                <UCheckbox v-model="resetResin" label="將樹脂設為零" />
+                <UButton
                   label="將此時間設為起點"
-                  severity="secondary"
+                  color="primary"
+                  variant="soft"
+                  size="xs"
+                  class="rounded-full"
                   @click="
                     setCustomTime(false, resin.time);
                     useCustomTime = true;
                   "
-                  :pt="{ root: { class: 'py-0!' } }"
                 />
               </div>
               <p>{{ resin.prefix }} {{ resin.time }}</p>
             </div>
           </div>
-          <Divider v-if="!index" />
+          <USeparator v-if="!index" class="my-4" />
         </div>
       </div>
     </div>

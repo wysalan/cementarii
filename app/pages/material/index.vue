@@ -101,81 +101,36 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="container mx-auto pt-5 pb-10">
-    <div class="flex flex-col items-center pb-5">
-      <Panel toggleable collapsed class="mx-3 w-75vw md:w-full rounded-xl">
-        <template #header>
-          <div class="flex flex-row items-center gap-2">
-            <p class="font-semibold">篩選</p>
-            <Button
-              label="清除篩選條件"
-              rounded
-              class="h-7"
-              v-if="isFiltered"
-              @click="removeAllFilter"
-            />
-          </div>
-        </template>
-        <div class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">星級</p>
-            <div class="flex flex-row gap-2">
-              <SelectButton
-                v-model="filter.raritySelected"
-                :options="filter.rarity"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">角色與武器</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="filter.characterWeaponSelected"
-                :options="filter.characterWeapon"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">區域特產</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="filter.localSpecialtySelected"
-                :options="filter.localSpecialty"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-          <div class="flex flex-col justify-center items-center gap-2">
-            <p class="text-lg font-semibold">其他</p>
-            <div class="flex flex-col md:flex-row gap-2">
-              <SelectButton
-                v-model="filter.otherSelected"
-                :options="filter.other"
-                class="flex flex-wrap justify-center items-center"
-                multiple
-              />
-            </div>
-          </div>
-        </div>
-      </Panel>
-      <div class="flex justify-center items-center pt-5">
-        <IconField>
-          <InputIcon class="pi pi-search" />
-          <InputText v-model="materialSearchKeyword" placeholder="搜尋素材" />
-          <InputIcon
-            class="pi pi-times"
-            @click="materialSearchKeyword = ''"
-            v-if="materialSearchKeyword"
+  <main class="container mx-auto pt-5 pb-10 px-4">
+    <div class="flex flex-col items-center pb-5 gap-5">
+      <div class="gi-panel w-full max-w-3xl p-4 flex items-center gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1">
+          <UIFilterSelect label="星級" :options="filter.rarity!" v-model="filter.raritySelected" />
+          <UIFilterSelect
+            label="角色與武器"
+            :options="filter.characterWeapon!"
+            v-model="filter.characterWeaponSelected"
           />
-        </IconField>
+          <UIFilterSelect
+            label="區域特產"
+            :options="filter.localSpecialty!"
+            v-model="filter.localSpecialtySelected"
+          />
+          <UIFilterSelect label="其他" :options="filter.other!" v-model="filter.otherSelected" />
+        </div>
+        <UTooltip text="清除篩選條件" v-if="isFiltered">
+          <UButton
+            icon="i-lucide-filter-x"
+            variant="ghost"
+            class="hover:bg-gold-400/15 hover:text-gold-700 dark:hover:text-gold-300 transition-colors"
+            aria-label="清除篩選條件"
+            @click="removeAllFilter"
+          />
+        </UTooltip>
       </div>
+      <UISearchBar v-model="materialSearchKeyword" placeholder="搜尋素材" />
     </div>
-    <div class="flex flex-wrap justify-center gap-5">
+    <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
       <MaterialBlock
         v-for="(material, index) in filteredMaterialList"
         :key="index"

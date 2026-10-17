@@ -7,29 +7,120 @@ const { parseStoryContent } = useDataParser();
 
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
+
+const stories = data.profile?.story || [];
+
+const selected = ref<number | null>(null);
+const selectedItem = computed(() => (selected.value === null ? null : stories[selected.value]));
+
+// 點擊空白區域時關閉故事內容
+const listEl = ref<HTMLElement | null>(null);
+const detailEl = ref<HTMLElement | null>(null);
+
+const onPointerDownOutside = (event: PointerEvent) => {
+  if (selected.value === null) return;
+  const target = event.target as Element | null;
+  if (!target?.closest("#site-content")) return;
+  if (detailEl.value?.contains(target) || listEl.value?.contains(target)) return;
+  selected.value = null;
+};
+
+onMounted(() => document.addEventListener("pointerdown", onPointerDownOutside));
+onBeforeUnmount(() => document.removeEventListener("pointerdown", onPointerDownOutside));
+
+// 手機／平板：內容卡在清單下方，開啟後自動捲動至卡片
+const scrollToDetail = () => {
+  if (window.innerWidth < 1280) {
+    detailEl.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-85vh justify-start items-center mt-5 overflow-y-auto">
-    <div class="flex flex-col gap-5 w-full mb-20 md:mb-15">
-      <Panel
-        :header="story.title"
-        toggleable
-        collapsed
-        class="rounded-xl"
-        v-for="(story, key) in data.profile?.story"
-        :pt="{
-          root: { class: 'w-full bg-white/80! backdrop-blur-sm py-2 shadow-md' },
-          header: { class: 'text-xl dark:text-zinc-700!' },
-        }"
+  <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
+    <!-- 故事內容卡：獨立定位於清單左側（right-10 + 清單寬 72 + 間距 4），各自垂直置中 -->
+    <Transition name="story-detail" mode="out-in" :duration="200" @after-enter="scrollToDetail">
+      <div
+        v-if="selectedItem"
+        :key="selected ?? -1"
+        ref="detailEl"
+        class="scroll-mt-24 max-xl:order-2 xl:absolute xl:right-86 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 xl:w-110"
       >
-        <p
-          class="text-lg dark:text-zinc-700!"
-          v-html="parseStoryContent(story.text, store.name, store.playerGender)"
-        ></p>
-      </Panel>
-    </div>
+        <section
+          class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
+        >
+          <div class="flex items-start justify-between gap-3 pb-4">
+            <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white">
+              {{ selectedItem.title }}
+            </h2>
+            <button
+              type="button"
+              class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
+              aria-label="關閉故事內容"
+              @click="selected = null"
+            >
+              <UIcon name="i-lucide-x" class="size-5" />
+            </button>
+          </div>
+          <div class="overflow-y-auto min-h-0">
+            <div :key="selected ?? -1" class="tab-pane">
+              <p
+                class="text-sm md:text-base"
+                v-html="parseStoryContent(selectedItem.text, store.name, store.playerGender)"
+              ></p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </Transition>
+
+    <!-- 故事項目清單 -->
+    <nav
+      ref="listEl"
+      class="flex flex-col gap-2 max-xl:order-1 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 xl:w-72 xl:max-h-[85vh] xl:overflow-y-auto"
+      aria-label="故事清單"
+    >
+      <button
+        v-for="(story, i) in stories"
+        :key="i"
+        type="button"
+        class="flex items-center p-3 rounded-lg border backdrop-blur-sm text-left transition-colors cursor-pointer"
+        :class="
+          selected === i
+            ? 'bg-navy-800/85 border-gold-300/80 shadow-[0_0_10px_rgba(211,188,142,0.35)]'
+            : 'bg-navy-900/70 border-white/20 hover:border-gold-300/60 hover:bg-navy-800/70'
+        "
+        :aria-current="selected === i ? 'true' : undefined"
+        @click="selected = selected === i ? null : i"
+      >
+        <span
+          class="text-sm md:text-base font-semibold transition-colors"
+          :class="selected === i ? 'text-gold-300' : 'text-white/90'"
+        >
+          {{ story.title }}
+        </span>
+      </button>
+    </nav>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.story-detail-enter-active > section,
+.story-detail-leave-active > section {
+  transition: opacity 0.2s ease;
+}
+.story-detail-enter-from > section,
+.story-detail-leave-to > section {
+  opacity: 0;
+}
+
+.tab-pane {
+  animation: tab-pane-in 0.2s ease;
+}
+@keyframes tab-pane-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+</style>
