@@ -315,11 +315,12 @@ function getSubstatValue(type: string | undefined, substat: number) {
     </UModal>
   </main>
   <main v-else>
-    <div class="container mx-auto pt-5 pb-10">
-      <p class="text-lg">目前無此武器資料，或是連接資料庫時發生錯誤</p>
-      <p class="text-lg" v-if="error">
-        錯誤訊息：{{ error?.statusMessage }} (Status code: {{ error?.statusCode }})
-      </p>
+    <div class="container mx-auto flex flex-col items-center pt-5 pb-10 px-4">
+      <div v-if="error">
+        <p>連接資料庫時發生錯誤</p>
+        <p>{{ error?.statusMessage }}（狀態碼：{{ error?.statusCode }}）</p>
+      </div>
+      <p v-else>目前尚無此武器資料</p>
     </div>
   </main>
 </template>
