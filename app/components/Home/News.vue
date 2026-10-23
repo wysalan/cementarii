@@ -46,12 +46,14 @@ const { data, status } = await useAsyncData(
 
 function getEventType(name: string | undefined) {
   if (name) {
-    if (name.includes("活動")) {
+    if (name.includes("活動") || name.includes("礪行修遠")) {
       return "活動";
     } else if (name.includes("任務")) {
       return "任務";
     } else if (name.includes("祈願")) {
       return "祈願";
+    } else if (name.includes("七聖召喚")) {
+      return "七聖召喚";
     } else {
       return "其他";
     }
@@ -77,7 +79,7 @@ function setEventDetail(eventData: GroupedEventData) {
       <h2 class="text-2xl text-highlighted">活動一覽</h2>
       <div class="flex flex-row flex-wrap gap-2">
         <UButton
-          v-for="type in ['活動', '任務', '祈願', '其他']"
+          v-for="type in ['活動', '任務', '祈願', '七聖召喚', '其他']"
           :key="type"
           :label="type"
           :color="eventFilter === type ? 'primary' : 'neutral'"
