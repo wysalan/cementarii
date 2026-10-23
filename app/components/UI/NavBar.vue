@@ -7,12 +7,17 @@ const dialogVisible = ref(false);
 const newUserName = ref(store.name);
 const newGender = ref(store.playerGender);
 const newLevel = ref(store.defaultTalentLevel);
+const newCharacterBg = ref(store.characterBg);
 
 const genderOptions = [
   { label: "男", value: "male" },
   { label: "女", value: "female" },
 ];
 const levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const characterBgOptions = [
+  { label: "自動取色", value: "extractFromAvatar" },
+  { label: "元素背景", value: "elementBg" },
+];
 const reloadAfterSetting = ref(false);
 
 // 連結區捲動提示箭頭
@@ -36,14 +41,16 @@ onUnmounted(() => {
 });
 
 function saveSettings() {
-  if (!newUserName.value) return;
-  store.changeUserName(newUserName.value);
+  if (!newUserName.value) {
+    newUserName.value = ref(store.name).value;
+  } else {
+    store.changeUserName(newUserName.value);
+  }
   if (newGender.value) store.changeGender(newGender.value);
   if (newLevel.value) store.changeDefaultTalentLevel(newLevel.value);
+  if (newCharacterBg.value) store.setCharacterBg(newCharacterBg.value);
+  if (reloadAfterSetting.value) window.location.reload();
   dialogVisible.value = false;
-  if (reloadAfterSetting.value) {
-    window.location.reload();
-  }
 }
 </script>
 
@@ -121,15 +128,44 @@ function saveSettings() {
   <UModal v-model:open="dialogVisible" title="設定" :ui="{ content: 'max-w-sm' }">
     <template #body>
       <div class="flex flex-col gap-5">
-        <UFormField label="玩家名稱" help="用於首頁顯示及旅行者角色故事的玩家顯示名稱" required>
-          <UInput v-model="newUserName" autocomplete="off" class="w-full" />
+        <USeparator label="基本設定" />
+        <UFormField name="player-name">
+          <template #label>
+            <div class="flex items-center gap-1">
+              <span>玩家名稱</span>
+              <UTooltip
+                text="用於首頁及「旅行者（空／熒）」角色故事的玩家顯示名稱"
+                :ui="{ content: 'dark' }"
+              >
+                <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
+              </UTooltip>
+            </div>
+          </template>
+          <UInput
+            v-model="newUserName"
+            autocomplete="off"
+            class="w-full"
+            :placeholder="ref(store.name).value"
+            required
+          />
         </UFormField>
-        <UFormField label="性別" help="此設定僅用於顯示角色故事中的第二人稱代詞">
+        <UFormField name="gender">
+          <template #label>
+            <div class="flex items-center gap-1">
+              <span>性別</span>
+              <UTooltip text="用於顯示角色故事中的第二人稱代詞" :ui="{ content: 'dark' }">
+                <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
+              </UTooltip>
+            </div>
+          </template>
           <URadioGroup v-model="newGender" :items="genderOptions" orientation="horizontal" />
         </UFormField>
-        <USeparator label="以下設定需重新整理才可生效" />
-        <UFormField label="技能預設顯示等級">
+        <USeparator label="資料顯示設定" />
+        <UFormField label="角色技能預設顯示等級">
           <USelect v-model="newLevel" :items="levelOptions" class="w-full" />
+        </UFormField>
+        <UFormField label="角色頁面背景樣式">
+          <USelect v-model="newCharacterBg" :items="characterBgOptions" class="w-full" />
         </UFormField>
         <UCheckbox v-model="reloadAfterSetting" label="儲存後重新整理頁面" />
       </div>
@@ -137,13 +173,7 @@ function saveSettings() {
     <template #footer>
       <div class="flex w-full justify-end gap-2">
         <UButton label="取消" variant="ghost" @click="dialogVisible = false" />
-        <UButton
-          label="儲存"
-          color="primary"
-          variant="solid"
-          :disabled="!newUserName"
-          @click="saveSettings"
-        />
+        <UButton label="儲存" color="primary" variant="solid" @click="saveSettings" />
       </div>
     </template>
   </UModal>

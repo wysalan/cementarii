@@ -4,6 +4,7 @@ export const useUserStore = defineStore("user", {
     playerGender: "male",
     defaultTalentLevel: 1,
     useCostumeIcon: false,
+    characterBg: "extractFromAvatar",
   }),
   actions: {
     changeUserName(newName: string) {
@@ -17,6 +18,9 @@ export const useUserStore = defineStore("user", {
     },
     changeIconState() {
       this.useCostumeIcon = !this.useCostumeIcon;
+    },
+    setCharacterBg(newCharacterBg: string) {
+      this.characterBg = newCharacterBg;
     },
   },
   persist: {
