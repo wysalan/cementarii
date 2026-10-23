@@ -14,36 +14,36 @@
     "fmt:check": "oxfmt --check"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.2.8",
-    "@fontsource-variable/noto-sans-tc": "^5.2.10",
-    "@iconify-json/lucide": "^1.2.121",
-    "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.10.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/noto-sans-tc": "^5.3.1",
+    "@iconify-json/lucide": "^1.2.147",
+    "@nuxt/image": "^2.2.0",
+    "@nuxt/ui": "^4.12.0",
     "@pinia/nuxt": "^0.11.3",
     "@prisma/adapter-neon": "^7.8.0",
     "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.7.0",
-    "colorthief": "^3.3.1",
+    "colorthief": "^3.5.0",
     "drizzle-orm": "^0.45.4",
-    "nuxt": "^4.4.2",
-    "pg": "^8.20.0",
+    "nuxt": "^4.6.2",
+    "pg": "^8.23.1",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.3.3",
-    "ts-extras": "^1.0.0",
-    "vue": "^3.5.31",
-    "vue-router": "^5.0.4",
-    "zod": "^4.3.6"
+    "ts-extras": "^1.3.0",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
-    "@types/pg": "^8.20.0",
+    "@types/node": "^25.9.9",
+    "@types/pg": "^8.23.1",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.11",
-    "oxfmt": "^0.43.0",
-    "oxlint": "^1.58.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
     "prisma": "^7.7.0",
     "prisma-json-types-generator": "^4.1.1",
-    "tsx": "^4.21.0"
+    "tsx": "^4.23.15"
   }
 }
