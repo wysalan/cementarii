@@ -3,12 +3,21 @@
   "name": "cementarii",
   "compatibility_date": "2026-10-19",
   "compatibility_flags": ["nodejs_compat"],
-
   "workers_dev": false,
   "preview_urls": false,
-  "routes": [{ "pattern": "cementarii.net", "custom_domain": true }],
-
+  "routes": [
+    {
+      "pattern": "cementarii.net",
+      "custom_domain": true,
+    },
+  ],
   "observability": {
     "enabled": true,
   },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "c64e9be266b9467ba728116f2dc95fa5",
+    },
+  ],
 }
