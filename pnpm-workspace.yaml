@@ -5,6 +5,7 @@ allowBuilds:
   prisma: true
   sharp: true
   vue-demi: true
+  workerd: true
 onlyBuiltDependencies:
   - "@parcel/watcher"
   - "@prisma/engines"
@@ -12,3 +13,4 @@ onlyBuiltDependencies:
   - prisma
   - sharp
   - vue-demi
+  - workerd

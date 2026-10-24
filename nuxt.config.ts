@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     clientBundle: { icons: ["lucide:sun", "lucide:moon"], scan: true },
   },
   image: {
-    provider: "ipx",
+    provider: "none",
   },
 
   typescript: {
@@ -38,6 +38,14 @@ export default defineNuxtConfig({
       compilerOptions: {
         types: ["node"],
       },
+    },
+  },
+
+  nitro: {
+    preset: "cloudflare-module",
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
     },
   },
 });
