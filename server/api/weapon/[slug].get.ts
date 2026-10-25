@@ -39,4 +39,4 @@ export default defineCachedEventHandler(async (event) => {
     ...flattenI18n(rest),
     costs: groupByStage(costs),
   };
-});
+}, API_CACHE);

@@ -34,4 +34,4 @@ export default defineCachedEventHandler(async (event) => {
     ...flattenI18n(rest),
     pieces: pieces.map(flattenI18n),
   };
-});
+}, API_CACHE);

@@ -83,4 +83,4 @@ export default defineCachedEventHandler(async (event) => {
     },
     outfits: outfits.map(({ outfit, ...link }) => ({ ...link, ...flattenI18n(outfit) })),
   };
-});
+}, API_CACHE);
