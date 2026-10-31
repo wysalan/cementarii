@@ -12,7 +12,6 @@ const { data } = defineProps<{ data: Item }>();
 const materialData = computed(() => {
   return materialList.find((material) => material.id === data.id);
 });
-const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 const dialogVisible = ref(false);

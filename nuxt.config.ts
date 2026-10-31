@@ -3,7 +3,13 @@ import { siteConfig } from "./app/site.config";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "@nuxt/image", "@pinia/nuxt", "pinia-plugin-persistedstate/nuxt"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxt/image",
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/i18n",
+  ],
 
   css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
 
@@ -30,6 +36,19 @@ export default defineNuxtConfig({
   },
   image: {
     provider: "none",
+  },
+
+  i18n: {
+    defaultLocale: "zh-TW",
+    strategy: "no_prefix",
+    locales: [
+      {
+        code: "zh-TW",
+        language: "zh-TW",
+        name: "繁體中文",
+        file: "zh-TW.json",
+      },
+    ],
   },
 
   typescript: {

@@ -1,28 +1,10 @@
 <script setup lang="ts">
-import { objectFromEntries } from "ts-extras";
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
+import type { CharacterData } from "@/types/api";
+const { data } = defineProps<{ data: CharacterData }>();
+const { t } = useI18n();
 
-import useDataParser from "@/composables/useDataParser";
-const { parseDescriptionText } = useDataParser();
-
-interface Dictionary {
-  relatedEffects: Record<string, string>;
-  linkToEffect: Record<string, string>;
-  linkToTalent: Record<string, string>;
-  linkToPassive: Record<string, string>;
-  linkToConstellation: Record<string, string>;
-}
-
-const dictionary: Dictionary | null = data.dictionary;
-
-const skills = objectFromEntries([
-  ["talents", Object.values(data.talents!.list)],
-  ["passives", data.passives!],
-  ["constellation", data.constellation?.list],
-] as const);
-
-const constellations = data.constellation?.list || [];
+const abilities = data.abilities.filter((a) => !a.isEnhanced);
+const constellations = abilities.filter((a) => a.kind === "constellation");
 
 // 弧形排列：中段項目向右凸出（模仿遊戲內命之座弧線）
 const arcOffsets = ["xl:pr-14", "xl:pr-5", "xl:pr-0", "xl:pr-0", "xl:pr-5", "xl:pr-14"];
@@ -55,38 +37,17 @@ const scrollToDetail = () => {
   }
 };
 
-// 相關效果 hover popover
-const getPopupData = (type: string, name: string) => {
-  const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
-  const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
-  const constellationList = Object.fromEntries(
-    skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
-  );
-  if (type === "talent") {
-    return { title: "相關突破天賦", name, description: talentsList[name]?.description || "" };
-  } else if (type === "passive") {
-    return { title: "相關固有天賦", name, description: passivesList[name]?.description || "" };
-  } else if (type === "constellation") {
-    return { title: "相關命之座", name, description: constellationList[name]?.description || "" };
-  } else if (type === "effect") {
-    return { title: "相關效果", name, description: dictionary?.relatedEffects[name] || "" };
-  }
-  return { title: "錯誤", name: "無法取得資料", description: "尚未設定此效果說明" };
-};
-
-const resolvePopover = (type: string, name: string) => {
-  const { title, name: popupName, description } = getPopupData(type, name);
-  return { title, name: popupName, html: parseDescriptionText(description, skills, dictionary) };
-};
+// 相關效果 popover 資料
+const resolvePopover = useAbilityPopover(data, abilities);
 </script>
 
 <template>
   <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
-    <!-- 右側：命之座清單（弧形排列，暫以菱形代替圖示） -->
+    <!-- 右側：命之座清單 -->
     <nav
       ref="listEl"
       class="flex flex-col gap-2 xl:gap-9 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
-      aria-label="命之座清單"
+      :aria-label="t('character.constellation.list')"
     >
       <button
         v-for="(constellation, i) in constellations"
@@ -97,7 +58,6 @@ const resolvePopover = (type: string, name: string) => {
         :aria-current="selected === i ? 'true' : undefined"
         @click="selected = selected === i ? null : i"
       >
-        <!-- hover／選中時的柔光橫帶（模仿遊戲內效果） -->
         <span
           class="absolute inset-0 xl:-left-16 xl:-right-10 xl:-inset-y-1 -z-10 rounded-lg xl:rounded-none bg-linear-to-r from-transparent to-transparent pointer-events-none transition-opacity duration-200"
           :class="
@@ -152,20 +112,20 @@ const resolvePopover = (type: string, name: string) => {
             <button
               type="button"
               class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
-              aria-label="關閉命之座資訊"
+              :aria-label="t('character.constellation.close')"
               @click="selected = null"
             >
               <UIcon name="i-lucide-x" class="size-5" />
             </button>
           </div>
           <p class="text-xs md:text-sm text-gold-300 font-semibold py-2">
-            命之座 第{{ (selected ?? 0) + 1 }}層
+            {{ t("character.constellation.level", { n: (selected ?? 0) + 1 }) }}
           </p>
           <div class="overflow-y-auto min-h-0">
             <div :key="selected ?? -1" class="tab-pane">
               <UIHoverPopover :resolve="resolvePopover">
                 <p
-                  v-html="parseDescriptionText(selectedItem.description, skills, dictionary)"
+                  v-html="parseDescriptionText(selectedItem.description, abilities, data.glossary)"
                   class="text-sm md:text-base"
                 ></p>
               </UIHoverPopover>

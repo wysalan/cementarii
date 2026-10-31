@@ -1,38 +1,9 @@
 <script setup lang="ts">
 import { storageConfig } from "@/site.config";
 import curve from "@/data/curve.json";
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
-
-interface outfitItem {
-  [key: string]: {
-    id: number;
-    name: string;
-    description: string;
-    isDefault: boolean;
-    images: Record<string, string>;
-    version: string;
-  };
-}
-
-interface Promotions {
-  [key: string]: {
-    maxlevel: number;
-    hp: number;
-    attack: number;
-    defense: number;
-    specialized: number;
-  };
-}
-
-interface PromotionItem {
-  [key: string]: {
-    hp: number;
-    attack: number;
-    defense: number;
-    specialized: number;
-  };
-}
+import type { CharacterData } from "@/types/api";
+const { data } = defineProps<{ data: CharacterData }>();
+const { t } = useI18n();
 
 interface Curve {
   [key: string]: {
@@ -40,10 +11,9 @@ interface Curve {
   };
 }
 
-interface curveItem {
-  [key: string]: number;
-}
+const detailOpen = ref(false);
 
+// 角色衣裝
 const outfitList = defineModel<string[]>("outfitList");
 const selectedOutfit = defineModel<string>("selectedOutfit");
 const outfitImgs = defineModel<Record<string, string>>("outfitImgs");
@@ -52,6 +22,7 @@ const outfitsObject = data.outfits
   ? Object.fromEntries(data.outfits.map((outfit) => [outfit.name, outfit]))
   : {};
 
+// 角色數值
 const levelIndex = ref(6);
 const levelTicks = [20, 40, 50, 60, 70, 80, 90, 95, 100];
 
@@ -59,101 +30,50 @@ const actualLevel = computed(() => {
   return levelTicks[levelIndex.value];
 });
 
-function getElementIcon(character: character) {
-  switch (character.element_text) {
-    case "火":
-      return "pryo";
-    case "水":
-      return "hydro";
-    case "雷":
-      return "electro";
-    case "冰":
-      return "cyro";
-    case "風":
-      return "anemo";
-    case "岩":
-      return "geo";
-    case "草":
-      return "dendro";
-    default:
-      return "unknown";
-  }
-}
-
 const calculatedStats = computed(() => {
   const characterCurve: Curve = curve.characters;
   const level: keyof Curve = actualLevel.value || 0;
-  const promotions = ref<Promotions>();
+  const promotions = data.stats.promotions.find((p) => p.maxLevel === Math.min(level, 90));
   const baseStats = {
-    hp: data.stats?.hp.base || 0,
-    atk: data.stats?.attack.base || 0,
-    def: data.stats?.defense.base || 0,
-    sp: data.stats?.substat.base || 0,
+    hp: data.stats?.base.hp || 0,
+    atk: data.stats?.base.attack || 0,
+    def: data.stats?.base.defense || 0,
+    stat: data.stats?.base.ascensionStat || 0,
   };
 
-  if (data.stats?.promotion) {
-    promotions.value = Object.fromEntries(
-      data.stats?.promotion.map((promotion) => [promotion.maxlevel, promotion]),
-    );
-  }
-
-  const result = ref({
+  const result = {
     hp:
-      baseStats.hp * (characterCurve?.[level]?.[data.stats?.hp.curve as keyof curveItem] || 0) +
-      (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.hp || 0),
+      baseStats.hp * (characterCurve?.[level]?.[data.stats.curves.hp] || 0) + (promotions?.hp || 0),
     atk:
-      baseStats.atk *
-        (characterCurve?.[level]?.[data.stats?.attack.curve as keyof curveItem] || 0) +
-      (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.attack || 0),
+      baseStats.atk * (characterCurve?.[level]?.[data.stats.curves.attack] || 0) +
+      (promotions?.attack || 0),
     def:
-      baseStats.def *
-        (characterCurve?.[level]?.[data.stats?.defense.curve as keyof curveItem] || 0) +
-      (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.defense || 0),
-    sp:
-      baseStats.sp +
-      (promotions.value?.[(level >= 90 ? 90 : level) as keyof PromotionItem]?.specialized || 0),
-  });
+      baseStats.def * (characterCurve?.[level]?.[data.stats.curves.defense] || 0) +
+      (promotions?.defense || 0),
+    subStat: baseStats.stat + (promotions?.ascensionStat || 0),
+  };
 
-  return result.value;
+  return result;
 });
 
-const detailOpen = ref(false);
-
-const materialCalculationMethod = ref("累計");
-const materialCalculationOption = ref(["單一", "累計"]);
-const costsValue = Object.values(data!.costs!);
+// 養成素材
+const materialCalculationMethod = ref<"single" | "cumulative">("cumulative");
+const materialCalculationOption = computed(() => [
+  { label: t("common.materials.method.single"), value: "single" },
+  { label: t("common.materials.method.cumulative"), value: "cumulative" },
+]);
 
 const materialCalculationResult = computed(() => {
-  if (materialCalculationMethod.value === "累計") {
-    const map = new Map();
-    costsValue
-      .slice(0, levelIndex.value)
-      .flat()
-      .forEach((item) => {
-        if (map.has(item.id)) {
-          map.get(item.id)!.count += item.count;
-        } else {
-          map.set(item.id, { ...item });
-        }
-      });
-    return [...map.values()].sort((a, b) => a.id - b.id);
+  if (materialCalculationMethod.value === "single") {
+    return sumMaterials(data.costs.ascension.filter((s) => s.stage === levelIndex.value));
   } else {
-    return costsValue[levelIndex.value - 1];
+    return sumMaterials(data.costs.ascension.filter((s) => s.stage <= levelIndex.value));
   }
 });
-
-function getSubstatValue(type: string | undefined, substat: number) {
-  if (type) {
-    if (type === "FIGHT_PROP_ELEMENT_MASTERY") {
-      return substat.toFixed(0);
-    }
-    return (substat * 100).toFixed(1) + "%";
-  }
-}
 </script>
 
 <template>
-  <!-- 右側：角色數值（模仿遊戲內屬性面板） -->
+  <!-- 右側：角色數值 -->
   <div
     class="xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 max-xl:mt-[36vh] max-xl:mx-4 xl:max-h-[85vh] overflow-y-auto max-xl:mb-30"
   >
@@ -175,7 +95,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <p class="text-sm md:text-base text-gold-300">{{ data.title }}</p>
         </div>
         <UBadge color="primary" variant="soft" class="select-none ml-auto self-start">
-          Ver. {{ data.version }}
+          Ver. {{ data.releasedIn }}
         </UBadge>
       </div>
       <div class="font-semibold text-left text-parchment-100/70 text-sm md:text-base">
@@ -197,32 +117,39 @@ function getSubstatValue(type: string | undefined, substat: number) {
       </div>
       <div class="flex flex-col divide-y divide-white/10">
         <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
-          <p class="font-semibold text-parchment-100/80">生命值上限</p>
+          <p class="font-semibold text-parchment-100/80">
+            {{ t("character.overview.stats.hp") }}
+          </p>
           <p class="text-white">{{ calculatedStats.hp.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
-          <p class="font-semibold text-parchment-100/80">攻擊力</p>
+          <p class="font-semibold text-parchment-100/80">
+            {{ t("character.overview.stats.atk") }}
+          </p>
           <p class="text-white">{{ calculatedStats.atk.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
-          <p class="font-semibold text-parchment-100/80">防禦力</p>
+          <p class="font-semibold text-parchment-100/80">
+            {{ t("character.overview.stats.def") }}
+          </p>
           <p class="text-white">{{ calculatedStats.def.toFixed(0) }}</p>
         </div>
         <div class="flex flex-row justify-between text-sm md:text-base py-2.5">
-          <p class="font-semibold text-parchment-100/80">{{ data.stats?.substat.text }}</p>
+          <p class="font-semibold text-parchment-100/80">
+            {{ t(`fightProp.${data.stats?.ascensionStat}`) }}
+          </p>
           <p class="text-white">
-            {{ getSubstatValue(data.stats?.substat.type, calculatedStats.sp) }}
+            {{ formatStatValue(data.stats.ascensionStat, calculatedStats.subStat) }}
           </p>
         </div>
       </div>
     </div>
-    <!-- 詳細資訊按鈕（模仿遊戲內樣式） -->
     <button
       type="button"
       class="block w-full xl:w-100 mt-4 rounded-full border border-parchment-100/50 bg-navy-900/60 backdrop-blur-md py-2 text-parchment-100 font-semibold hover:bg-parchment-100/25 hover:text-white transition-colors cursor-pointer"
       @click="detailOpen = true"
     >
-      詳細資訊
+      {{ t("character.overview.details") }}
     </button>
     <div
       class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg h-fit w-full xl:w-100 p-5 gap-5 mt-4 shadow-lg text-parchment-100"
@@ -232,12 +159,15 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <h2
             class="gi-diamond text-base md:text-lg font-semibold text-white flex items-center gap-1"
           >
-            升級所需素材
+            {{ t("common.materials.title") }}
             <UTooltip
               :text="
-                materialCalculationMethod === '單一'
-                  ? `將角色從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
-                  : `將角色從 1 級升至 ${actualLevel} 級所需要的素材`
+                materialCalculationMethod === 'single'
+                  ? t('character.overview.materials.hint.single', {
+                      from: levelTicks[levelIndex - 1] || 1,
+                      to: actualLevel,
+                    })
+                  : t('character.overview.materials.hint.cumulative', { to: actualLevel })
               "
               :ui="{ content: 'dark' }"
             >
@@ -247,24 +177,24 @@ function getSubstatValue(type: string | undefined, substat: number) {
           <USelect
             v-model="materialCalculationMethod"
             :items="materialCalculationOption"
-            aria-label="選擇計算方式"
+            :aria-label="t('common.materials.methodLabel')"
             :ui="{ content: 'dark' }"
           />
         </div>
         <UniversalItemStrip
-          v-if="materialCalculationResult?.toString().length"
+          v-if="materialCalculationResult?.length"
           :items="materialCalculationResult"
         />
         <div v-else class="w-full">
-          <p>無需素材</p>
+          <p>{{ t("common.noMaterials") }}</p>
         </div>
       </div>
     </div>
   </div>
-  <!-- 詳細資訊彈窗（原左欄內容） -->
+  <!-- 詳細資訊彈出式視窗 -->
   <UModal
     v-model:open="detailOpen"
-    title="詳細資訊"
+    :title="t('character.overview.details')"
     :close="{
       class:
         'text-parchment-100 hover:text-white hover:bg-white/10 active:text-white active:bg-white/20',
@@ -278,67 +208,99 @@ function getSubstatValue(type: string | undefined, substat: number) {
   >
     <template #body>
       <div class="flex flex-col gap-4">
-        <USeparator label="基本資料" :ui="{ label: 'text-parchment-100/90' }" />
+        <USeparator
+          :label="t('character.overview.profile.title')"
+          :ui="{ label: 'text-parchment-100/90' }"
+        />
         <div class="flex flex-col divide-y divide-white/10">
           <div class="flex flex-row justify-between items-center text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">元素</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.profile.element") }}
+            </p>
             <NuxtImg
-              :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
-              :alt="data.element_text + '元素圖示'"
+              :src="`${storageConfig.baseUrl}/elements/${data.element}.png`"
+              :alt="
+                t('character.overview.profile.elementIcon', {
+                  element: t(`element.${data.element}`),
+                })
+              "
               width="30"
               height="30"
               placeholder
-              v-if="data.element_type !== 'ELEMENT_NONE'"
             />
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">武器</p>
-            <p class="text-white">{{ data.weapon_text }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.profile.weapon") }}
+            </p>
+            <p class="text-white">{{ t(`weaponType.${data.weaponType}`) }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">所屬</p>
-            <p class="text-white">{{ data.affiliation || "無" }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.profile.affiliation") }}
+            </p>
+            <p class="text-white">{{ data.affiliation || t("common.none") }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">命之座</p>
-            <p class="text-white">{{ data.constellation?.name }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.profile.constellation") }}
+            </p>
+            <p class="text-white">{{ data.constellationName }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">生日</p>
-            <p class="text-white">{{ data.birthday?.mmdd }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.profile.birthday") }}
+            </p>
+            <p class="text-white">
+              {{ data.birthMonth ? `${data.birthMonth}/${data.birthDay}` : "-" }}
+            </p>
           </div>
         </div>
-        <USeparator label="配音演員" :ui="{ label: 'text-parchment-100/90' }" />
+        <USeparator
+          :label="t('character.overview.voiceActors.title')"
+          :ui="{ label: 'text-parchment-100/90' }"
+        />
         <div class="flex flex-col divide-y divide-white/10">
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">華語</p>
-            <p class="text-white">{{ data.cv?.CHS }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.voiceActors.zhCN") }}
+            </p>
+            <p class="text-white">{{ data.voiceActors?.zhCN }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">日語</p>
-            <p class="text-white">{{ data.cv?.JP }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.voiceActors.ja") }}
+            </p>
+            <p class="text-white">{{ data.voiceActors?.ja }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">英語</p>
-            <p class="text-white">{{ data.cv?.EN }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.voiceActors.en") }}
+            </p>
+            <p class="text-white">{{ data.voiceActors?.en }}</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
-            <p class="font-semibold text-parchment-100/80">韓語</p>
-            <p class="text-white">{{ data.cv?.KR }}</p>
+            <p class="font-semibold text-parchment-100/80">
+              {{ t("character.overview.voiceActors.ko") }}
+            </p>
+            <p class="text-white">{{ data.voiceActors?.ko }}</p>
           </div>
         </div>
-        <USeparator label="衣裝" :ui="{ label: 'text-parchment-100/90' }" />
+        <USeparator
+          :label="t('character.overview.outfit.title')"
+          :ui="{ label: 'text-parchment-100/90' }"
+        />
         <div class="flex flex-col gap-3">
           <USelect
             v-model="selectedOutfit"
             :items="outfitList"
-            placeholder="選擇衣裝"
+            :placeholder="t('character.overview.outfit.placeholder')"
             class="w-full"
             :ui="{ content: 'dark' }"
           />
           <div class="max-h-30 overflow-y-auto">
-            <p class="text-sm md:text-base">
-              {{ outfitsObject[selectedOutfit as keyof outfitItem]?.description }}
+            <p class="text-sm md:text-base" v-if="selectedOutfit">
+              {{ outfitsObject[selectedOutfit]?.description }}
             </p>
           </div>
         </div>

@@ -24,7 +24,6 @@ const { slug } = useRoute().params;
 const data: MaterialData | undefined = materialList.find(
   (material) => material.id.toString() === slug,
 );
-const { parseStoryContent } = useDataParser();
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 

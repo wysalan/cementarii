@@ -19,6 +19,7 @@
     "@iconify-json/lucide": "^1.2.147",
     "@nuxt/image": "^2.2.0",
     "@nuxt/ui": "^4.12.0",
+    "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^0.11.3",
     "@prisma/adapter-neon": "^7.8.0",
     "@prisma/adapter-pg": "^7.7.0",
@@ -30,7 +31,6 @@
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.3.3",
-    "ts-extras": "^1.3.0",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0",
     "zod": "^4.6.7"
@@ -45,6 +45,7 @@
     "prisma": "^7.7.0",
     "prisma-json-types-generator": "^4.1.1",
     "tsx": "^4.23.15",
+    "vue-tsc": "^3.3.13",
     "wrangler": "^4.151.3"
   }
 }

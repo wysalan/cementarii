@@ -1,26 +1,62 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { siteConfig, storageConfig } from "@/site.config";
-import useDataParser from "@/composables/useDataParser";
+import type { ArtifactData } from "@/types/api";
+type ArtifactSlot = ArtifactData["pieces"][number]["slot"];
+
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
 
 definePageMeta({
   layout: "detail",
 });
 
+// 取得資料
+const { locale, t } = useI18n();
 const { slug } = useRoute().params;
-const { data: artifactData, status, error } = await useFetch(`/api/artifact/${slug}`);
-const { parseDescriptionText } = useDataParser();
-
-useSeoMeta({
-  title: `${artifactData.value?.name || "找不到聖遺物"} | ${siteConfig.title}`,
+const event = useRequestEvent();
+const {
+  data: artifactData,
+  status,
+  error,
+} = await useFetch(`/api/artifact/${slug}`, {
+  query: { locale },
 });
 
-const maxRarity: number | undefined = artifactData.value
-  ? artifactData.value.rarity_list?.[artifactData.value.rarity_list.length - 1]
-  : 0;
+if (event && error.value?.status === 404) {
+  setResponseStatus(event, 404);
+}
 
-const currentPart = ref("flower");
-const partList = ref(["flower", "plume", "sands", "goblet", "circlet"]);
+// SEO
+const title = computed(
+  () => `${artifactData.value?.name || t("artifact.notFoundTitle")} | ${siteConfig.title}`,
+);
+useSeoMeta({ title });
+
+// 部件圖示
+const SLOT_ICON: Record<ArtifactSlot, string> = {
+  flower: "UI_Icon_Equip_Bracer",
+  plume: "UI_Icon_Equip_Necklace",
+  sands: "UI_Icon_Equip_Shoes",
+  goblet: "UI_Icon_Equip_Ring",
+  circlet: "UI_Icon_Equip_Dress",
+};
+
+// 部件切換
+const pieces = artifactData.value?.pieces ?? [];
+const currentSlot = ref<ArtifactSlot | undefined>(pieces[0]?.slot);
+const currentPiece = computed(() => pieces.find((p) => p.slot === currentSlot.value));
+
+// 套裝效果
+const bonuses = computed(() => {
+  const artifact = artifactData.value;
+  if (!artifact) return [];
+  return [
+    { count: 1, text: artifact.bonus1pc },
+    { count: 2, text: artifact.bonus2pc },
+    { count: 4, text: artifact.bonus4pc },
+  ].filter((b) => b.text);
+});
 
 // Functions
 function getBgColor(rarity: number | undefined) {
@@ -39,23 +75,6 @@ function getBgColor(rarity: number | undefined) {
     }
   }
 }
-
-function getArtifactIcon(partName: string | undefined) {
-  if (partName) {
-    switch (partName) {
-      case "flower":
-        return "UI_Icon_Equip_Bracer";
-      case "plume":
-        return "UI_Icon_Equip_Necklace";
-      case "sands":
-        return "UI_Icon_Equip_Shoes";
-      case "goblet":
-        return "UI_Icon_Equip_Ring";
-      case "circlet":
-        return "UI_Icon_Equip_Dress";
-    }
-  }
-}
 </script>
 
 <template>
@@ -63,18 +82,15 @@ function getArtifactIcon(partName: string | undefined) {
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
       <div class="flex flex-col lg:col-span-4 lg:h-[calc(100dvh-6.5rem)]">
         <div class="flex shrink-0 px-5 py-2 bg-[#bc6832] rounded-t-lg">
-          <p class="text-lg md:text-xl font-semibold text-white">
-            {{
-              artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]?.name
-            }}
-          </p>
+          <p class="text-lg md:text-xl font-semibold text-white">{{ currentPiece?.name }}</p>
         </div>
         <div
           class="flex shrink-0 justify-center items-center relative"
-          :class="getBgColor(maxRarity)"
+          :class="getBgColor(artifactData.maxRarity)"
         >
           <NuxtImg
-            :src="`${storageConfig.baseUrl}/relic-icon/${artifactData.imgaes?.[currentPart as keyof typeof artifactData.imgaes]}.webp`"
+            :src="`${storageConfig.baseUrl}/relic-icon/${currentPiece?.icon}.webp`"
+            :alt="currentPiece?.name"
             width="128"
             height="128"
             class="h-50 w-50"
@@ -89,29 +105,27 @@ function getArtifactIcon(partName: string | undefined) {
             </h2>
             <p class="text-xl md:text-2xl font-bold select-none">．</p>
             <p class="text-xl md:text-2xl font-semibold opacity-50">
-              {{
-                artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
-                  ?.relicText
-              }}
+              {{ currentSlot && t(`artifactSlot.${currentSlot}`) }}
             </p>
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex flex-row items-center gap-2">
               <button
-                v-for="part in partList"
-                :key="part"
+                v-for="piece in pieces"
+                :key="piece.slot"
                 type="button"
                 class="flex items-center justify-center min-w-fit p-2 rounded-lg border-2 transition-colors cursor-pointer"
                 :class="
-                  currentPart === part
+                  currentSlot === piece.slot
                     ? 'bg-navy-800 border-gold-400'
                     : 'bg-navy-800/10 border-transparent hover:border-navy-800/40'
                 "
-                :aria-pressed="currentPart === part"
-                @click="currentPart = part"
+                :aria-pressed="currentSlot === piece.slot"
+                @click="currentSlot = piece.slot"
               >
                 <NuxtImg
-                  :src="`${storageConfig.baseUrl}/ui-icon/${getArtifactIcon(part)}.png`"
+                  :src="`${storageConfig.baseUrl}/ui-icon/${SLOT_ICON[piece.slot]}.png`"
+                  :alt="t(`artifactSlot.${piece.slot}`)"
                   width="24"
                   height="24"
                 />
@@ -120,26 +134,21 @@ function getArtifactIcon(partName: string | undefined) {
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-5">
-              <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_1pcs">
-                <p class="text-base md:text-lg font-semibold">1 件套裝</p>
-                <p class="text-sm md:text-base">{{ artifactData.effect_1pcs }}</p>
-              </div>
-              <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_2pcs">
-                <p class="text-base md:text-lg font-semibold">2 件套裝</p>
-                <p class="text-sm md:text-base">{{ artifactData.effect_2pcs }}</p>
-              </div>
-              <div class="flex flex-col justify-center gap-1" v-if="artifactData.effect_4pcs">
-                <p class="text-base md:text-lg font-semibold">4 件套裝</p>
-                <p class="text-sm md:text-base">{{ artifactData.effect_4pcs }}</p>
+              <div
+                class="flex flex-col justify-center gap-1"
+                v-for="bonus in bonuses"
+                :key="bonus.count"
+              >
+                <p class="text-base md:text-lg font-semibold">
+                  {{ t("artifact.bonus", { count: bonus.count }) }}
+                </p>
+                <p class="text-sm md:text-base whitespace-pre-line">{{ bonus.text }}</p>
               </div>
             </div>
           </div>
           <div>
             <p class="text-sm md:text-base font-semibold opacity-50">
-              {{
-                artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
-                  ?.description
-              }}
+              {{ currentPiece?.description }}
             </p>
           </div>
         </div>
@@ -148,28 +157,26 @@ function getArtifactIcon(partName: string | undefined) {
       <div class="flex flex-col lg:col-span-6 gi-panel lg:h-[calc(100dvh-6.5rem)]">
         <div class="flex flex-col gap-5 p-5 lg:min-h-0">
           <p class="gi-diamond text-base md:text-lg font-semibold text-highlighted shrink-0">
-            聖遺物故事
+            {{ t("artifact.story") }}
           </p>
           <div
             class="text-sm md:text-base lg:min-h-0 lg:overflow-y-auto"
-            v-html="
-              parseDescriptionText(
-                artifactData.relic_parts?.[currentPart as keyof typeof artifactData.relic_parts]
-                  ?.story,
-              )
-            "
+            v-html="parseStoryContent(currentPiece?.story, store.name, store.playerGender)"
           ></div>
         </div>
       </div>
     </div>
   </main>
   <main v-else>
-    <div class="container mx-auto flex flex-col items-center pt-5 pb-10 px-4">
-      <div v-if="error">
-        <p>連接資料庫時發生錯誤</p>
-        <p>{{ error?.statusMessage }}（狀態碼：{{ error?.statusCode }}）</p>
+    <div class="container mx-auto pt-5 pb-10 px-4">
+      <div class="flex flex-col items-center" v-if="error?.status == 404">
+        <p>{{ t("artifact.notFound") }}</p>
       </div>
-      <p v-else>目前尚無此聖遺物資料</p>
+      <div class="flex flex-col items-center" v-else>
+        <p>{{ t("common.error.server") }}</p>
+        <p>{{ t("common.error.statusCode", { code: error?.status }) }}</p>
+        <p>{{ t("common.error.statusText", { message: error?.statusText }) }}</p>
+      </div>
     </div>
   </main>
 </template>

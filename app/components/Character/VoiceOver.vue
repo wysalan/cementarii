@@ -1,28 +1,25 @@
 <script setup lang="ts">
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
-
-import useDataParser from "@/composables/useDataParser";
-const { parseStoryContent } = useDataParser();
+import type { CharacterData } from "@/types/api";
+type VoicelineTab = keyof CharacterData["voicelines"];
+const { data } = defineProps<{ data: CharacterData }>();
 
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
-const voiceovers = data.profile?.voiceover || [];
+const { t } = useI18n();
 
-// 語音分類分頁（資料庫 type 欄位尚未建立，目前兩個分頁都顯示全部）
-const voiceTabs = [
-  { key: "fetter", label: "好感" },
-  { key: "general", label: "一般" },
-] as const;
-const activeTab = ref<"general" | "fetter">("fetter");
+// 語音分類分頁
+const voiceTabs = computed<{ key: VoicelineTab; label: string }[]>(() => [
+  { key: "friendship", label: t("character.voiceline.tabs.friendship") },
+  { key: "battle", label: t("character.voiceline.tabs.battle") },
+]);
+const activeTab = ref<VoicelineTab>("friendship");
 
-// ponytail: 等資料庫新增 type 欄位後改為依 activeTab 過濾
-const filteredVoiceovers = computed(() => voiceovers);
+const voicelines = computed(() => data.voicelines[activeTab.value]);
 
 const selected = ref<number | null>(null);
 const selectedItem = computed(() =>
-  selected.value === null ? null : filteredVoiceovers.value[selected.value],
+  selected.value === null ? null : voicelines.value[selected.value],
 );
 watch(activeTab, () => (selected.value = null));
 
@@ -89,7 +86,7 @@ const onDetailEnter = (el: Element) => {
             <button
               type="button"
               class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
-              aria-label="關閉語音內容"
+              :aria-label="t('character.voiceline.close')"
               @click="selected = null"
             >
               <UIcon name="i-lucide-x" class="size-5" />
@@ -120,7 +117,7 @@ const onDetailEnter = (el: Element) => {
         <!-- 滑動的 active 背景指示器 -->
         <span
           class="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-sm bg-parchment-100 transition-transform duration-200 ease-out"
-          :class="activeTab === 'general' ? 'translate-x-full' : ''"
+          :class="activeTab === 'battle' ? 'translate-x-full' : ''"
         ></span>
         <button
           v-for="tab in voiceTabs"
@@ -137,9 +134,12 @@ const onDetailEnter = (el: Element) => {
           {{ tab.label }}
         </button>
       </div>
-      <nav class="flex flex-col gap-2 min-h-0 xl:overflow-y-auto" aria-label="語音清單">
+      <nav
+        class="flex flex-col gap-2 min-h-0 xl:overflow-y-auto"
+        :aria-label="t('character.voiceline.list')"
+      >
         <button
-          v-for="(voiceover, i) in filteredVoiceovers"
+          v-for="(voiceline, i) in voicelines"
           :key="i"
           type="button"
           class="flex items-center p-3 rounded-lg border backdrop-blur-sm text-left transition-colors cursor-pointer"
@@ -155,7 +155,7 @@ const onDetailEnter = (el: Element) => {
             class="text-sm md:text-base font-semibold transition-colors"
             :class="selected === i ? 'text-gold-300' : 'text-white/90'"
           >
-            {{ voiceover.title }}
+            {{ voiceline.title }}
           </span>
         </button>
       </nav>

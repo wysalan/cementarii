@@ -1,0 +1,148 @@
+{
+  "element": {
+    "pyro": "火",
+    "hydro": "水",
+    "anemo": "風",
+    "electro": "雷",
+    "dendro": "草",
+    "cryo": "冰",
+    "geo": "岩"
+  },
+  "weaponType": {
+    "sword": "單手劍",
+    "claymore": "雙手劍",
+    "polearm": "長柄武器",
+    "bow": "弓",
+    "catalyst": "法器"
+  },
+  "fightProp": {
+    "FIGHT_PROP_HP_PERCENT": "生命值",
+    "FIGHT_PROP_ATTACK_PERCENT": "攻擊力",
+    "FIGHT_PROP_DEFENSE_PERCENT": "防禦力",
+    "FIGHT_PROP_CRITICAL": "暴擊率",
+    "FIGHT_PROP_CRITICAL_HURT": "暴擊傷害",
+    "FIGHT_PROP_ELEMENT_MASTERY": "元素精通",
+    "FIGHT_PROP_CHARGE_EFFICIENCY": "元素充能效率",
+    "FIGHT_PROP_HEAL_ADD": "治療加成",
+    "FIGHT_PROP_PHYSICAL_ADD_HURT": "物理傷害加成",
+    "FIGHT_PROP_FIRE_ADD_HURT": "火元素傷害加成",
+    "FIGHT_PROP_WATER_ADD_HURT": "水元素傷害加成",
+    "FIGHT_PROP_WIND_ADD_HURT": "風元素傷害加成",
+    "FIGHT_PROP_ELEC_ADD_HURT": "雷元素傷害加成",
+    "FIGHT_PROP_GRASS_ADD_HURT": "草元素傷害加成",
+    "FIGHT_PROP_ICE_ADD_HURT": "冰元素傷害加成",
+    "FIGHT_PROP_ROCK_ADD_HURT": "岩元素傷害加成"
+  },
+  "common": {
+    "none": "無",
+    "noMaterials": "無需素材",
+    "materials": {
+      "title": "升級所需素材",
+      "methodLabel": "選擇計算方式",
+      "method": { "single": "單一", "cumulative": "累計" }
+    },
+    "error": {
+      "server": "連接資料庫時發生錯誤",
+      "statusCode": "狀態碼：{code}",
+      "statusText": "訊息：{message}"
+    }
+  },
+  "character": {
+    "notFound": "目前尚無此角色資料",
+    "notFoundTitle": "找不到角色",
+    "tabNav": "角色頁面分頁",
+    "tabs": {
+      "overview": "總覽",
+      "talent": "天賦",
+      "constellation": "命之座",
+      "story": "故事",
+      "voiceline": "語音"
+    },
+    "overview": {
+      "details": "詳細資訊",
+      "stats": { "hp": "生命值上限", "atk": "攻擊力", "def": "防禦力" },
+      "profile": {
+        "title": "基本資料",
+        "element": "元素",
+        "elementIcon": "{element}元素圖示",
+        "weapon": "武器",
+        "affiliation": "所屬",
+        "constellation": "命之座",
+        "birthday": "生日"
+      },
+      "voiceActors": {
+        "title": "配音演員",
+        "zhCN": "華語",
+        "ja": "日語",
+        "en": "英語",
+        "ko": "韓語"
+      },
+      "outfit": { "title": "衣裝", "placeholder": "選擇衣裝" },
+      "materials": {
+        "hint": {
+          "single": "將角色從 {from} 級升至 {to} 級所需要的素材",
+          "cumulative": "將角色從 1 級升至 {to} 級所需要的素材"
+        }
+      }
+    },
+    "talent": {
+      "list": "天賦清單",
+      "close": "關閉天賦資訊",
+      "tabs": { "intro": "天賦介紹", "stats": "詳細屬性" },
+      "materials": "所需素材"
+    },
+    "popover": {
+      "talent": "相關突破天賦",
+      "passive": "相關固有天賦",
+      "constellation": "相關命之座",
+      "effect": "相關效果",
+      "error": {
+        "title": "錯誤",
+        "name": "無法取得資料",
+        "description": "尚未設定此效果說明"
+      }
+    },
+    "constellation": {
+      "list": "命之座清單",
+      "close": "關閉命之座資訊",
+      "level": "命之座 第 {n} 層"
+    },
+    "story": {
+      "list": "故事清單",
+      "close": "關閉故事內容"
+    },
+    "voiceline": {
+      "list": "語音清單",
+      "close": "關閉語音內容",
+      "tabs": { "friendship": "好感", "battle": "戰鬥" }
+    }
+  },
+  "weapon": {
+    "notFound": "目前尚無此武器資料",
+    "notFoundTitle": "找不到武器",
+    "iconAlt": "武器圖示：{name}",
+    "baseAttack": "基礎攻擊力",
+    "refinement": "精煉 {rank} 階",
+    "refinementLabel": "選擇精煉等階",
+    "story": "故事",
+    "materials": {
+      "hint": {
+        "single": "將武器從 {from} 級升至 {to} 級所需要的素材",
+        "cumulative": "將武器從 1 級升至 {to} 級所需要的素材"
+      }
+    }
+  },
+  "artifactSlot": {
+    "flower": "生之花",
+    "plume": "死之羽",
+    "sands": "時之沙",
+    "goblet": "空之杯",
+    "circlet": "理之冠"
+  },
+  "artifact": {
+    "notFound": "目前尚無此聖遺物資料",
+    "notFoundTitle": "找不到聖遺物",
+    "bonus": "{count} 件套裝",
+    "story": "聖遺物故事"
+  }
+}
