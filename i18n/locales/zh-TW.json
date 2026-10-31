@@ -61,6 +61,7 @@
     "overview": {
       "details": "詳細資訊",
       "stats": { "hp": "生命值上限", "atk": "攻擊力", "def": "防禦力" },
+      "manekinLevelUp": "「千星奇域」等級達到 10",
       "profile": {
         "title": "基本資料",
         "element": "元素",

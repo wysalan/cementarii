@@ -186,7 +186,13 @@ const materialCalculationResult = computed(() => {
           :items="materialCalculationResult"
         />
         <div v-else class="w-full">
-          <p>{{ t("common.noMaterials") }}</p>
+          <p>
+            {{
+              data.slug.includes("manekin") && !data.element
+                ? t("character.overview.manekinLevelUp")
+                : t("common.noMaterials")
+            }}
+          </p>
         </div>
       </div>
     </div>
@@ -218,6 +224,7 @@ const materialCalculationResult = computed(() => {
               {{ t("character.overview.profile.element") }}
             </p>
             <NuxtImg
+              v-if="data.element"
               :src="`${storageConfig.baseUrl}/elements/${data.element}.png`"
               :alt="
                 t('character.overview.profile.elementIcon', {
@@ -228,6 +235,7 @@ const materialCalculationResult = computed(() => {
               height="30"
               placeholder
             />
+            <p v-else>——</p>
           </div>
           <div class="flex flex-row justify-between text-sm md:text-base py-2">
             <p class="font-semibold text-parchment-100/80">
@@ -252,7 +260,7 @@ const materialCalculationResult = computed(() => {
               {{ t("character.overview.profile.birthday") }}
             </p>
             <p class="text-white">
-              {{ data.birthMonth ? `${data.birthMonth}/${data.birthDay}` : "-" }}
+              {{ data.birthMonth ? `${data.birthMonth}/${data.birthDay}` : "——" }}
             </p>
           </div>
         </div>

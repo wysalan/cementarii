@@ -52,12 +52,14 @@ const calculatedStats = computed(() => {
 
   const weaponCurve: Curve = curve.weapons;
   const promotion = weapon.stats.promotions.find((p) => p.maxLevel === level);
+  const { base, curves } = weapon.stats;
 
   return {
-    attack:
-      weapon.stats.base.attack * (weaponCurve[level]?.[weapon.stats.curves.attack] ?? 0) +
-      (promotion?.attack ?? 0),
-    substat: weapon.stats.base.substat * (weaponCurve[level]?.[weapon.stats.curves.substat] ?? 0),
+    attack: base.attack * (weaponCurve[level]?.[curves.attack] ?? 0) + (promotion?.attack ?? 0),
+    substat:
+      base.substat !== undefined && curves.substat
+        ? base.substat * (weaponCurve[level]?.[curves.substat] ?? 0)
+        : 0,
   };
 });
 
@@ -145,7 +147,7 @@ function getBgColor(rarity: number | null) {
               </p>
               <p class="text-xl md:text-2xl font-bold">{{ calculatedStats.attack.toFixed(0) }}</p>
             </div>
-            <div class="flex flex-col text-right w-30">
+            <div v-if="weaponData.substatType" class="flex flex-col text-right w-30">
               <p class="font-semibold opacity-60 text-sm md:text-base">
                 {{ t(`fightProp.${weaponData.substatType}`) }}
               </p>

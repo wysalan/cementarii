@@ -34,13 +34,23 @@ const title = computed(
 useSeoMeta({ title });
 
 // 分頁
-const tabs: Record<string, { component: Component; icon: string }> = {
+const allTabs: Record<string, { component: Component; icon: string }> = {
   overview: { component: Overview, icon: "i-lucide-user-round" },
   talent: { component: Talent, icon: "i-lucide-sparkles" },
   constellation: { component: Constellation, icon: "i-lucide-star" },
   story: { component: Story, icon: "i-lucide-book-open" },
   voiceline: { component: VoiceOver, icon: "i-lucide-mic" },
 };
+
+const tabs = computed(() => {
+  const data = characterData.value;
+  const hasData: Record<string, boolean> = {
+    constellation: !!data?.abilities.some((a) => a.kind === "constellation"),
+    story: !!data?.stories.length,
+    voiceline: !!(data?.voicelines.friendship.length || data?.voicelines.battle.length),
+  };
+  return Object.fromEntries(Object.entries(allTabs).filter(([name]) => hasData[name] ?? true));
+});
 
 const currentTab = ref("overview");
 
