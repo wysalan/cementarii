@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import useResinCalculator from "@/composables/useResinCalculator";
-const { getSimpleResinResult } = useResinCalculator();
 const currentResin = ref(0);
 const recoveryTimeResult = computed(() => {
   const resin = currentResin.value;

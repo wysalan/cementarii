@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
 
-import useResinCalculator from "@/composables/useResinCalculator";
-const { getFullResinResult } = useResinCalculator();
-
 useSeoMeta({
   title: `樹脂計算器 | ${siteConfig.title}`,
 });
