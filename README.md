@@ -41,5 +41,5 @@ _（部分角色、武器和聖遺物資料仍未匯入資料庫）_
 ### 後端
 
 - [Nitro](https://nitro.build/)
-- [Prisma ORM](https://www.prisma.io/)
+- [Drizzle ORM](https://orm.drizzle.team/)
 - [Neon Database (PostgreSQL)](https://neon.com/)

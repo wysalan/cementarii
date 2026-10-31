@@ -21,9 +21,6 @@
     "@nuxt/ui": "^4.12.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@pinia/nuxt": "^0.11.3",
-    "@prisma/adapter-neon": "^7.8.0",
-    "@prisma/adapter-pg": "^7.7.0",
-    "@prisma/client": "^7.7.0",
     "colorthief": "^3.5.0",
     "drizzle-orm": "^0.45.4",
     "nuxt": "^4.6.2",
@@ -38,12 +35,9 @@
   "devDependencies": {
     "@types/node": "^25.9.9",
     "@types/pg": "^8.23.1",
-    "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.11",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
-    "prisma": "^7.7.0",
-    "prisma-json-types-generator": "^4.1.1",
     "tsx": "^4.23.15",
     "vue-tsc": "^3.3.13",
     "wrangler": "^4.151.3"
