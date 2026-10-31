@@ -27,26 +27,7 @@ function getAvatarFileName(character: CharacterData) {
   }
 }
 
-function getElementIcon(character: CharacterData) {
-  switch (character.elementText) {
-    case "火":
-      return "pryo";
-    case "水":
-      return "hydro";
-    case "雷":
-      return "electro";
-    case "冰":
-      return "cyro";
-    case "風":
-      return "anemo";
-    case "岩":
-      return "geo";
-    case "草":
-      return "dendro";
-    default:
-      return "unknown";
-  }
-}
+const elementIcon = computed(() => data.elementType.replace("ELEMENT_", "").toLowerCase());
 </script>
 
 <template>
@@ -71,7 +52,7 @@ function getElementIcon(character: CharacterData) {
       />
       <div class="absolute top-1.25 left-1.25">
         <NuxtImg
-          :src="`${storageConfig.baseUrl}/elements/${getElementIcon(data)}.png`"
+          :src="`${storageConfig.baseUrl}/elements/${elementIcon}.png`"
           :alt="data.elementText + '元素圖示'"
           width="30"
           height="30"
