@@ -44,34 +44,41 @@ export function parseDescriptionText(
     );
   return result.replace(
     /\{LINK\}((?:<span[^>]*>)?(.*?)(?:<\/span>)?)\{\/LINK\}/g,
-    (_, htmlContent: string, keyword: string) => {
-      const type = linkTypeOf.get(keyword);
-      if (type) {
-        return `<span data-type="${type}" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-      } else if (
-        glossary?.relatedEffects &&
-        Object.keys(glossary?.relatedEffects)?.includes(keyword)
-      ) {
-        return `<span data-type="effect" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-      } else if (glossary?.linkToEffect && Object.keys(glossary?.linkToEffect)?.includes(keyword)) {
-        return `<span data-type="effect" data-name="${glossary?.linkToEffect[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
-      } else if (glossary?.linkToTalent && Object.keys(glossary?.linkToTalent)?.includes(keyword)) {
-        return `<span data-type="talent" data-name="${glossary?.linkToTalent[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
-      } else if (
-        glossary?.linkToPassive &&
-        Object.keys(glossary?.linkToPassive)?.includes(keyword)
-      ) {
-        return `<span data-type="passive" data-name="${glossary?.linkToPassive[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
-      } else if (
-        glossary?.linkToConstellation &&
-        Object.keys(glossary?.linkToConstellation)?.includes(keyword)
-      ) {
-        return `<span data-type="constellation" data-name="${glossary?.linkToConstellation[keyword]}" style="${spanStyle}">${htmlContent}</span>`;
-      } else {
-        return `<span data-type="unknown" data-name="${keyword}" style="${spanStyle}">${htmlContent}</span>`;
-      }
+    (_, htmlContent: string, rawKeyword: string) => {
+      const [type, name] = resolveLink(stripKeyword(rawKeyword), linkTypeOf, glossary);
+      return `<span data-type="${type}" data-name="${name}" style="${spanStyle}">${htmlContent}</span>`;
     },
   );
+}
+
+/** 去掉關鍵字前後的引號與書名號，例如「影舞」→ 影舞 */
+function stripKeyword(keyword: string): string {
+  return keyword.replace(/[「」『』《》〈〉]/g, "").trim();
+}
+
+/**
+ * 找出 `{LINK}` 關鍵字對應的類型與名稱
+ * 順序：名詞說明中的別名（`linkTo*`）→ 技能名稱 → 相關效果（`relatedEffects`）
+ */
+function resolveLink(
+  keyword: string,
+  linkTypeOf: Map<string, string>,
+  glossary: Glossary | null,
+): [type: string, name: string] {
+  const aliases = [
+    ["effect", glossary?.linkToEffect],
+    ["talent", glossary?.linkToTalent],
+    ["passive", glossary?.linkToPassive],
+    ["constellation", glossary?.linkToConstellation],
+  ] as const;
+  for (const [type, map] of aliases) {
+    const target = map?.[keyword];
+    if (target) return [type, target];
+  }
+  const type = linkTypeOf.get(keyword);
+  if (type) return [type, keyword];
+  if (glossary?.relatedEffects?.[keyword] !== undefined) return ["effect", keyword];
+  return ["unknown", keyword];
 }
 
 export function parseTalentAttributes(ability: Ability, level: number) {
