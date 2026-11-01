@@ -167,7 +167,9 @@ const outfitImgs = computed(() => ({
           @click="currentTab = name"
         >
           <UIcon :name="tab.icon" class="size-5" />
-          <span class="text-xs font-semibold whitespace-nowrap">{{ name }}</span>
+          <span class="text-xs font-semibold whitespace-nowrap">
+            {{ t(`character.tabs.${name}`) }}
+          </span>
         </button>
       </div>
     </nav>

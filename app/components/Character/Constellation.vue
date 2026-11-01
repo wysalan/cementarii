@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storageConfig } from "@/site.config";
 import type { CharacterData } from "@/types/api";
 const { data } = defineProps<{ data: CharacterData }>();
 const { t } = useI18n();
@@ -53,7 +54,7 @@ const resolvePopover = useAbilityPopover(data, abilities);
         v-for="(constellation, i) in constellations"
         :key="i"
         type="button"
-        class="group relative flex items-center justify-between xl:justify-end gap-4 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
+        class="group relative flex items-center justify-between xl:justify-end gap-3 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
         :class="arcOffsets[i]"
         :aria-current="selected === i ? 'true' : undefined"
         @click="selected = selected === i ? null : i"
@@ -77,15 +78,22 @@ const resolvePopover = useAbilityPopover(data, abilities);
           </span>
         </span>
         <span
-          class="flex shrink-0 items-center justify-center w-9 h-9 m-1.5 rotate-45 rounded-xs border-2 backdrop-blur-sm transition-colors"
+          class="flex shrink-0 items-center justify-center w-12 h-12 m-1.5 rounded-full border-2 backdrop-blur-sm transition-colors"
           :class="
             selected === i
-              ? 'bg-gold-400 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
+              ? 'bg-gold-600/70 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
               : 'bg-navy-900/70 border-white/40 group-hover:border-gold-300'
           "
         >
+          <NuxtImg
+            v-if="constellation.icon"
+            :src="`${storageConfig.baseUrl}/skill-icon/${constellation.icon}.webp`"
+            :alt="constellation?.name"
+            class="size-10"
+          />
           <span
-            class="-rotate-45 text-xs font-bold select-none"
+            v-else
+            class="text-sm font-bold select-none"
             :class="selected === i ? 'text-navy-900' : 'text-white/80'"
           >
             {{ i + 1 }}
@@ -105,8 +113,17 @@ const resolvePopover = useAbilityPopover(data, abilities);
         <section
           class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
         >
-          <div class="flex items-start justify-between gap-3">
-            <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white">
+          <div class="flex items-center justify-between gap-3">
+            <h2
+              class="flex flex-row justify-center items-center text-lg md:text-xl font-semibold text-white"
+            >
+              <NuxtImg
+                v-if="selectedItem.icon"
+                :src="`${storageConfig.baseUrl}/skill-icon/${selectedItem.icon}.webp`"
+                :alt="selectedItem.name"
+                class="size-10 mr-2"
+              />
+              <span v-else class="gi-diamond"></span>
               {{ selectedItem.name }}
             </h2>
             <button
