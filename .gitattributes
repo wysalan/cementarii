@@ -1,0 +1,2 @@
+# 工作區與 repo 一律使用 LF（oxfmt 預設要求 LF），不受 core.autocrlf 影響
+* text=auto eol=lf
