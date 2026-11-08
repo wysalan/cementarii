@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { label, options } = defineProps<{ label: string; options: string[] }>();
-const selected = defineModel<string[]>({ default: [] });
+const selected = defineModel<string[]>({ default: () => [] });
 </script>
 
 <template>

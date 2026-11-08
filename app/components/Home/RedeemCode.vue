@@ -31,8 +31,8 @@ const { data, status } = await useAsyncData(
           class="flex bg-parchment-200 dark:bg-navy-950 rounded-md p-3 hover:ring-1 ring-inset ring-gold-500 transition-shadow"
           v-for="code in data"
         >
-          <NuxtLink
-            :to="'https://genshin.hoyoverse.com/gift?code=' + code.code"
+          <a
+            :href="'https://genshin.hoyoverse.com/gift?code=' + code.code"
             target="_blank"
             rel="noopener"
             class="flex flex-row items-center gap-2 group h-5"
@@ -43,7 +43,7 @@ const { data, status } = await useAsyncData(
               name="i-lucide-external-link"
               class="opacity-0 group-hover:opacity-100 transition-opacity select-none"
             />
-          </NuxtLink>
+          </a>
         </div>
       </div>
     </div>
