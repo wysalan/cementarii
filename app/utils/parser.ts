@@ -42,12 +42,18 @@ export function parseDescriptionText(
         return `<span style="color: ${color}">${content}</span>`;
       },
     );
-  return result.replace(
-    /\{LINK\}((?:<span[^>]*>)?(.*?)(?:<\/span>)?)\{\/LINK\}/g,
-    (_, htmlContent: string, rawKeyword: string) => {
-      const [type, name] = resolveLink(stripKeyword(rawKeyword), linkTypeOf, glossary);
-      return `<span data-type="${type}" data-name="${name}" style="${spanStyle}">${htmlContent}</span>`;
-    },
+  return (
+    result
+      .replace(
+        /\{LINK\}((?:<span[^>]*>)?(.*?)(?:<\/span>)?)\{\/LINK\}/g,
+        (_, htmlContent: string, rawKeyword: string) => {
+          const [type, name] = resolveLink(stripKeyword(rawKeyword), linkTypeOf, glossary);
+          return `<span data-type="${type}" data-name="${name}" style="${spanStyle}">${htmlContent}</span>`;
+        },
+      )
+      // 強化前後的差異標記（describeAbility）
+      .replace(/\{DIFF=(new|changed)\}/g, '<span class="ability-diff-$1">')
+      .replace(/\{\/DIFF\}/g, "</span>")
   );
 }
 

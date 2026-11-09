@@ -51,6 +51,12 @@
     "notFound": "目前尚無此角色資料",
     "notFoundTitle": "找不到角色",
     "tabNav": "角色頁面分頁",
+    "enhanced": {
+      "badge": "強化後",
+      "baseBadge": "強化前",
+      "toBase": "點選切換至強化前；將游標停留至此處可標示與強化前不同之處",
+      "toEnhanced": "點選切換至強化後"
+    },
     "tabs": {
       "overview": "總覽",
       "talent": "天賦",

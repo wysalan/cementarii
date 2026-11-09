@@ -4,6 +4,8 @@ interface PopoverData {
   title: string;
   name: string;
   html: string;
+  enhanced?: boolean; // 只有具強化版本的技能才有值
+  alternate?: PopoverData;
 }
 
 const { resolve } = defineProps<{
@@ -17,6 +19,14 @@ const popover = ref<{
   above: boolean;
 } | null>(null);
 const popEl = ref<HTMLElement | null>(null);
+const showAlternate = ref(false);
+const showDiff = ref(false);
+const htmlEl = ref<HTMLElement | null>(null);
+useDiffOverlay(htmlEl, showDiff);
+const shown = computed(() => {
+  const data = popover.value?.data;
+  return showAlternate.value && data?.alternate ? data.alternate : data;
+});
 let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
 const handleHover = (event: MouseEvent) => {
@@ -29,6 +39,8 @@ const handleHover = (event: MouseEvent) => {
   if (!data) return;
   clearTimeout(hideTimer);
   const rect = target.getBoundingClientRect();
+  if (popover.value?.data.title !== data.title || popover.value?.data.name !== data.name)
+    showAlternate.value = false;
   const above = rect.bottom + 240 > window.innerHeight;
   const rawX = rect.left + rect.width / 2;
   const x = Math.min(Math.max(rawX, 176), window.innerWidth - 176);
@@ -65,7 +77,7 @@ const cancelHide = () => clearTimeout(hideTimer);
   <Teleport to="body">
     <Transition name="hover-popover">
       <div
-        v-if="popover"
+        v-if="popover && shown"
         ref="popEl"
         class="fixed z-50 w-100 max-w-[90vw] rounded-lg bg-navy-900/80 backdrop-blur-lg border border-gold-500/30 shadow-lg p-4 text-parchment-100"
         :style="{
@@ -76,11 +88,22 @@ const cancelHide = () => clearTimeout(hideTimer);
         @mouseenter="cancelHide"
         @mouseleave="scheduleHide"
       >
-        <p class="text-xs font-semibold text-gold-300">{{ popover.data.title }}</p>
-        <h3 class="text-sm md:text-base font-semibold text-white py-2">
-          {{ popover.data.name }}
+        <p class="text-xs font-semibold text-gold-300">{{ shown.title }}</p>
+        <h3 class="flex items-center gap-2 text-sm md:text-base font-semibold text-white py-2">
+          {{ shown.name }}
+          <CharacterEnhancedBadge
+            v-if="shown.enhanced !== undefined"
+            v-model:active="showDiff"
+            :enhanced="shown.enhanced"
+            @toggle="showAlternate = !showAlternate"
+          />
         </h3>
-        <p v-html="popover.data.html" class="text-sm max-h-60 overflow-y-auto"></p>
+        <p
+          ref="htmlEl"
+          v-html="shown.html"
+          class="relative isolate text-sm max-h-60 overflow-y-auto -mx-2 px-2"
+          :class="{ 'show-diff': showDiff }"
+        ></p>
       </div>
     </Transition>
   </Teleport>

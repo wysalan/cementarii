@@ -4,16 +4,27 @@ import type { CharacterData } from "@/types/api";
 const { data } = defineProps<{ data: CharacterData }>();
 const { t } = useI18n();
 
-const abilities = data.abilities.filter((a) => !a.isEnhanced);
-const constellations = abilities.filter((a) => a.kind === "constellation");
+const abilities = computed(() => data.abilities.filter((a) => !a.isEnhanced));
+const constellations = computed(() => abilities.value.filter((a) => a.kind === "constellation"));
 
 // 弧形排列：中段項目向右凸出（模仿遊戲內命之座弧線）
 const arcOffsets = ["xl:pr-14", "xl:pr-5", "xl:pr-0", "xl:pr-0", "xl:pr-5", "xl:pr-14"];
 
 const selected = ref<number | null>(null);
-const selectedItem = computed(() =>
-  selected.value === null ? null : constellations[selected.value],
+
+const showEnhanced = ref(false);
+watch(selected, () => (showEnhanced.value = false));
+
+const selectedItem = computed(() => {
+  if (selected.value === null) return null;
+  const item = constellations.value[selected.value];
+  if (!item || !showEnhanced.value) return item ?? null;
+  return counterpartOf(data.abilities, item) ?? item;
+});
+const hasVersions = computed(
+  () => !!selectedItem.value && !!counterpartOf(data.abilities, selectedItem.value),
 );
+const toggleVersion = () => (showEnhanced.value = !showEnhanced.value);
 
 // 點擊空白區域時關閉命之座資訊
 const listEl = ref<HTMLElement | null>(null);
@@ -37,6 +48,10 @@ const scrollToDetail = () => {
     detailEl.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 };
+
+const showDiff = ref(false);
+const descEl = ref<HTMLElement | null>(null);
+useDiffOverlay(descEl, showDiff);
 
 // 相關效果 popover 資料
 const resolvePopover = useAbilityPopover(data, abilities);
@@ -125,6 +140,13 @@ const resolvePopover = useAbilityPopover(data, abilities);
               />
               <span v-else class="gi-diamond"></span>
               {{ selectedItem.name }}
+              <CharacterEnhancedBadge
+                v-if="hasVersions"
+                v-model:active="showDiff"
+                :enhanced="selectedItem.isEnhanced"
+                class="ml-2"
+                @toggle="toggleVersion"
+              />
             </h2>
             <button
               type="button"
@@ -138,12 +160,21 @@ const resolvePopover = useAbilityPopover(data, abilities);
           <p class="text-xs md:text-sm text-gold-300 font-semibold py-2">
             {{ t("character.constellation.level", { n: (selected ?? 0) + 1 }) }}
           </p>
-          <div class="overflow-y-auto min-h-0">
-            <div :key="selected ?? -1" class="tab-pane">
+          <!-- overflow 會連左右一起裁切：留 8px 給差異強調的左右延伸與外框 -->
+          <div class="overflow-y-auto min-h-0 -mx-2 px-2">
+            <div :key="`${selected ?? -1}-${selectedItem.isEnhanced}`" class="tab-pane">
               <UIHoverPopover :resolve="resolvePopover">
                 <p
-                  v-html="parseDescriptionText(selectedItem.description, abilities, data.glossary)"
-                  class="text-sm md:text-base"
+                  v-html="
+                    parseDescriptionText(
+                      describeAbility(data.abilities, selectedItem),
+                      abilities,
+                      data.glossary,
+                    )
+                  "
+                  ref="descEl"
+                  class="relative isolate text-sm md:text-base"
+                  :class="{ 'show-diff': showDiff }"
                 ></p>
               </UIHoverPopover>
             </div>

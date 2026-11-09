@@ -102,6 +102,44 @@ html {
   }
 }
 
+/* 強化前後的差異，外層有 .show-diff 時才顯示；描述文字（span）的底色由 useDiffOverlay 另外畫 */
+.show-diff .ability-diff-new {
+  color: var(--color-gold-100);
+}
+.show-diff :not(span).ability-diff-new,
+.diff-overlay > div {
+  background-color: rgb(211 188 142 / 0.25);
+  box-shadow: 0 0 0 1px rgb(220 201 156 / 0.35);
+  border-radius: 0.25rem;
+}
+.diff-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  animation: diff-overlay-in 0.15s ease;
+}
+.diff-overlay > div {
+  position: absolute;
+}
+@keyframes diff-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+.show-diff .ability-diff-changed {
+  text-decoration: underline dotted var(--color-gold-300);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.ability-diff-new,
+.ability-diff-changed {
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
 @utility gi-panel {
   background-color: var(--ui-bg-elevated);
   border: 1px solid var(--ui-border);

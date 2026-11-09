@@ -8,18 +8,34 @@ import { useUserStore } from "@/stores/User";
 import { useAbilityPopover } from "~/composables/useAbilityPopover";
 const store = useUserStore();
 
-const abilities = data.abilities.filter((a) => !a.isEnhanced);
+const abilities = computed(() => data.abilities.filter((a) => !a.isEnhanced));
 
 // 天賦清單：戰鬥天賦＋固有天賦
-const abilityList = abilities
-  .filter((a) => a.kind !== "constellation")
-  .map((ability) => ({
-    ability,
-    hasStats: ability.parameters !== null,
-  }));
+const abilityList = computed(() =>
+  abilities.value
+    .filter((a) => a.kind !== "constellation")
+    .map((ability) => ({
+      ability,
+      hasStats: ability.parameters !== null,
+    })),
+);
 
 const selected = ref<number | null>(null);
-const selectedItem = computed(() => (selected.value === null ? null : abilityList[selected.value]));
+
+const showEnhanced = ref(false);
+watch(selected, () => (showEnhanced.value = false));
+
+const selectedItem = computed(() => {
+  if (selected.value === null) return null;
+  const item = abilityList.value[selected.value];
+  if (!item || !showEnhanced.value) return item ?? null;
+  const other = counterpartOf(data.abilities, item.ability);
+  return other ? { ...item, ability: other } : item;
+});
+const hasVersions = computed(
+  () => !!selectedItem.value && !!counterpartOf(data.abilities, selectedItem.value.ability),
+);
+const toggleVersion = () => (showEnhanced.value = !showEnhanced.value);
 
 // 點擊空白區域時關閉天賦資訊
 const listEl = ref<HTMLElement | null>(null);
@@ -57,6 +73,20 @@ const detailTabs: ComputedRef<{ key: "intro" | "stats"; label: string }[]> = com
 ]);
 const activeTab = ref<"intro" | "stats">("intro");
 watch(selected, () => (activeTab.value = "intro"));
+
+const showDiff = ref(false);
+const introEl = ref<HTMLElement | null>(null);
+useDiffOverlay(introEl, showDiff);
+
+const attributeRows = computed(() => {
+  const item = selectedItem.value;
+  if (!item) return [];
+  const level = talentsLevel.value[item.ability.kind] || 1;
+  const rows = parseTalentAttributes(item.ability, level);
+  const base = baseAbilityOf(data.abilities, item.ability);
+  const diffs = diffAttributes(rows, base && parseTalentAttributes(base, level));
+  return rows.map((row, i) => ({ ...row, diff: diffs[i] }));
+});
 
 // 切換分頁時卡片高度的過渡動畫（FLIP：記錄前後高度再補間）
 const cardEl = ref<HTMLElement | null>(null);
@@ -179,6 +209,13 @@ const needMaterials = (end: number) => sumMaterials(data.costs.talent.filter((s)
               />
               <span v-else class="gi-diamond"></span>
               {{ selectedItem.ability.name }}
+              <CharacterEnhancedBadge
+                v-if="hasVersions"
+                v-model:active="showDiff"
+                :enhanced="selectedItem.ability.isEnhanced"
+                class="ml-2"
+                @toggle="toggleVersion"
+              />
             </h2>
             <button
               type="button"
@@ -215,8 +252,12 @@ const needMaterials = (end: number) => sumMaterials(data.costs.talent.filter((s)
               {{ tab.label }}
             </button>
           </div>
-          <div ref="scrollEl" class="overflow-y-auto min-h-0">
-            <div :key="selectedItem.hasStats ? activeTab : 'intro'" class="tab-pane">
+          <!-- overflow 會連左右一起裁切：留 8px 給差異強調的左右延伸與外框 -->
+          <div ref="scrollEl" class="overflow-y-auto min-h-0 -mx-2 px-2">
+            <div
+              :key="`${selectedItem.hasStats ? activeTab : 'intro'}-${selectedItem.ability.isEnhanced}`"
+              class="tab-pane"
+            >
               <!-- 天賦介紹 -->
               <UIHoverPopover
                 v-if="!selectedItem.hasStats || activeTab === 'intro'"
@@ -224,13 +265,19 @@ const needMaterials = (end: number) => sumMaterials(data.costs.talent.filter((s)
               >
                 <p
                   v-html="
-                    parseDescriptionText(selectedItem.ability.description, abilities, data.glossary)
+                    parseDescriptionText(
+                      describeAbility(data.abilities, selectedItem.ability),
+                      abilities,
+                      data.glossary,
+                    )
                   "
-                  class="text-sm md:text-base"
+                  ref="introEl"
+                  class="relative isolate text-sm md:text-base"
+                  :class="{ 'show-diff': showDiff }"
                 ></p>
               </UIHoverPopover>
               <!-- 詳細屬性 -->
-              <div v-else class="flex flex-col gap-3">
+              <div v-else class="flex flex-col gap-3" :class="{ 'show-diff': showDiff }">
                 <div
                   class="flex flex-row items-center gap-5 pr-2.5"
                   v-if="selectedItem.ability.kind !== 'alternate_sprint'"
@@ -249,15 +296,20 @@ const needMaterials = (end: number) => sumMaterials(data.costs.talent.filter((s)
                     class="w-full"
                   />
                 </div>
+                <!-- 內距讓強調底色不貼字，負邊距抵銷內距 -->
                 <div
-                  class="flex flex-row justify-between text-sm md:text-base gap-15"
-                  v-for="prop in parseTalentAttributes(
-                    selectedItem.ability,
-                    talentsLevel[selectedItem.ability.kind] || 1,
-                  )"
+                  class="flex flex-row justify-between text-sm md:text-base gap-15 -mx-0.5 px-0.5"
+                  :class="{ 'ability-diff-new': prop.diff === 'new' }"
+                  v-for="(prop, i) in attributeRows"
+                  :key="i"
                 >
                   <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
-                  <p class="text-white text-right">{{ prop.value }}</p>
+                  <p
+                    class="text-white text-right"
+                    :class="{ 'ability-diff-changed': prop.diff === 'changed' }"
+                  >
+                    {{ prop.value }}
+                  </p>
                 </div>
                 <div
                   class="flex flex-col w-full gap-3"

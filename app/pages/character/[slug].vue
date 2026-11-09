@@ -118,11 +118,12 @@ const outfitImgs = computed(() => ({
       class="hidden xl:flex fixed left-12 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
       :aria-label="t('character.tabNav')"
     >
+      <!-- 標籤以絕對定位放在按鈕右側，按鈕（hover 與點擊範圍）只有菱形本身 -->
       <button
         v-for="(tab, name) in tabs"
         :key="name"
         type="button"
-        class="group flex items-center justify-start gap-3 cursor-pointer"
+        class="group relative flex w-fit cursor-pointer"
         :aria-current="currentTab === name ? 'page' : undefined"
         @click="currentTab = name"
       >
@@ -141,7 +142,7 @@ const outfitImgs = computed(() => ({
           />
         </span>
         <span
-          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity opacity-0 group-hover:opacity-100"
+          class="absolute left-full top-1/2 -translate-y-1/2 ml-3 whitespace-nowrap pointer-events-none text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
           :class="currentTab === name ? 'text-gold-300' : 'text-white/80'"
         >
           {{ t(`character.tabs.${name}`) }}
