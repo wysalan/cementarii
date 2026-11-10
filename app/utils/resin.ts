@@ -1,72 +1,38 @@
 function formatTime(date: Date) {
-  return `${date.getHours().toString().padStart(2, "0")} : ${date.getMinutes().toString().padStart(2, "0")}`;
+  return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 }
 
-function getTimeDiffPrefix(nowTime: Date, today: Date): string {
-  if (nowTime.getDate() - today.getDate() === 1) {
-    return "明天";
-  } else if (nowTime.getDate() - today.getDate() === 2) {
-    return "後天";
-  } else {
-    return "今天";
-  }
+function getTimeDiffPrefix(date: Date, now: Date): string {
+  // round 用來吸收日光節約造成的 23/25 小時
+  const days = Math.round(
+    (new Date(date).setHours(0, 0, 0, 0) - new Date(now).setHours(0, 0, 0, 0)) / 86400000,
+  );
+  return ["今天", "明天", "後天"][days] ?? `${date.getMonth() + 1}/${date.getDate()}`;
 }
 
-export function getSimpleResinResult(currentResin: number) {
-  if (currentResin >= 200) return "已回滿";
+export function getFullResinResult(currentResin: number, start?: Date, now = new Date()) {
+  const time = new Date(start ?? now);
+  if (currentResin >= 200) return [{ resin: 200, prefix: "", time: "已回滿", date: time }];
+  const result: { resin: number; prefix: string; time: string; date: Date }[] = [];
 
-  const nowTime = new Date();
-  const today = new Date(nowTime);
-  today.setHours(23, 59, 59, 999);
-
-  const resin = Math.max(0, currentResin);
-  const maxResin = 200;
-
-  const neededMinutes = (maxResin - resin) * 8;
-  nowTime.setMinutes(nowTime.getMinutes() + neededMinutes);
-  const prefix = nowTime > today ? "明天" : "今天";
-
-  return `${prefix} ${formatTime(nowTime)}`;
-}
-
-export function getFullResinResult(
-  currentResin: number,
-  customTime: { hour: number; minute: number },
-  useCustomTime?: boolean,
-) {
-  if (currentResin >= 200) return [{ resin: 200, prefix: "", time: "已回滿" }];
-  const result: { resin: number; prefix: string; time: string }[] = [];
-  const nowTime = new Date();
-  if (useCustomTime) {
-    nowTime.setHours(customTime.hour);
-    nowTime.setMinutes(customTime.minute);
-  }
-  const today = new Date(nowTime);
-  today.setHours(23, 59, 59, 999);
-
-  const resin = Math.max(0, currentResin);
+  let resin = Math.max(0, currentResin);
   const maxResin = 200;
   const remainResin = maxResin - resin;
 
   const resinRecoveryMinutes = 8;
 
   for (let counter = 0; counter < remainResin; counter++) {
-    nowTime.setMinutes(nowTime.getMinutes() + resinRecoveryMinutes);
-    currentResin++;
-    if (!(currentResin % 10) || currentResin === 200) {
-      const prefix = getTimeDiffPrefix(nowTime, today);
-      result.push({
-        resin: currentResin,
-        prefix: prefix,
-        time: `${formatTime(nowTime)}`,
-      });
-      if (currentResin === 200) {
-        result.unshift({
-          resin: currentResin,
-          prefix: prefix,
-          time: `${formatTime(nowTime)}`,
-        });
-      }
+    time.setMinutes(time.getMinutes() + resinRecoveryMinutes);
+    resin++;
+    if (!(resin % 10) || resin === maxResin) {
+      const row = {
+        resin,
+        prefix: getTimeDiffPrefix(time, now),
+        time: formatTime(time),
+        date: new Date(time),
+      };
+      result.push(row);
+      if (resin === maxResin) result.unshift(row);
     }
   }
   return result;

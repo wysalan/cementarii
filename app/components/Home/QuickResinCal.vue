@@ -5,10 +5,8 @@ const recoveryTimeResult = computed(() => {
   if (resin === null || resin === undefined || resin.toString() === "") {
     return "請輸入樹脂數量";
   }
-  if (resin >= 200) {
-    return "已回滿";
-  }
-  return getSimpleResinResult(resin);
+  const full = getFullResinResult(resin).at(-1)!;
+  return `${full.prefix} ${full.time}`.trim();
 });
 </script>
 
