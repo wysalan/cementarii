@@ -279,7 +279,7 @@ const required = (value: unknown, label: string) => {
 /** 空字串一律轉成 NULL */
 const emptyToNull = (s: string | null | undefined) => (s ? s : null);
 
-/** 依對照表轉換代碼，遇到不認得的值立刻停下 */
+/** 依對照表轉換代號，遇到不認得的值立刻停下 */
 function mapCode<T extends string>(map: Record<string, T>, code: string, label: string): T {
   const value = map[code];
   if (!value) throw new Error(`未知的${label}：${code}`);
@@ -344,7 +344,7 @@ const ENHANCED_IN: Record<number, string> = {
 };
 
 /**
- * 加強前的內容：資料來源只剩加強後的版本、加強前的內容只存在既有資料庫時，在此保存（鍵為「角色 ID:技能種類:排序」）；
+ * 加強前的內容：資料來源只剩加強後的版本、加強前的內容只存在既有資料庫時，在此保留（鍵為「角色 ID:技能種類:排序」）；
  * 該技能的原本版本改用這裡的內容，加強版改用資料來源的內容（有 descriptionBuff 時用 descriptionBuff）
  */
 const BEFORE_ENHANCEMENT: Record<
@@ -554,7 +554,7 @@ async function hoyowiki(key: string, load: () => Promise<Response>): Promise<any
   return JSON.parse(fs.readFileSync(file, "utf8")).data;
 }
 
-/** HoYoWiki 角色名稱 → entry_page_id（角色列表 menu_id 2，每頁 30 筆） */
+/** HoYoWiki 角色名稱 → entry_page_id（角色清單 menu_id 2，每頁 30 筆） */
 let hoyowikiEntries: Promise<Map<string, string>> | undefined;
 function hoyowikiEntryIds() {
   return (hoyowikiEntries ??= (async () => {
@@ -825,12 +825,13 @@ function buildCharacterFactory() {
         kind: string;
         sortOrder: number;
         parameters: AbilityParameters | null;
-        i18n: { description: string; labels: string[] | null };
+        i18n: { description: string; labels: string[] | null; labelsByLevel: string[][] | null };
       },
     >(
       generated: T,
       src: any,
       enhancedLabels = generated.i18n.labels,
+      enhancedLabelsByLevel = generated.i18n.labelsByLevel,
     ) => {
       const before = BEFORE_ENHANCEMENT[`${gameId}:${generated.kind}:${generated.sortOrder}`];
       if (!src.descriptionBuff && !before) return [generated];
@@ -844,6 +845,7 @@ function buildCharacterFactory() {
             ? required(yattaText(src.descriptionBuff), "descriptionBuff")
             : generated.i18n.description,
           labels: enhancedLabels,
+          labelsByLevel: enhancedLabelsByLevel,
         },
       };
       const base = before
@@ -854,6 +856,8 @@ function buildCharacterFactory() {
               ...generated.i18n,
               description: before.description,
               labels: before.labels ?? generated.i18n.labels,
+              // 手動保留的加強前 labels 沒有各等級的版本
+              labelsByLevel: before.labels ? null : generated.i18n.labelsByLevel,
             },
           }
         : generated;
@@ -877,7 +881,20 @@ function buildCharacterFactory() {
         throw new Error(
           `${slug} 的 ${kind} 與 ENHANCED_LABELS 不符（labels 有 ${labels.length} 個）`,
         );
-      const pick = (indexes?: number[]) => (indexes ? indexes.map((i) => labels[i]!) : labels);
+      const pick = (indexes?: number[], from = labels) =>
+        indexes ? indexes.map((i) => from[i]!) : from;
+      // 1.0 角色等的格式會隨等級改變（F1P → P），genshin-db 只有 1 級的，各等級改用 Yatta
+      const levels = z
+        .array(z.array(nonEmpty))
+        .parse(
+          Object.values(yt.promote ?? {}).map((l: any) => l.description.filter(Boolean)),
+        ) as string[][];
+      if (canonicalJson(levels[0]) !== canonicalJson(labels))
+        throw new Error(`${slug} 的 ${kind}：Yatta 1 級的 labels 與 genshin-db 不同`);
+      const pickByLevel = (indexes?: number[]) => {
+        const byLevel = levels.map((l) => pick(indexes, l));
+        return byLevel.some((l) => canonicalJson(l) !== canonicalJson(byLevel[0])) ? byLevel : null;
+      };
       const base = {
         kind,
         sortOrder: 0,
@@ -897,9 +914,10 @@ function buildCharacterFactory() {
           name: yt.name as string,
           description: required(yattaText(yt.description), "description"),
           labels: pick(split?.before) as string[] | null,
+          labelsByLevel: pickByLevel(split?.before),
         },
       };
-      return withEnhanced(base, yt, pick(split?.after));
+      return withEnhanced(base, yt, pick(split?.after), pickByLevel(split?.after));
     };
     const plain = (kind: "passive" | "constellation") => (a: any, i: number) =>
       withEnhanced(
@@ -914,9 +932,11 @@ function buildCharacterFactory() {
             name: a.name as string,
             description: required(yattaText(a.description), "description"),
             labels: null as string[] | null,
+            labelsByLevel: null as string[][] | null,
           },
         },
         a,
+        null,
         null,
       );
 
@@ -1479,7 +1499,7 @@ async function compareOne(slug: string, build: Builders, out: string[], filtered
       sql`select * from character_lore where character_id = ${id} and locale = ${LOCALE}`,
     );
     const abilities = await rows(sql`
-        select a.*, i.locale, i.name, i.description, i.labels from character_abilities a
+        select a.*, i.locale, i.name, i.description, i.labels, i.labels_by_level from character_abilities a
         join character_ability_i18n i on i.ability_id = a.id and i.locale = ${LOCALE}
         where a.character_id = ${id} order by a.kind, a.sort_order, a.is_enhanced`);
     const costs = await rows(sql`select * from character_costs where character_id = ${id}`);
@@ -1504,7 +1524,9 @@ async function compareOne(slug: string, build: Builders, out: string[], filtered
     diff("lore", normalizeRow(lore!, false), plainJson(genLore));
     diff(
       "abilities",
-      abilities.map((a) => withI18n(normalizeRow(a, false), ["name", "description", "labels"])),
+      abilities.map((a) =>
+        withI18n(normalizeRow(a, false), ["name", "description", "labels", "labelsByLevel"]),
+      ),
       plainJson(c.abilities),
     );
     diff("costs", stableSort(costs.map((x) => normalizeRow(x, false))), stableSort(c.costs));
@@ -1971,7 +1993,11 @@ function syncAbilities(opts: SyncOptions, build: Builders) {
   type Ability = Awaited<ReturnType<Builders["character"]>>["abilities"][number];
   type Data = {
     inserts: (Ability & { itemId: string })[];
-    labelUpdates: { abilityId: number; labels: string[] | null }[];
+    labelUpdates: {
+      abilityId: number;
+      labels: string[] | null;
+      labelsByLevel: string[][] | null;
+    }[];
     flagUpdates: { abilityId: number; isEnhanced: boolean }[];
     reorders: { abilityId: number; to: number }[];
     iconUpdates: { abilityId: number; icon: string | null }[];
@@ -2040,7 +2066,13 @@ function syncAbilities(opts: SyncOptions, build: Builders) {
           throw new Error(`${slug} 的 ${key(a)}：資料庫「${row.name}」／產生「${a.i18n.name}」`);
         const split = !a.isEnhanced && ENHANCED_LABELS[`${ch.game_id}:${a.kind}`];
         return split && canonicalJson(row.labels) !== canonicalJson(a.i18n.labels)
-          ? [{ abilityId: row.id as number, labels: a.i18n.labels }]
+          ? [
+              {
+                abilityId: row.id as number,
+                labels: a.i18n.labels,
+                labelsByLevel: a.i18n.labelsByLevel,
+              },
+            ]
           : [];
       });
       if (labelUpdates.length) notes.push(`更新加強相關的 labels ${labelUpdates.length} 筆`);
@@ -2135,7 +2167,7 @@ function syncAbilities(opts: SyncOptions, build: Builders) {
       for (const u of d.labelUpdates)
         await tx
           .update(t.characterAbilityI18n)
-          .set({ labels: u.labels })
+          .set({ labels: u.labels, labelsByLevel: u.labelsByLevel })
           .where(
             sql`${t.characterAbilityI18n.abilityId} = ${u.abilityId} and ${t.characterAbilityI18n.locale} = ${LOCALE}`,
           );
@@ -2319,7 +2351,7 @@ async function fillMissing(
     const abilities = new Map(
       (
         await rows(sql`
-          select a.*, i.name, i.description, i.labels from character_abilities a
+          select a.*, i.name, i.description, i.labels, i.labels_by_level from character_abilities a
           join character_ability_i18n i on i.ability_id = a.id and i.locale = ${LOCALE}
           where a.character_id = ${id}`)
       ).map((a) => [key(a.kind, a.sort_order, a.is_enhanced), a]),
@@ -2347,8 +2379,16 @@ async function fillMissing(
         updates.push({ table: t.characterAbilities, set: abilitySet, where: sql`id = ${row.id}` });
       const abilityI18nSet = fillColumns(
         label,
-        { description: row.description, labels: row.labels },
-        { description: a.i18n.description, labels: a.i18n.labels },
+        {
+          description: row.description,
+          labels: row.labels,
+          labelsByLevel: row.labels_by_level,
+        },
+        {
+          description: a.i18n.description,
+          labels: a.i18n.labels,
+          labelsByLevel: a.i18n.labelsByLevel,
+        },
         log,
       );
       if (Object.keys(abilityI18nSet).length)

@@ -93,7 +93,7 @@ function resolveLink(
 
 export function parseTalentAttributes(ability: Ability, level: number) {
   const params = ability.parameters ?? {};
-  return (ability.labels ?? []).map((label) => {
+  return (ability.labelsByLevel?.[level - 1] ?? ability.labels ?? []).map((label) => {
     const [text, formatPart] = label.split("|");
     const value = formatPart?.replace(
       /\{(param\d+):([\w]+)\}/g,

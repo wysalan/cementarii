@@ -25,6 +25,21 @@ test("天賦數值的格式與遊戲內一致", () => {
   assert.equal(valueOf("F2P", 0.003), "0.30%秒");
 });
 
+test("有每級格式時依等級挑選，沒有時用 labels", () => {
+  const ability = {
+    labels: ["一段蓄力傷害|{param2:F1P}+{param3:F1P}"],
+    labelsByLevel: [
+      ["一段蓄力傷害|{param2:F1P}+{param3:F1P}"],
+      ["一段蓄力傷害|{param2:P}+{param3:P}"],
+    ],
+    parameters: { param2: [0.84, 1.596], param3: [0.92, 1.748] },
+  };
+  assert.equal(parseTalentAttributes(ability as never, 1)[0]!.value, "84.0%+92.0%");
+  assert.equal(parseTalentAttributes(ability as never, 2)[0]!.value, "160%+175%");
+  const single = { ...ability, labelsByLevel: null };
+  assert.equal(parseTalentAttributes(single as never, 2)[0]!.value, "159.6%+174.8%");
+});
+
 test("性別標記依玩家性別取代，不限用字與順序", () => {
   assert.equal(parseStoryContent("{F#妳}{M#你}好", "", "male"), "你好");
   assert.equal(parseStoryContent("{F#妳}{M#你}好", "", "female"), "妳好");

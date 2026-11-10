@@ -146,6 +146,8 @@ export const characterAbilityI18n = pgTable(
     name: text().notNull(),
     description: text().notNull(),
     labels: text().array(), // ['一段傷害|{param1:F1P}', …]
+    // [等級 - 1][項目]：格式會隨等級改變時才有（F1P → P），各等級都與 labels 相同時為 NULL
+    labelsByLevel: jsonb().$type<string[][]>(),
   },
   (t) => [primaryKey({ columns: [t.abilityId, t.locale] })],
 );
