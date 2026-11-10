@@ -10,10 +10,13 @@ interface CodeData {
   }[];
 }
 
-const { data, status } = await useAsyncData(
+// 第三方 API：只在瀏覽器端抓、不擋住畫面，對方變慢或掛掉時首頁仍能正常輸出
+const { data, status } = useAsyncData(
   "codes",
   () => $fetch<CodeData>("https://api.ennead.cc/mihoyo/genshin/codes"),
   {
+    server: false,
+    lazy: true,
     transform: (res) => res.active.toReversed(),
   },
 );
@@ -23,20 +26,26 @@ const { data, status } = await useAsyncData(
   <div class="relative">
     <div class="gi-panel p-5">
       <h2 class="text-2xl text-highlighted pb-4">兌換碼一覽</h2>
-      <div class="flex rounded-md" v-if="status === 'pending'">
-        <USkeleton class="w-full h-50" />
+      <p v-if="status === 'error'" role="alert">兌換碼暫時無法取得，請稍後再試。</p>
+      <div v-else-if="!data" class="flex flex-col gap-2" role="status" aria-label="兌換碼載入中">
+        <USkeleton
+          v-for="i in 4"
+          :key="i"
+          class="h-11 rounded-md bg-parchment-200 dark:bg-navy-950"
+        />
       </div>
       <div v-else class="flex flex-col gap-2 max-h-50 overflow-y-auto">
         <div
           class="flex bg-parchment-200 dark:bg-navy-950 rounded-md p-3 hover:ring-1 ring-inset ring-gold-500 transition-shadow"
           v-for="code in data"
+          :key="code.code"
         >
           <a
             :href="'https://genshin.hoyoverse.com/gift?code=' + code.code"
             target="_blank"
             rel="noopener"
             class="flex flex-row items-center gap-2 group h-5"
-            aria-label="前往官網兌換頁面"
+            :aria-label="`前往官網兌換 ${code.code}`"
           >
             {{ code.code }}
             <UIcon
