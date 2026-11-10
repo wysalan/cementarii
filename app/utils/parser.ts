@@ -18,9 +18,13 @@ function formatAttrParam(value: number, format: string): string {
     case "F2P":
       return (value * 100).toFixed(2) + "%";
     case "P":
-      return (value * 100).toFixed(1) + "%";
+      return (value * 100).toFixed(0) + "%";
     case "F1":
-      return value.toFixed(0);
+      return value.toFixed(1);
+    case "F2":
+      return value.toFixed(2);
+    case "I":
+      return Math.round(value).toLocaleString("en-US");
     default:
       return String(value);
   }
@@ -117,7 +121,9 @@ export function parseStoryContent(
       },
     )
     .replace(/^#/g, "")
-    .replace(/{F#妳}{M#你}/g, playerGender && (playerGender === "male" ? "你" : "妳"))
+    .replace(/\{([FM])#([^}]*)\}/g, (_, gender: string, text: string) =>
+      (gender === "M") === (playerGender === "male") ? text : "",
+    )
     .replace(/{NICKNAME}/g, userName);
 }
 
