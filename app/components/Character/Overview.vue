@@ -18,9 +18,9 @@ const outfitList = defineModel<string[]>("outfitList");
 const selectedOutfit = defineModel<string>("selectedOutfit");
 const outfitImgs = defineModel<Record<string, string>>("outfitImgs");
 
-const outfitsObject = data.outfits
-  ? Object.fromEntries(data.outfits.map((outfit) => [outfit.name, outfit]))
-  : {};
+const outfitsObject = computed(() =>
+  Object.fromEntries((data.outfits ?? []).map((outfit) => [outfit.name, outfit])),
+);
 
 // 角色數值
 const levelIndex = ref(6);

@@ -6,6 +6,7 @@ import Talent from "@/components/Character/Talent.vue";
 import Constellation from "@/components/Character/Constellation.vue";
 import Story from "@/components/Character/Story.vue";
 import VoiceOver from "@/components/Character/VoiceOver.vue";
+import { useUserStore } from "@/stores/User";
 
 definePageMeta({
   layout: "detail",
@@ -25,6 +26,23 @@ const {
 if (event && error.value?.status === 404) {
   setResponseStatus(event, 404);
 }
+
+// 技能名稱、技能說明、衣裝說明在各分頁有多處顯示，性別標記在這裡一次處理
+const store = useUserStore();
+const displayData = computed(() => {
+  const data = characterData.value;
+  if (!data) return data;
+  const gender = (text: string | null) => applyGender(text, store.playerGender);
+  return {
+    ...data,
+    abilities: data.abilities.map((a) => ({
+      ...a,
+      name: gender(a.name),
+      description: gender(a.description),
+    })),
+    outfits: data.outfits.map((o) => ({ ...o, description: gender(o.description) })),
+  };
+});
 
 // SEO
 const title = computed(
@@ -91,7 +109,7 @@ const outfitImgs = computed(() => ({
 
 <template>
   <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
-  <main class="dark" v-if="status === 'success' && characterData">
+  <main class="dark" v-if="status === 'success' && displayData">
     <!-- 立繪背景（排除 header 列） -->
     <div
       class="fixed -z-1 inset-x-0 top-17 bottom-0 bg-cover bg-center"
@@ -105,7 +123,7 @@ const outfitImgs = computed(() => ({
       <KeepAlive>
         <component
           :is="tabs[currentTab]?.component"
-          :data="characterData"
+          :data="displayData"
           v-model:outfitList="outfitList"
           v-model:selectedOutfit="selectedOutfit"
           v-model:outfitImgs="outfitImgs"

@@ -106,23 +106,27 @@ export function parseTalentAttributes(ability: Ability, level: number) {
   });
 }
 
+/** 依玩家性別取代 `{F#妳}{M#你}` 這類標記；開頭的 `#` 是遊戲用來標示「內含標記」的記號，一併拿掉 */
+export function applyGender(text: string | undefined | null, playerGender: string): string {
+  return (text ?? "")
+    .replace(/^#/, "")
+    .replace(/\{([FM])#([^}]*)\}/g, (_, gender: string, content: string) =>
+      (gender === "M") === (playerGender === "male") ? content : "",
+    );
+}
+
 export function parseStoryContent(
   content: string | undefined | null,
   userName: string,
   playerGender: string,
 ) {
-  if (!content) return "";
-  return content
+  return applyGender(content, playerGender)
     .replace(/\n/g, "<br>")
     .replace(
       /<color=(#[0-9a-fA-F]{6})[0-9a-fA-F]{2}>(.*?)<\/color>/g,
       (_, color: string, content: string) => {
         return `<span style="color: ${color}">${content}</span>`;
       },
-    )
-    .replace(/^#/g, "")
-    .replace(/\{([FM])#([^}]*)\}/g, (_, gender: string, text: string) =>
-      (gender === "M") === (playerGender === "male") ? text : "",
     )
     .replace(/{NICKNAME}/g, userName);
 }

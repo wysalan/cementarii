@@ -219,7 +219,7 @@ function getBgColor(rarity: number | null) {
           <p
             v-html="
               parseEffectDescription(
-                weaponData.effectDescription,
+                applyGender(weaponData.effectDescription, store.playerGender),
                 weaponData.refinementParams,
                 selectedRefinementRank,
               )
