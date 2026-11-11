@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
-import materialList from "@/data/materialList.json";
+
+const { locale } = useI18n();
+const { data, error } = await useFetch("/api/material", { query: { locale } });
 
 useSeoMeta({
   title: `素材 | ${siteConfig.title}`,
@@ -22,7 +24,7 @@ const filter = ref<Record<string, string[]>>({
     "武器突破素材",
   ],
   characterWeaponSelected: [],
-  localSpecialty: ["蒙德", "璃月", "稻妻", "須彌", "楓丹", "納塔", "挪德卡萊"],
+  localSpecialty: ["蒙德", "璃月", "稻妻", "須彌", "楓丹", "納塔", "挪德卡萊", "至冬"],
   localSpecialtySelected: [],
   other: [
     "素材",
@@ -38,25 +40,51 @@ const filter = ref<Record<string, string[]>>({
   otherSelected: [],
 });
 
+// 清單的排列順序：依類型分組，同類型依 ID；不在表裡的類型排在最後
+const TYPE_ORDER = [
+  "角色經驗素材",
+  "角色與武器培養素材",
+  "角色培養素材",
+  "角色突破素材",
+  "角色天賦素材",
+  "武器突破素材",
+  "素材",
+  ...filter.value.localSpecialty!.map((region) => `${region}區域特產`),
+  "高級兌換券",
+  "普通兌換券",
+  "限定祈願道具",
+  "祈願道具",
+  "功能開啟憑證",
+  "消耗品",
+  "稀有貨幣",
+  "通用貨幣",
+];
+const typeRank = (typeText: string | null) => {
+  const rank = TYPE_ORDER.indexOf(typeText ?? "");
+  return rank < 0 ? TYPE_ORDER.length : rank;
+};
+const materialList = computed(() =>
+  (data.value ?? []).toSorted((a, b) => typeRank(a.typeText) - typeRank(b.typeText) || a.id - b.id),
+);
+
 const filteredMaterialList = computed(() => {
-  return materialList
+  const keyword = materialSearchKeyword.value.toLowerCase().replaceAll(" ", "");
+  return materialList.value
     .filter((material) => {
       return (
         (!filter.value.raritySelected?.length ||
           filter.value.raritySelected.includes(material.rarity.toString())) &&
         (!filter.value.characterWeaponSelected?.length ||
-          filter.value.characterWeaponSelected.includes(material.typeText)) &&
+          filter.value.characterWeaponSelected.includes(material.typeText ?? "")) &&
         (!filter.value.localSpecialtySelected?.length ||
           filter.value.localSpecialtySelected.includes(
-            material.typeText.replace("區域特產", ""),
+            (material.typeText ?? "").replace("區域特產", ""),
           )) &&
         (!filter.value.otherSelected?.length ||
-          filter.value.otherSelected.includes(material.typeText)) &&
-        (!materialSearchKeyword.value ||
-          material.name.CHT.includes(materialSearchKeyword.value.toLowerCase()) ||
-          material.name.EN.toLowerCase()
-            .replace(" ", "")
-            .includes(materialSearchKeyword.value.toLowerCase().replace(" ", "")))
+          filter.value.otherSelected.includes(material.typeText ?? "")) &&
+        (!keyword ||
+          material.name.toLowerCase().replaceAll(" ", "").includes(keyword) ||
+          (material.nameEn ?? "").toLowerCase().replaceAll(" ", "").includes(keyword))
       );
     })
     .slice(0, loadLimit.value);
@@ -89,7 +117,7 @@ onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (loadLimit.value < materialList.length) {
+          if (loadLimit.value < materialList.value.length) {
             loadLimit.value += 50;
           }
         }
@@ -130,12 +158,9 @@ onMounted(() => {
       </div>
       <UISearchBar v-model="materialSearchKeyword" placeholder="搜尋素材" />
     </div>
+    <p v-if="error" role="alert" class="text-center">資料暫時無法取得，請稍後再試。</p>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
-      <MaterialBlock
-        v-for="(material, index) in filteredMaterialList"
-        :key="index"
-        :data="material"
-      />
+      <MaterialBlock v-for="material in filteredMaterialList" :key="material.id" :data="material" />
     </div>
     <div ref="loadMoreTrigger"></div>
   </main>

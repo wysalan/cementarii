@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { storageConfig } from "@/site.config";
 
-interface ArtifactData {
-  id: number;
-  slug: string;
-  name: string;
-  rarityList: number[];
-  icon: string;
-}
-const { data } = defineProps<{ data: ArtifactData }>();
+import type { ArtifactListItem } from "@/types/api";
+const { data } = defineProps<{ data: ArtifactListItem }>();
 </script>
 
 <template>
   <NuxtLink
     :to="`/artifact/${data.slug}`"
     class="flex flex-col justify-center items-center bg-parchment-200 rounded-lg hover:scale-105 hover:ring-2 transition ease-in-out"
-    :class="rarityRing(data.rarityList[data.rarityList.length - 1] || 1)"
+    :class="rarityRing(data.maxRarity)"
   >
     <div class="relative">
       <NuxtImg
@@ -24,7 +18,7 @@ const { data } = defineProps<{ data: ArtifactData }>();
         width="96"
         height="96"
         class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg bg-linear-to-b"
-        :class="rarityGradient(data.rarityList[data.rarityList.length - 1] || 1)"
+        :class="rarityGradient(data.maxRarity)"
         placeholder
       />
     </div>

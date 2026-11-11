@@ -1,20 +1,8 @@
 <script setup lang="ts">
 import { storageConfig } from "@/site.config";
 
-interface MaterialData {
-  id: number;
-  name: {
-    CHT: string;
-    EN: string;
-  };
-  category: string;
-  rarity: number;
-  typeText: string;
-  description: string;
-  sources: string[];
-  icon: string;
-}
-const { data } = defineProps<{ data: MaterialData }>();
+import type { MaterialListItem } from "@/types/api";
+const { data } = defineProps<{ data: MaterialListItem }>();
 </script>
 
 <template>
@@ -26,7 +14,7 @@ const { data } = defineProps<{ data: MaterialData }>();
     <div class="relative">
       <NuxtImg
         :src="`${storageConfig.baseUrl}/item-icon/${data.icon}.webp`"
-        :alt="data.name.CHT"
+        :alt="data.name"
         width="96"
         height="96"
         class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg bg-linear-to-b"
@@ -35,7 +23,7 @@ const { data } = defineProps<{ data: MaterialData }>();
       />
     </div>
     <div class="flex flex-col justify-center items-center h-10 w-full my-1">
-      <p class="break-all w-20 xl:w-30 text-center text-navy-800">{{ data.name.CHT }}</p>
+      <p class="break-all w-20 xl:w-30 text-center text-navy-800">{{ data.name }}</p>
     </div>
   </NuxtLink>
 </template>

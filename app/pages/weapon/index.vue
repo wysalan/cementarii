@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
-import weaponList from "@/data/weaponList.json";
+
+const { locale, t } = useI18n();
+const { data, error } = await useFetch("/api/weapon", { query: { locale } });
+const weaponList = computed(() => data.value ?? []);
 
 useSeoMeta({
   title: `武器 | ${siteConfig.title}`,
@@ -28,50 +31,22 @@ const filter = ref<Record<string, string[]>>({
   statSelected: [],
 });
 
-function getStatText(mainStatType: string) {
-  if (mainStatType) {
-    switch (mainStatType) {
-      case "FIGHT_PROP_ATTACK_PERCENT":
-        return "攻擊力";
-      case "FIGHT_PROP_DEFENSE_PERCENT":
-        return "防禦力";
-      case "FIGHT_PROP_HP_PERCENT":
-        return "生命值";
-      case "FIGHT_PROP_PHYSICAL_ADD_HURT":
-        return "物理傷害加成";
-      case "FIGHT_PROP_ELEMENT_MASTERY":
-        return "元素精通";
-      case "FIGHT_PROP_CHARGE_EFFICIENCY":
-        return "元素充能效率";
-      case "FIGHT_PROP_CRITICAL":
-        return "暴擊率";
-      case "FIGHT_PROP_CRITICAL_HURT":
-        return "暴擊傷害";
-      default:
-        return "unknown";
-    }
-  }
-  return "unknown";
-}
-
 const filteredWeaponList = computed(() => {
-  return weaponList
+  const keyword = weaponSearchKeyword.value.toLowerCase().replaceAll(" ", "");
+  return weaponList.value
     .filter((weapon) => {
       return (
         (!filter.value.raritySelected?.length ||
           filter.value.raritySelected.includes(weapon.rarity.toString())) &&
         (!filter.value.weaponSelected?.length ||
-          filter.value.weaponSelected.includes(weapon.weaponText)) &&
+          filter.value.weaponSelected.includes(t(`weaponType.${weapon.weaponType}`))) &&
         (!filter.value.statSelected?.length ||
-          filter.value.statSelected?.includes(getStatText(weapon.mainStatType))) &&
-        (!weaponSearchKeyword.value ||
-          weapon.name
-            .toLowerCase()
-            .replace(" ", "")
-            .includes(weaponSearchKeyword.value.toLowerCase()) ||
-          weapon.slug
-            .replace("-", "")
-            .includes(weaponSearchKeyword.value.toLowerCase().replace(" ", "")))
+          filter.value.statSelected.includes(
+            weapon.substatType ? t(`fightProp.${weapon.substatType}`) : "",
+          )) &&
+        (!keyword ||
+          weapon.name.toLowerCase().replaceAll(" ", "").includes(keyword) ||
+          weapon.slug.replaceAll("-", "").includes(keyword))
       );
     })
     .sort((a, b) => {
@@ -113,7 +88,7 @@ onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (loadLimit.value < weaponList.length) {
+          if (loadLimit.value < weaponList.value.length) {
             loadLimit.value += 50;
           }
         }
@@ -145,8 +120,9 @@ onMounted(() => {
       </div>
       <UISearchBar v-model="weaponSearchKeyword" placeholder="搜尋武器" />
     </div>
+    <p v-if="error" role="alert" class="text-center">資料暫時無法取得，請稍後再試。</p>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
-      <WeaponBlock v-for="(weapon, index) in filteredWeaponList" :key="index" :data="weapon" />
+      <WeaponBlock v-for="weapon in filteredWeaponList" :key="weapon.id" :data="weapon" />
     </div>
     <div ref="loadMoreTrigger"></div>
   </main>

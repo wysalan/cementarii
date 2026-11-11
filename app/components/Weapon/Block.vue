@@ -1,18 +1,8 @@
 <script setup lang="ts">
 import { storageConfig } from "@/site.config";
 
-interface WeaponData {
-  id: number;
-  name: string;
-  slug: string;
-  rarity: number;
-  weaponType: string;
-  weaponText: string;
-  mainStatType: string;
-  mainStatText: string;
-  icon: string;
-}
-const { data } = defineProps<{ data: WeaponData }>();
+import type { WeaponListItem } from "@/types/api";
+const { data } = defineProps<{ data: WeaponListItem }>();
 </script>
 
 <template>

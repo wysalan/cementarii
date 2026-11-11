@@ -3,31 +3,11 @@ import { storageConfig } from "@/site.config";
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
-interface CharacterData {
-  listIndex: number;
-  id: number;
-  name: Record<string, string>;
-  rarity: number;
-  region: string;
-  elementType: string;
-  elementText: string;
-  weaponType: string;
-  weaponText: string;
-  slug: string;
-  avatar: string;
-  costumeAvatar: string;
-}
-const { data } = defineProps<{ data: CharacterData }>();
+import type { CharacterListItem } from "@/types/api";
+const { data } = defineProps<{ data: CharacterListItem }>();
+const { t } = useI18n();
 
-function getAvatarFileName(character: CharacterData) {
-  if (store.useCostumeIcon && character.costumeAvatar) {
-    return character.costumeAvatar;
-  } else {
-    return character.avatar;
-  }
-}
-
-const elementIcon = computed(() => data.elementType.replace("ELEMENT_", "").toLowerCase());
+const avatar = computed(() => (store.useCostumeIcon && data.costumeIcon) || data.icon);
 </script>
 
 <template>
@@ -38,8 +18,8 @@ const elementIcon = computed(() => data.elementType.replace("ELEMENT_", "").toLo
   >
     <div class="relative">
       <NuxtImg
-        :src="`${storageConfig.baseUrl}/avatar-icon/${getAvatarFileName(data)}.webp`"
-        :alt="data.name['CHT']"
+        :src="`${storageConfig.baseUrl}/avatar-icon/${avatar}.webp`"
+        :alt="data.name"
         width="96"
         height="96"
         class="w-25 h-25 lg:w-35 lg:h-35 mask-[linear-gradient(to_bottom,black_85%,transparent_100%)] rounded-t-lg"
@@ -52,18 +32,20 @@ const elementIcon = computed(() => data.elementType.replace("ELEMENT_", "").toLo
       />
       <div class="absolute top-1.25 left-1.25">
         <NuxtImg
-          :src="`${storageConfig.baseUrl}/elements/${elementIcon}.png`"
-          :alt="data.elementText + '元素圖示'"
+          :src="`${storageConfig.baseUrl}/elements/${data.element}.png`"
+          :alt="
+            t('character.overview.profile.elementIcon', { element: t(`element.${data.element}`) })
+          "
           width="30"
           height="30"
           placeholder
           class="w-6.25 h-6.25 md:w-7.5 md:h-7.5 bg-navy-950/60 rounded-lg"
-          v-if="data.elementType !== 'ELEMENT_NONE'"
+          v-if="data.element"
         />
       </div>
     </div>
     <div class="flex flex-col justify-center items-center h-10 w-full text-navy-800">
-      <p>{{ data.name["CHT"] }}</p>
+      <p>{{ data.name }}</p>
     </div>
   </NuxtLink>
 </template>
