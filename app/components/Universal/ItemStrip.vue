@@ -3,6 +3,8 @@
 interface Item {
   id: number;
   name: string;
+  rarity: number;
+  icon: string;
   count: number;
 }
 
@@ -45,7 +47,7 @@ watch(
       class="flex flex-row justify-start max-w-full overflow-x-auto gap-1"
       @scroll.passive="update"
     >
-      <UniversalItem v-for="(item, key) in items" :key="key" :data="item" />
+      <UniversalItem v-for="item in items" :key="item.id" :data="item" />
     </div>
     <Transition name="strip-btn">
       <button
