@@ -1269,6 +1269,16 @@ function buildArtifactFactory() {
 
 // ---------- 素材 ----------
 
+/** 遊戲介面才用得到的來源項目：跳轉按鈕、合成數量的格式字串、空字串 */
+const GAME_ONLY_SOURCES = new Set(["前往採集", "可合成數量：{0}", "佔位-可合成數量:{0}", ""]);
+
+/** 拿掉遊戲介面專用的項目；原本有內容、拿掉後全空的視為沒有資料（NULL），不當成「沒有一般取得方式」 */
+function cleanSources(sources: string[] | null) {
+  if (!sources?.length) return sources;
+  const kept = sources.filter((s) => !GAME_ONLY_SOURCES.has(s) && !s.startsWith("佔位"));
+  return kept.length ? kept : null;
+}
+
 /** 素材（只補資料庫缺少的）；格式與既有資料一致：zh-TW 有完整內容，en 只有名稱 */
 function buildMaterial() {
   // 與 gdbIndex 相同，透過寬鬆的函式型別呼叫，避開 genshin-db 對 "names" 查詢的回傳型別
@@ -1298,9 +1308,7 @@ function buildMaterial() {
           name: required(m.name, `素材 ${id} 的 name`),
           typeText: emptyToNull(m.typeText),
           description: emptyToNull(m.description),
-          // genshin-db 會帶「佔位-可合成數量:{0}」之類的項目，拿掉
-          sources:
-            ((m.sources ?? null) as string[] | null)?.filter((s) => !s.startsWith("佔位")) ?? null,
+          sources: cleanSources((m.sources ?? null) as string[] | null),
         },
         {
           materialId: id,
@@ -1330,9 +1338,9 @@ async function yattaMaterial(id: number) {
   const category = yattaMaterialCategory(y.type);
   if (!category)
     throw new Error(`genshin-db 沒有素材 ${id}，Yatta 的類型「${y.type}」沒有對應的 category`);
-  const sources = ((y.source ?? []) as { name: string }[])
-    .map((s) => s.name)
-    .filter((s) => s !== "塵歌壺種植");
+  const sources = cleanSources(
+    ((y.source ?? []) as { name: string }[]).map((s) => s.name).filter((s) => s !== "塵歌壺種植"),
+  );
   return {
     row: {
       id,
@@ -1347,7 +1355,7 @@ async function yattaMaterial(id: number) {
         name: required(y.name, `素材 ${id} 的 name`),
         typeText: emptyToNull(y.type),
         description: yattaText(y.description),
-        sources: sources.length ? sources : null,
+        sources: sources?.length ? sources : null,
       },
       { materialId: id, locale: "en" as const, name: required(en?.name, `素材 ${id} 的英文名稱`) },
     ],
