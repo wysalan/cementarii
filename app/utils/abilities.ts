@@ -77,7 +77,7 @@ export function describeAbility(abilities: AbilityLike[], ability: AbilityLike):
   if (!ability.isEnhanced) return ability.description;
   const cached = diffCache.get(ability);
   if (cached !== undefined) return cached;
-  const base = baseAbilityOf(abilities, ability);
+  const base = counterpartOf(abilities, ability);
   const marked = base
     ? markEnhancedDiff(base.description, ability.description)
     : ability.description;
@@ -95,17 +95,6 @@ export function counterpartOf<T extends Omit<AbilityLike, "description">>(
       a.isEnhanced !== ability.isEnhanced &&
       a.kind === ability.kind &&
       a.sortOrder === ability.sortOrder,
-  );
-}
-
-/** 強化後技能對應的強化前版本 */
-export function baseAbilityOf<T extends Omit<AbilityLike, "description">>(
-  abilities: T[],
-  ability: T,
-): T | undefined {
-  if (!ability.isEnhanced) return undefined;
-  return abilities.find(
-    (a) => !a.isEnhanced && a.kind === ability.kind && a.sortOrder === ability.sortOrder,
   );
 }
 

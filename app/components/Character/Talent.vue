@@ -83,7 +83,7 @@ const attributeRows = computed(() => {
   if (!item) return [];
   const level = talentsLevel.value[item.ability.kind] || 1;
   const rows = parseTalentAttributes(item.ability, level);
-  const base = baseAbilityOf(data.abilities, item.ability);
+  const base = item.ability.isEnhanced ? counterpartOf(data.abilities, item.ability) : undefined;
   const diffs = diffAttributes(rows, base && parseTalentAttributes(base, level));
   return rows.map((row, i) => ({ ...row, diff: diffs[i] }));
 });

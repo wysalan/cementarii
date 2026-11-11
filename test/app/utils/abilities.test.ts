@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
-  baseAbilityOf,
   counterpartOf,
   describeAbility,
   diffAttributes,
@@ -53,8 +52,6 @@ test("找到同一個技能的另一個版本", () => {
   assert.equal(counterpartOf(abilities, base), enhanced);
   assert.equal(counterpartOf(abilities, enhanced), base);
   assert.equal(counterpartOf(abilities, other), undefined);
-  assert.equal(baseAbilityOf(abilities, enhanced), base);
-  assert.equal(baseAbilityOf(abilities, base), undefined);
 });
 
 test("只有強化後的技能會加上差異標記", () => {
