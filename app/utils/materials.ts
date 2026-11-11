@@ -21,8 +21,6 @@
 export function sumMaterials<T extends { id: number; count: number }>(
   stages: { materials: T[] }[],
 ): T[] {
-  // console.log("msg  from materials.ts");
-  // console.log(stages);
   const totals = new Map<number, T>();
   for (const material of stages.flatMap((s) => s.materials)) {
     const total = totals.get(material.id);
