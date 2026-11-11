@@ -53,7 +53,7 @@ export default defineNuxtConfig({
 
   typescript: {
     tsConfig: {
-      include: ["./app/types/*"],
+      include: ["./app/types/*", "../test/app/**/*"],
       compilerOptions: {
         types: ["node"],
       },
@@ -62,6 +62,7 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "cloudflare-module",
+    typescript: { tsConfig: { include: ["../test/server/**/*"] } },
     cloudflare: {
       deployConfig: true,
       nodeCompat: true,
