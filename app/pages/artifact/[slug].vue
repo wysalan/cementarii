@@ -59,22 +59,6 @@ const bonuses = computed(() => {
 });
 
 // Functions
-function getBgColor(rarity: number | undefined) {
-  if (rarity) {
-    switch (rarity) {
-      case 1:
-        return "bg-linear-to-br from-[#6a6d74] to-[#868586]";
-      case 2:
-        return "bg-linear-to-br from-[#4b6c67] to-[#519072]";
-      case 3:
-        return "bg-linear-to-br from-[#567496] to-[#5392b8]";
-      case 4:
-        return "bg-linear-to-br from-[#5e5789] to-[#9c75b7]";
-      case 5:
-        return "bg-linear-to-br from-[#945c2c] to-[#b27330]";
-    }
-  }
-}
 </script>
 
 <template>
@@ -85,8 +69,8 @@ function getBgColor(rarity: number | undefined) {
           <p class="text-lg md:text-xl font-semibold text-white">{{ currentPiece?.name }}</p>
         </div>
         <div
-          class="flex shrink-0 justify-center items-center relative"
-          :class="getBgColor(artifactData.maxRarity)"
+          class="flex shrink-0 justify-center items-center relative bg-linear-to-br"
+          :class="rarityGradient(artifactData.maxRarity)"
         >
           <NuxtImg
             :src="`${storageConfig.baseUrl}/relic-icon/${currentPiece?.icon}.webp`"

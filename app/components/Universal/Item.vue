@@ -19,40 +19,6 @@ const dialogVisible = ref(false);
 // （不可綁 dialogVisible，否則關閉動畫期間會先退回淺色）
 const btnEl = ref<HTMLElement | null>(null);
 const overlayClass = computed(() => (btnEl.value?.closest(".dark") ? "dark" : ""));
-
-function getBgColor(rarity: number | undefined) {
-  if (rarity) {
-    switch (rarity) {
-      case 1:
-        return "bg-linear-to-br from-[#6a6d74] to-[#868586]";
-      case 2:
-        return "bg-linear-to-br from-[#4b6c67] to-[#519072]";
-      case 3:
-        return "bg-linear-to-br from-[#567496] to-[#5392b8]";
-      case 4:
-        return "bg-linear-to-br from-[#5e5789] to-[#9c75b7]";
-      case 5:
-        return "bg-linear-to-br from-[#945c2c] to-[#b27330]";
-    }
-  }
-}
-
-function getNameBarColor(rarity: number | undefined) {
-  if (rarity) {
-    switch (rarity) {
-      case 1:
-        return "bg-[#72778b]";
-      case 2:
-        return "bg-[#2a9072]";
-      case 3:
-        return "bg-[#5180cb]";
-      case 4:
-        return "bg-[#a156e0]";
-      case 5:
-        return "bg-[#bc6832]";
-    }
-  }
-}
 </script>
 
 <template>
@@ -65,8 +31,8 @@ function getNameBarColor(rarity: number | undefined) {
     >
       <!-- grow：按鈕被外層 flex 拉伸時由圖示區吃掉多餘高度，避免頂部露出底色 -->
       <div
-        class="flex justify-center items-center w-full grow min-h-16 rounded-t-md"
-        :class="getBgColor(materialData?.rarity)"
+        class="flex justify-center items-center w-full grow min-h-16 rounded-t-md bg-linear-to-br"
+        :class="rarityGradient(materialData?.rarity)"
       >
         <NuxtImg
           :src="`${storageConfig.baseUrl}/item-icon/UI_ItemIcon_${data.id}.webp`"
@@ -85,7 +51,7 @@ function getNameBarColor(rarity: number | undefined) {
       <div class="flex flex-col h-fit rounded-lg overflow-hidden">
         <div
           class="flex flex-row justify-between items-center px-5 py-2"
-          :class="getNameBarColor(materialData?.rarity)"
+          :class="rarityBar(materialData?.rarity)"
         >
           <p class="text-base md:text-lg font-semibold text-white">
             {{ materialData?.name.CHT }}
@@ -99,8 +65,8 @@ function getNameBarColor(rarity: number | undefined) {
           />
         </div>
         <div
-          class="flex justify-center items-center h-50 relative"
-          :class="getBgColor(materialData?.rarity)"
+          class="flex justify-center items-center h-50 relative bg-linear-to-br"
+          :class="rarityGradient(materialData?.rarity)"
         >
           <NuxtImg
             :src="`${storageConfig.baseUrl}/item-icon/${materialData?.icon}.webp`"

@@ -84,30 +84,14 @@ const materialCalculationResult = computed(() => {
 });
 
 // Functions
-function getBgColor(rarity: number | null) {
-  if (rarity) {
-    switch (rarity) {
-      case 1:
-        return "bg-linear-to-b from-[#6a6d74] to-[#868586]";
-      case 2:
-        return "bg-linear-to-b from-[#4b6c67] to-[#519072]";
-      case 3:
-        return "bg-linear-to-b from-[#567496] to-[#5392b8]";
-      case 4:
-        return "bg-linear-to-b from-[#5e5789] to-[#9c75b7]";
-      case 5:
-        return "bg-linear-to-b from-[#945c2c] to-[#b27330]";
-    }
-  }
-}
 </script>
 
 <template>
   <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && weaponData">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mx-4 sm:mx-5">
       <div
-        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-8 overflow-hidden"
-        :class="getBgColor(weaponData.rarity)"
+        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-8 overflow-hidden bg-linear-to-b"
+        :class="rarityGradient(weaponData.rarity)"
       >
         <NuxtImg
           :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.gacha}.webp`"
@@ -131,8 +115,8 @@ function getBgColor(rarity: number | null) {
             <NuxtImg
               :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.icon}.webp`"
               :alt="t('weapon.iconAlt', { name: weaponData.name })"
-              class="w-10 h-10 rounded-sm"
-              :class="getBgColor(weaponData.rarity)"
+              class="w-10 h-10 rounded-sm bg-linear-to-b"
+              :class="rarityGradient(weaponData.rarity)"
             />
             <h2 class="text-xl md:text-2xl font-semibold text-highlighted">
               {{ weaponData.name }}
