@@ -13,6 +13,7 @@ export default defineCachedEventHandler(async (event) => {
       association: true,
       birthMonth: true,
       images: true,
+      enhancedIn: true,
     },
     with: {
       i18n: {

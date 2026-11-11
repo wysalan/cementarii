@@ -15,6 +15,7 @@ const loadLimit = ref(100);
 const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const characterSearchKeyword = ref("");
 const advancedOpen = ref(false);
+const enhancedOnly = ref(false);
 
 const characterFilter = ref<Record<string, string[]>>({
   rarity: ["4", "5"],
@@ -53,6 +54,7 @@ const filteredCharacterList = computed(() => {
   return characterList.value
     .filter((character) => {
       return (
+        (!enhancedOnly.value || !!character.enhancedIn) &&
         (!characterFilter.value.raritySelected?.length ||
           characterFilter.value.raritySelected.includes(character.rarity.toString())) &&
         (!characterFilter.value.elementSelected?.length ||
@@ -79,6 +81,7 @@ const filteredCharacterList = computed(() => {
 
 const isFiltered = computed(() => {
   return (
+    enhancedOnly.value ||
     characterFilter.value.raritySelected?.length ||
     characterFilter.value.elementSelected?.length ||
     characterFilter.value.weaponSelected?.length ||
@@ -90,6 +93,7 @@ const isFiltered = computed(() => {
 });
 
 const removeAllFilter = () => {
+  enhancedOnly.value = false;
   characterFilter.value.raritySelected = [];
   characterFilter.value.elementSelected = [];
   characterFilter.value.weaponSelected = [];
@@ -194,6 +198,10 @@ onMounted(() => {
                 />
               </div>
               <USeparator label="其他設定" />
+              <div class="flex flex-col md:flex-row justify-center items-center gap-2">
+                <p class="text-center">只顯示已強化角色</p>
+                <USwitch v-model="enhancedOnly" />
+              </div>
               <div class="flex flex-col md:flex-row justify-center items-center gap-2">
                 <p class="text-center">將大頭照切換為衣裝版本</p>
                 <USwitch v-model="store.useCostumeIcon" />
