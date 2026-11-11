@@ -81,7 +81,17 @@ const imageColors = ref<Record<string, Color | Color[] | null>>({
 });
 const extractingImgColor = ref(true);
 
+// 設定存在 localStorage，伺服器端讀不到，等掛載後才判斷，避免 hydration 不一致
+const mounted = ref(false);
+// 沒有元素的角色沒有對應的影片，維持自動取色
+const elementBgUrl = computed(() => {
+  const element = characterData.value?.element;
+  if (!mounted.value || store.characterBg !== "elementBg" || !element) return null;
+  return `${storageConfig.baseUrl}/videos/bg_${element}.webm`;
+});
+
 onMounted(() => {
+  mounted.value = true;
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src = `${storageConfig.baseUrl}/avatar-img/${characterData.value?.images?.gacha}.webp`;
@@ -108,8 +118,19 @@ const outfitImgs = computed(() => ({
 </script>
 
 <template>
-  <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
+  <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor && !elementBgUrl" />
   <main class="dark" v-if="status === 'success' && displayData">
+    <video
+      v-if="elementBgUrl"
+      :key="elementBgUrl"
+      :src="elementBgUrl"
+      class="fixed -z-1 inset-0 size-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+    ></video>
     <!-- 立繪背景（排除 header 列） -->
     <div
       class="fixed -z-1 inset-x-0 top-17 bottom-0 bg-cover bg-center"
