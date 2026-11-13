@@ -71,6 +71,9 @@ export default defineNuxtConfig({
       // pg 的原生模組（選用），Workers 無法使用，以空模組取代
       "pg-native": "unenv/mock/empty",
     },
+    storage: {
+      cache: { driver: "cloudflare-kv-binding", binding: "CACHE" },
+    },
     devStorage: {
       cache: { driver: "memory" },
     },

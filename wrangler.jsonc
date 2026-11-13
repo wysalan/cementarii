@@ -14,6 +14,12 @@
   "observability": {
     "enabled": true,
   },
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "b7cf504275f3422bbfeb96008f6620d6",
+    },
+  ],
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
