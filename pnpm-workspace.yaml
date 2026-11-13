@@ -1,14 +1,12 @@
 allowBuilds:
   "@parcel/watcher": true
-  "@prisma/engines": true
   esbuild: true
-  prisma: true
   sharp: true
   vue-demi: true
+  workerd: true
 onlyBuiltDependencies:
   - "@parcel/watcher"
-  - "@prisma/engines"
   - esbuild
-  - prisma
   - sharp
   - vue-demi
+  - workerd

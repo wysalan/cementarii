@@ -1,52 +1,41 @@
 <script setup lang="ts">
-import { objectFromEntries } from "ts-extras";
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
+import { storageConfig } from "@/site.config";
+import type { CharacterData } from "@/types/api";
+const { data } = defineProps<{ data: CharacterData }>();
+const { t } = useI18n();
 
 import { useUserStore } from "@/stores/User";
+import { useAbilityPopover } from "~/composables/useAbilityPopover";
 const store = useUserStore();
 
-interface Dictionary {
-  relatedEffects: Record<string, string>;
-  linkToEffect: Record<string, string>;
-  linkToTalent: Record<string, string>;
-  linkToPassive: Record<string, string>;
-  linkToConstellation: Record<string, string>;
-}
-
-import useDataParser from "@/composables/useDataParser";
-const { parseDescriptionText, parseTalentAttributes } = useDataParser();
-
-const talentsList = Object.values(data.talents?.list || {});
-const talentsNameList = Object.keys(data.talents?.list || {});
-const dictionary: Dictionary | null = data.dictionary;
-
-const skills = objectFromEntries([
-  ["talents", Object.values(data.talents!.list)],
-  ["passives", data.passives!],
-  ["constellation", data.constellation?.list],
-] as const);
+const abilities = computed(() => data.abilities.filter((a) => !a.isEnhanced));
 
 // 天賦清單：戰鬥天賦＋固有天賦
-const skillItems = [
-  ...talentsList.map((talent, index) => ({
-    name: talent.name,
-    skill: talent,
-    index,
-    hasStats: true as const,
-    special: talentsNameList[index]?.includes("Special") || false,
-  })),
-  ...(data.passives || []).map((passive) => ({
-    name: passive.name,
-    skill: passive,
-    index: -1,
-    hasStats: false as const,
-    special: false,
-  })),
-];
+const abilityList = computed(() =>
+  abilities.value
+    .filter((a) => a.kind !== "constellation")
+    .map((ability) => ({
+      ability,
+      hasStats: ability.parameters !== null,
+    })),
+);
 
 const selected = ref<number | null>(null);
-const selectedItem = computed(() => (selected.value === null ? null : skillItems[selected.value]));
+
+const showEnhanced = ref(false);
+watch(selected, () => (showEnhanced.value = false));
+
+const selectedItem = computed(() => {
+  if (selected.value === null) return null;
+  const item = abilityList.value[selected.value];
+  if (!item || !showEnhanced.value) return item ?? null;
+  const other = counterpartOf(data.abilities, item.ability);
+  return other ? { ...item, ability: other } : item;
+});
+const hasVersions = computed(
+  () => !!selectedItem.value && !!counterpartOf(data.abilities, selectedItem.value.ability),
+);
+const toggleVersion = () => (showEnhanced.value = !showEnhanced.value);
 
 // 點擊空白區域時關閉天賦資訊
 const listEl = ref<HTMLElement | null>(null);
@@ -71,19 +60,33 @@ const scrollToDetail = () => {
   }
 };
 
-const talentsLevel = ref([
-  store.defaultTalentLevel,
-  store.defaultTalentLevel,
-  store.defaultTalentLevel,
-]);
+const talentsLevel = ref<Record<string, number>>({
+  normal_attack: store.defaultTalentLevel,
+  elemental_skill: store.defaultTalentLevel,
+  elemental_burst: store.defaultTalentLevel,
+});
 
 // 資訊卡分頁（模仿遊戲內 天賦介紹／詳細屬性 切換）
-const detailTabs = [
-  { key: "intro", label: "天賦介紹" },
-  { key: "stats", label: "詳細屬性" },
-] as const;
+const detailTabs: ComputedRef<{ key: "intro" | "stats"; label: string }[]> = computed(() => [
+  { key: "intro", label: t("character.talent.tabs.intro") },
+  { key: "stats", label: t("character.talent.tabs.stats") },
+]);
 const activeTab = ref<"intro" | "stats">("intro");
 watch(selected, () => (activeTab.value = "intro"));
+
+const showDiff = ref(false);
+const introEl = ref<HTMLElement | null>(null);
+useDiffOverlay(introEl, showDiff);
+
+const attributeRows = computed(() => {
+  const item = selectedItem.value;
+  if (!item) return [];
+  const level = talentsLevel.value[item.ability.kind] || 1;
+  const rows = parseTalentAttributes(item.ability, level);
+  const base = item.ability.isEnhanced ? counterpartOf(data.abilities, item.ability) : undefined;
+  const diffs = diffAttributes(rows, base && parseTalentAttributes(base, level));
+  return rows.map((row, i) => ({ ...row, diff: diffs[i] }));
+});
 
 // 切換分頁時卡片高度的過渡動畫（FLIP：記錄前後高度再補間）
 const cardEl = ref<HTMLElement | null>(null);
@@ -112,65 +115,29 @@ const switchTab = async (key: "intro" | "stats") => {
   }, 260);
 };
 
-// 相關效果 hover popover
-const getPopupData = (type: string, name: string) => {
-  const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
-  const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
-  const constellationList = Object.fromEntries(
-    skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
-  );
-  if (type === "talent") {
-    return { title: "相關突破天賦", name, description: talentsList[name]?.description || "" };
-  } else if (type === "passive") {
-    return { title: "相關固有天賦", name, description: passivesList[name]?.description || "" };
-  } else if (type === "constellation") {
-    return { title: "相關命之座", name, description: constellationList[name]?.description || "" };
-  } else if (type === "effect") {
-    return { title: "相關效果", name, description: dictionary?.relatedEffects[name] || "" };
-  }
-  return { title: "錯誤", name: "無法取得資料", description: "尚未設定此效果說明" };
-};
+// 相關效果 popover 資料
+const resolvePopover = useAbilityPopover(data, abilities);
 
-const resolvePopover = (type: string, name: string) => {
-  const { title, name: popupName, description } = getPopupData(type, name);
-  return { title, name: popupName, html: parseDescriptionText(description, skills, dictionary) };
-};
-
-const needMaterials = computed(() => {
-  return (end = 10) => {
-    const map = new Map();
-    data.talents?.costs
-      .slice(0, end - 1)
-      .flat()
-      .forEach((item) => {
-        if (map.has(item.id)) {
-          map.get(item.id)!.count += item.count;
-        } else {
-          map.set(item.id, { ...item });
-        }
-      });
-    return [...map.values()].sort((a, b) => a.id - b.id);
-  };
-});
+const needMaterials = (end: number) => sumMaterials(data.costs.talent.filter((s) => s.stage < end));
 </script>
 
 <template>
   <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
-    <!-- 右側：天賦清單（模仿遊戲內天賦介面，暫以菱形代替天賦圖示） -->
+    <!-- 右側：天賦清單 -->
     <nav
       ref="listEl"
       class="flex flex-col gap-2 xl:gap-6 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
-      aria-label="天賦清單"
+      :aria-label="t('character.talent.list')"
     >
       <button
-        v-for="(item, i) in skillItems"
+        v-for="(item, i) in abilityList"
         :key="i"
         type="button"
-        class="group relative flex items-center justify-between xl:justify-end gap-4 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
+        class="group relative flex items-center justify-between xl:justify-end gap-3 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
         :aria-current="selected === i ? 'true' : undefined"
         @click="selected = selected === i ? null : i"
       >
-        <!-- hover／選中時的柔光橫帶（模仿遊戲內效果） -->
+        <!-- hover／選中時的柔光橫帶 -->
         <span
           class="absolute inset-0 xl:-left-16 xl:-right-10 xl:-inset-y-1 -z-10 rounded-lg xl:rounded-none bg-linear-to-r from-transparent to-transparent pointer-events-none transition-opacity duration-200"
           :class="
@@ -186,24 +153,31 @@ const needMaterials = computed(() => {
             class="block text-sm md:text-base font-semibold transition-colors"
             :class="selected === i ? 'text-gold-300' : 'text-white/90 group-hover:text-gold-200'"
           >
-            {{ item.name }}
+            {{ item.ability.name }}
           </span>
           <span
-            v-if="item.hasStats && !item.special"
+            v-if="item.hasStats && item.ability.kind !== 'alternate_sprint'"
             class="block text-xs md:text-sm text-white/90"
           >
-            Lv.{{ talentsLevel[item.index] }}
+            Lv.{{ talentsLevel[item.ability.kind] }}
           </span>
         </span>
         <span
-          class="flex shrink-0 items-center justify-center w-9 h-9 m-1.5 rotate-45 rounded-xs border-2 backdrop-blur-sm transition-colors"
+          class="flex shrink-0 items-center justify-center w-12 h-12 m-1.5 rounded-full border-2 backdrop-blur-sm transition-colors"
           :class="
             selected === i
-              ? 'bg-gold-400 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
+              ? 'bg-gold-600/70 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
               : 'bg-navy-900/70 border-white/40 group-hover:border-gold-300'
           "
         >
+          <NuxtImg
+            v-if="item.ability.icon"
+            :src="`${storageConfig.baseUrl}/skill-icon/${item.ability.icon}.webp`"
+            :alt="item.ability.name"
+            class="size-10"
+          />
           <span
+            v-else
             class="w-3.5 h-3.5 rounded-xs"
             :class="selected === i ? 'bg-navy-900' : 'bg-white/70'"
           ></span>
@@ -212,7 +186,6 @@ const needMaterials = computed(() => {
     </nav>
 
     <!-- 左側：天賦資訊（單卡＋分頁切換） -->
-    <!-- :duration 固定計時：opacity 動畫掛在 section 上（父層半透明會讓 backdrop-filter 失效） -->
     <Transition name="talent-detail" mode="out-in" :duration="200" @after-enter="scrollToDetail">
       <div
         v-if="selectedItem"
@@ -224,14 +197,30 @@ const needMaterials = computed(() => {
           ref="cardEl"
           class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
         >
-          <div class="flex items-start justify-between gap-3 pb-4">
-            <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white">
-              {{ selectedItem.name }}
+          <div class="flex items-center justify-between gap-2 pb-4">
+            <h2
+              class="flex flex-row justify-center items-center text-lg md:text-xl font-semibold text-white"
+            >
+              <NuxtImg
+                v-if="selectedItem.ability.icon"
+                :src="`${storageConfig.baseUrl}/skill-icon/${selectedItem.ability.icon}.webp`"
+                :alt="selectedItem.ability.name"
+                class="size-10 mr-2"
+              />
+              <span v-else class="gi-diamond"></span>
+              {{ selectedItem.ability.name }}
+              <CharacterEnhancedBadge
+                v-if="hasVersions"
+                v-model:active="showDiff"
+                :enhanced="selectedItem.ability.isEnhanced"
+                class="ml-2"
+                @toggle="toggleVersion"
+              />
             </h2>
             <button
               type="button"
               class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
-              aria-label="關閉天賦資訊"
+              :aria-label="t('character.talent.close')"
               @click="selected = null"
             >
               <UIcon name="i-lucide-x" class="size-5" />
@@ -263,54 +252,79 @@ const needMaterials = computed(() => {
               {{ tab.label }}
             </button>
           </div>
-          <div ref="scrollEl" class="overflow-y-auto min-h-0">
-            <div :key="selectedItem.hasStats ? activeTab : 'intro'" class="tab-pane">
+          <!-- overflow 會連左右一起裁切：留 8px 給差異強調的左右延伸與外框 -->
+          <div ref="scrollEl" class="overflow-y-auto min-h-0 -mx-2 px-2">
+            <div
+              :key="`${selectedItem.hasStats ? activeTab : 'intro'}-${selectedItem.ability.isEnhanced}`"
+              class="tab-pane"
+            >
               <!-- 天賦介紹 -->
               <UIHoverPopover
                 v-if="!selectedItem.hasStats || activeTab === 'intro'"
                 :resolve="resolvePopover"
               >
                 <p
-                  v-html="parseDescriptionText(selectedItem.skill.description, skills, dictionary)"
-                  class="text-sm md:text-base"
+                  v-html="
+                    parseDescriptionText(
+                      describeAbility(data.abilities, selectedItem.ability),
+                      abilities,
+                      data.glossary,
+                    )
+                  "
+                  ref="introEl"
+                  class="relative isolate text-sm md:text-base"
+                  :class="{ 'show-diff': showDiff }"
                 ></p>
               </UIHoverPopover>
               <!-- 詳細屬性 -->
-              <div v-else class="flex flex-col gap-3">
-                <!-- pr-2.5：滑桿把手在最大值時有半顆超出軌道，避免被捲動容器裁切 -->
-                <div class="flex flex-row items-center gap-5 pr-2.5" v-if="!selectedItem.special">
+              <div v-else class="flex flex-col gap-3" :class="{ 'show-diff': showDiff }">
+                <div
+                  class="flex flex-row items-center gap-5 pr-2.5"
+                  v-if="selectedItem.ability.kind !== 'alternate_sprint'"
+                >
                   <div
                     class="bg-gold-400 rounded-sm p-1 w-20 text-center select-none font-semibold text-navy-900 text-sm md:text-base"
                   >
-                    Lv. <span class="font-bold">{{ talentsLevel[selectedItem.index] }}</span>
+                    Lv.
+                    <span class="font-bold">{{ talentsLevel[selectedItem.ability.kind] }}</span>
                   </div>
                   <USlider
-                    v-model="talentsLevel[selectedItem.index]"
+                    v-model="talentsLevel[selectedItem.ability.kind]"
                     :min="1"
                     :max="15"
                     :step="1"
                     class="w-full"
                   />
                 </div>
+                <!-- 內距讓強調底色不貼字，負邊距抵銷內距 -->
                 <div
-                  class="flex flex-row justify-between text-sm md:text-base gap-15"
-                  v-for="prop in parseTalentAttributes(
-                    selectedItem.skill,
-                    talentsLevel[selectedItem.index] || 1,
-                  )"
+                  class="flex flex-row justify-between text-sm md:text-base gap-15 -mx-0.5 px-0.5"
+                  :class="{ 'ability-diff-new': prop.diff === 'new' }"
+                  v-for="(prop, i) in attributeRows"
+                  :key="i"
                 >
                   <p class="font-semibold text-parchment-100/80">{{ prop.text }}</p>
-                  <p class="text-white text-right">{{ prop.value }}</p>
+                  <p
+                    class="text-white text-right"
+                    :class="{ 'ability-diff-changed': prop.diff === 'changed' }"
+                  >
+                    {{ prop.value }}
+                  </p>
                 </div>
-                <div class="flex flex-col w-full gap-3" v-if="!selectedItem.special">
+                <div
+                  class="flex flex-col w-full gap-3"
+                  v-if="selectedItem.ability.kind !== 'alternate_sprint'"
+                >
                   <USeparator />
-                  <p class="text-base font-semibold text-white">所需素材</p>
+                  <p class="text-base font-semibold text-white">
+                    {{ t("character.talent.materials") }}
+                  </p>
                   <UniversalItemStrip
-                    v-if="needMaterials(talentsLevel[selectedItem.index])?.toString().length"
-                    :items="needMaterials(talentsLevel[selectedItem.index])"
+                    v-if="needMaterials(talentsLevel[selectedItem.ability.kind] || 1).length"
+                    :items="needMaterials(talentsLevel[selectedItem.ability.kind] || 1)"
                   />
                   <div v-else>
-                    <p>無需素材</p>
+                    <p>{{ t("common.noMaterials") }}</p>
                   </div>
                 </div>
               </div>

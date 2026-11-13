@@ -1,180 +1,100 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { siteConfig, storageConfig } from "@/site.config";
-import useDataParser from "@/composables/useDataParser";
 import curve from "@/data/curve.json";
+import { useUserStore } from "@/stores/User";
+const store = useUserStore();
 
 definePageMeta({
   layout: "detail",
 });
 
-const { slug } = useRoute().params;
-const { data: weaponData, status, error } = await useFetch(`/api/weapon/${slug}`);
-const { parseEffectDescription, parseStoryContent } = useDataParser();
-import { useUserStore } from "@/stores/User";
-const store = useUserStore();
+const dialogVisible = ref(false);
 
-useSeoMeta({
-  title: `${weaponData.value?.name || "找不到武器"} | ${siteConfig.title}`,
+// 取得資料
+const { locale, t } = useI18n();
+const { slug } = useRoute().params;
+const event = useRequestEvent();
+const {
+  data: weaponData,
+  status,
+  error,
+} = await useFetch(`/api/weapon/${slug}`, {
+  query: { locale },
 });
 
-// Type
+if (event && error.value?.status === 404) {
+  setResponseStatus(event, 404);
+}
+
+// SEO
+const title = computed(
+  () => `${weaponData.value?.name || t("weapon.notFoundTitle")} | ${siteConfig.title}`,
+);
+
+useSeoMeta({ title });
+
+// 型別
 interface Curve {
   [key: string]: {
     [key: string]: number;
   };
 }
 
-interface CurveItem {
-  [key: string]: number;
-}
-
-interface Promotions {
-  [key: string]: {
-    maxlevel: number;
-    attack: number;
-  };
-}
-
-interface PromotionItem {
-  [key: string]: {
-    attack: number;
-  };
-}
-
-// Weapon Level
-const levelIndex = ref(6);
-const levelTicks = [20, 40, 50, 60, 70, 80, 90];
-const actualLevel = computed(() => {
-  return levelTicks[levelIndex.value];
-});
+// 武器數值顯示
+const levelTicks = weaponData.value?.stats.promotions.map((p) => p.maxLevel) ?? [];
+const levelIndex = ref(levelTicks.length - 1);
+const actualLevel = computed(() => levelTicks[levelIndex.value]);
 const calculatedStats = computed(() => {
+  const weapon = weaponData.value;
+  const level = actualLevel.value;
+  if (!weapon || !level) return { attack: 0, substat: 0 };
+
   const weaponCurve: Curve = curve.weapons;
-  const level: keyof Curve = actualLevel.value || 0;
-  const promotions = ref<Promotions>();
-  const baseStats = {
-    atk: weaponData.value?.stats?.base.attack || 0,
-    substat: weaponData.value?.stats?.base.substat || 0,
-  };
+  const promotion = weapon.stats.promotions.find((p) => p.maxLevel === level);
+  const { base, curves } = weapon.stats;
 
-  if (weaponData.value?.stats?.promotion) {
-    promotions.value = Object.fromEntries(
-      weaponData.value.stats?.promotion.map((promotion) => [promotion.maxlevel, promotion]),
-    );
-  }
-
-  const result = ref({
-    attack:
-      baseStats.atk *
-        (weaponCurve?.[level]?.[weaponData.value?.stats?.curve.attack as keyof CurveItem] || 0) +
-      (promotions.value?.[level as keyof PromotionItem]?.attack || 0),
+  return {
+    attack: base.attack * (weaponCurve[level]?.[curves.attack] ?? 0) + (promotion?.attack ?? 0),
     substat:
-      baseStats.substat *
-      (weaponCurve?.[level]?.[weaponData.value?.stats?.curve.substat as keyof CurveItem] || 0),
-  });
-
-  return result.value;
+      base.substat !== undefined && curves.substat
+        ? base.substat * (weaponCurve[level]?.[curves.substat] ?? 0)
+        : 0,
+  };
 });
 
-// Weapon Refinement Rank
-const refinementRankList = ref([
-  { label: "精煉 1 階", value: 1 },
-  { label: "精煉 2 階", value: 2 },
-  { label: "精煉 3 階", value: 3 },
-  { label: "精煉 4 階", value: 4 },
-  { label: "精煉 5 階", value: 5 },
-]);
+// 精煉等級
+const refinementRankList = computed(() =>
+  [1, 2, 3, 4, 5].map((rank) => ({ label: t("weapon.refinement", { rank }), value: rank })),
+);
 const selectedRefinementRank = ref(1);
 
-const dialogVisible = ref(false);
-
-// Material
-const materialCalculationMethod = ref("累計");
-const materialCalculationOption = ref(["單一", "累計"]);
-const costsList = weaponData.value ? Object.values(weaponData.value!.costs!) : [];
+// 養成素材
+const materialCalculationMethod = ref<"single" | "cumulative">("cumulative");
+const materialCalculationOption = computed(() => [
+  { label: t("common.materials.method.single"), value: "single" },
+  { label: t("common.materials.method.cumulative"), value: "cumulative" },
+]);
 
 const materialCalculationResult = computed(() => {
-  if (materialCalculationMethod.value === "累計") {
-    const map = new Map();
-    costsList
-      .slice(0, levelIndex.value)
-      .flat()
-      .forEach((item) => {
-        if (map.has(item.id)) {
-          map.get(item.id)!.count += item.count;
-        } else {
-          map.set(item.id, { ...item });
-        }
-      });
-    return [...map.values()].sort((a, b) => a.id - b.id);
-  } else {
-    return costsList[levelIndex.value - 1];
-  }
+  const costs = weaponData.value?.costs ?? [];
+  return materialCalculationMethod.value === "single"
+    ? sumMaterials(costs.filter((c) => c.stage === levelIndex.value))
+    : sumMaterials(costs.filter((c) => c.stage <= levelIndex.value));
 });
 
 // Functions
-function getBgColor(rarity: number | null) {
-  if (rarity) {
-    switch (rarity) {
-      case 1:
-        return "bg-linear-to-b from-[#6a6d74] to-[#868586]";
-      case 2:
-        return "bg-linear-to-b from-[#4b6c67] to-[#519072]";
-      case 3:
-        return "bg-linear-to-b from-[#567496] to-[#5392b8]";
-      case 4:
-        return "bg-linear-to-b from-[#5e5789] to-[#9c75b7]";
-      case 5:
-        return "bg-linear-to-b from-[#945c2c] to-[#b27330]";
-    }
-  }
-}
-
-function getSubstatText(substat: string | undefined) {
-  if (substat) {
-    switch (substat) {
-      case "FIGHT_PROP_ATTACK_PERCENT":
-        return "攻擊力";
-      case "FIGHT_PROP_DEFENSE_PERCENT":
-        return "防禦力";
-      case "FIGHT_PROP_HP_PERCENT":
-        return "生命值";
-      case "FIGHT_PROP_PHYSICAL_ADD_HURT":
-        return "物理傷害加成";
-      case "FIGHT_PROP_ELEMENT_MASTERY":
-        return "元素精通";
-      case "FIGHT_PROP_CHARGE_EFFICIENCY":
-        return "元素充能效率";
-      case "FIGHT_PROP_CRITICAL":
-        return "暴擊率";
-      case "FIGHT_PROP_CRITICAL_HURT":
-        return "暴擊傷害";
-      default:
-        return "unknown";
-    }
-  }
-  return "unknown";
-}
-
-function getSubstatValue(type: string | undefined, substat: number) {
-  if (type) {
-    if (type === "FIGHT_PROP_ELEMENT_MASTERY") {
-      return substat;
-    }
-    return (substat * 100).toFixed(1) + "%";
-  }
-}
 </script>
 
 <template>
   <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && weaponData">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mx-4 sm:mx-5">
       <div
-        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-8 overflow-hidden"
-        :class="getBgColor(weaponData.rarity)"
+        class="flex justify-center items-center w-full h-[50dvh] lg:h-[calc(100dvh-6.5rem)] p-6 rounded-xl lg:col-span-8 overflow-hidden bg-linear-to-b"
+        :class="rarityGradient(weaponData.rarity)"
       >
         <NuxtImg
-          :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.Gacha_EquipIcon}.webp`"
+          :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.gacha}.webp`"
           :alt="weaponData.name"
           class="h-full rotate-20"
         />
@@ -184,17 +104,19 @@ function getSubstatValue(type: string | undefined, substat: number) {
       >
         <div class="flex flex-col justify-start gap-5">
           <div class="flex flex-row justify-between">
-            <p class="font-semibold text-base md:text-lg">{{ weaponData.weapon_text }}</p>
+            <p class="font-semibold text-base md:text-lg">
+              {{ t(`weaponType.${weaponData.weaponType}`) }}
+            </p>
             <UBadge color="primary" variant="soft" class="select-none">
-              Ver. {{ weaponData.version }}
+              Ver. {{ weaponData.releasedIn }}
             </UBadge>
           </div>
           <div class="flex flex-row items-center gap-3">
             <NuxtImg
-              :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.EquipIcon}.webp`"
-              :alt="'武器圖示：' + weaponData.name"
-              class="w-10 h-10 rounded-sm"
-              :class="getBgColor(weaponData.rarity)"
+              :src="`${storageConfig.baseUrl}/weapon-icon/${weaponData.images?.icon}.webp`"
+              :alt="t('weapon.iconAlt', { name: weaponData.name })"
+              class="w-10 h-10 rounded-sm bg-linear-to-b"
+              :class="rarityGradient(weaponData.rarity)"
             />
             <h2 class="text-xl md:text-2xl font-semibold text-highlighted">
               {{ weaponData.name }}
@@ -204,15 +126,17 @@ function getSubstatValue(type: string | undefined, substat: number) {
         <div class="flex flex-col gap-3">
           <div class="flex flex-row justify-between">
             <div class="flex flex-col w-30 text-left">
-              <p class="font-semibold opacity-60 text-sm md:text-base">基礎攻擊力</p>
+              <p class="font-semibold opacity-60 text-sm md:text-base">
+                {{ t("weapon.baseAttack") }}
+              </p>
               <p class="text-xl md:text-2xl font-bold">{{ calculatedStats.attack.toFixed(0) }}</p>
             </div>
-            <div class="flex flex-col text-right w-30">
+            <div v-if="weaponData.substatType" class="flex flex-col text-right w-30">
               <p class="font-semibold opacity-60 text-sm md:text-base">
-                {{ getSubstatText(weaponData.stats?.type.substat) }}
+                {{ t(`fightProp.${weaponData.substatType}`) }}
               </p>
               <p class="text-xl md:text-2xl font-bold">
-                {{ getSubstatValue(weaponData.stats?.type.substat, calculatedStats.substat) }}
+                {{ formatStatValue(weaponData.substatType, calculatedStats.substat) }}
               </p>
             </div>
           </div>
@@ -236,12 +160,15 @@ function getSubstatValue(type: string | undefined, substat: number) {
             <h2
               class="gi-diamond text-base md:text-lg font-semibold text-highlighted flex items-center gap-1"
             >
-              升級所需素材
+              {{ t("common.materials.title") }}
               <UTooltip
                 :text="
-                  materialCalculationMethod === '單一'
-                    ? `將武器從 ${levelTicks[levelIndex - 1] || 1} 級升至 ${actualLevel} 級所需要的素材`
-                    : `將武器從 1 級升至 ${actualLevel} 級所需要的素材`
+                  materialCalculationMethod === 'single'
+                    ? t('weapon.materials.hint.single', {
+                        from: levelTicks[levelIndex - 1] || 1,
+                        to: actualLevel,
+                      })
+                    : t('weapon.materials.hint.cumulative', { to: actualLevel })
                 "
               >
                 <UIcon name="i-lucide-circle-help" class="size-4 text-muted" />
@@ -250,31 +177,37 @@ function getSubstatValue(type: string | undefined, substat: number) {
             <USelect
               v-model="materialCalculationMethod"
               :items="materialCalculationOption"
-              aria-label="選擇計算方式"
+              :aria-label="t('common.materials.methodLabel')"
             />
           </div>
           <UniversalItemStrip
-            v-if="materialCalculationResult?.toString().length"
+            v-if="materialCalculationResult.length"
             :items="materialCalculationResult"
           />
           <div v-else class="w-full">
-            <p>無需素材</p>
+            <p>{{ t("common.noMaterials") }}</p>
           </div>
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3" v-if="weaponData.effectName">
           <div class="flex flex-row justify-between items-center w-full">
             <h3 class="gi-diamond text-lg md:text-xl font-semibold text-highlighted">
-              {{ weaponData.effect?.text.name }}
+              {{ weaponData.effectName }}
             </h3>
             <USelect
               v-model="selectedRefinementRank"
               :items="refinementRankList"
-              aria-label="選擇精煉等階"
+              :aria-label="t('weapon.refinementLabel')"
               class="w-fit"
             />
           </div>
           <p
-            v-html="parseEffectDescription(weaponData.effect, selectedRefinementRank)"
+            v-html="
+              parseEffectDescription(
+                applyGender(weaponData.effectDescription, store.playerGender),
+                weaponData.refinementParams,
+                selectedRefinementRank,
+              )
+            "
             class="text-sm md:text-base"
           ></p>
         </div>
@@ -283,7 +216,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
         </div>
         <div>
           <UButton
-            label="故事"
+            :label="t('weapon.story')"
             icon="i-lucide-book-open"
             color="primary"
             variant="solid"
@@ -295,7 +228,7 @@ function getSubstatValue(type: string | undefined, substat: number) {
     </div>
     <UModal
       v-model:open="dialogVisible"
-      title="故事"
+      :title="t('weapon.story')"
       :close="{
         class:
           'text-navy-700 hover:text-navy-900 hover:bg-black/5 active:bg-black/10 dark:text-parchment-100 dark:hover:text-white dark:hover:bg-white/10 dark:active:text-white dark:active:bg-white/20',
@@ -315,12 +248,15 @@ function getSubstatValue(type: string | undefined, substat: number) {
     </UModal>
   </main>
   <main v-else>
-    <div class="container mx-auto flex flex-col items-center pt-5 pb-10 px-4">
-      <div v-if="error">
-        <p>連接資料庫時發生錯誤</p>
-        <p>{{ error?.statusMessage }}（狀態碼：{{ error?.statusCode }}）</p>
+    <div class="container mx-auto pt-5 pb-10 px-4">
+      <div class="flex flex-col items-center" v-if="error?.status == 404">
+        <p>{{ t("weapon.notFound") }}</p>
       </div>
-      <p v-else>目前尚無此武器資料</p>
+      <div class="flex flex-col items-center" v-else>
+        <p>{{ t("common.error.server") }}</p>
+        <p>{{ t("common.error.statusCode", { code: error?.status }) }}</p>
+        <p>{{ t("common.error.statusText", { message: error?.statusText }) }}</p>
+      </div>
     </div>
   </main>
 </template>

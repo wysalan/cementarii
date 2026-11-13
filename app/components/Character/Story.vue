@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
-
-import useDataParser from "@/composables/useDataParser";
-const { parseStoryContent } = useDataParser();
+import type { CharacterData } from "@/types/api";
+const { data } = defineProps<{ data: CharacterData }>();
 
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
 
-const stories = data.profile?.story || [];
+const { t } = useI18n();
+
+const stories = data.stories;
 
 const selected = ref<number | null>(null);
 const selectedItem = computed(() => (selected.value === null ? null : stories[selected.value]));
@@ -56,7 +55,7 @@ const scrollToDetail = () => {
             <button
               type="button"
               class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
-              aria-label="關閉故事內容"
+              :aria-label="t('character.story.close')"
               @click="selected = null"
             >
               <UIcon name="i-lucide-x" class="size-5" />
@@ -78,7 +77,7 @@ const scrollToDetail = () => {
     <nav
       ref="listEl"
       class="flex flex-col gap-2 max-xl:order-1 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10 xl:w-72 xl:max-h-[85vh] xl:overflow-y-auto"
-      aria-label="故事清單"
+      :aria-label="t('character.story.list')"
     >
       <button
         v-for="(story, i) in stories"

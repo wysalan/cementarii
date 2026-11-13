@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
-import characterList from "@/data/characterList.json";
 import { useUserStore } from "@/stores/User";
 const store = useUserStore();
+const { locale, t } = useI18n();
+
+const { data, error } = await useFetch("/api/character", { query: { locale } });
+const characterList = computed(() => data.value ?? []);
 
 useSeoMeta({
   title: `角色 | ${siteConfig.title}`,
@@ -12,6 +15,7 @@ const loadLimit = ref(100);
 const loadMoreTrigger = useTemplateRef("loadMoreTrigger");
 const characterSearchKeyword = ref("");
 const advancedOpen = ref(false);
+const enhancedOnly = ref(false);
 
 const characterFilter = ref<Record<string, string[]>>({
   rarity: ["4", "5"],
@@ -30,63 +34,54 @@ const characterFilter = ref<Record<string, string[]>>({
   birthMonthSelected: [],
 });
 
-function getBodyText(bodyType: string) {
-  if (bodyType) {
-    switch (bodyType) {
-      case "BODY_LOLI":
-        return "女孩";
-      case "BODY_GIRL":
-        return "少女";
-      case "BODY_LADY":
-        return "成女";
-      case "BODY_BOY":
-        return "少年";
-      case "BODY_MALE":
-        return "成男";
-      default:
-        return "unknown";
-    }
-  }
-  return "unknown";
+const BODY_TEXT: Record<string, string> = {
+  loli: "女孩",
+  girl: "少女",
+  lady: "成女",
+  boy: "少年",
+  male: "成男",
+};
+
+function getIdentity(character: { slug: string; association: string }) {
+  if (character.slug.startsWith("manekin")) return "奇偶";
+  if (character.association === "ASSOC_MAINACTOR") return "降臨者";
+  if (character.association === "ASSOC_RANGER") return "遊俠";
+  return "";
 }
 
 const filteredCharacterList = computed(() => {
-  return characterList
+  const keyword = characterSearchKeyword.value.toLowerCase().replaceAll(" ", "");
+  return characterList.value
     .filter((character) => {
       return (
+        (!enhancedOnly.value || !!character.enhancedIn) &&
         (!characterFilter.value.raritySelected?.length ||
           characterFilter.value.raritySelected.includes(character.rarity.toString())) &&
         (!characterFilter.value.elementSelected?.length ||
-          characterFilter.value.elementSelected.includes(character.elementText)) &&
+          characterFilter.value.elementSelected.includes(
+            character.element ? t(`element.${character.element}`) : "",
+          )) &&
         (!characterFilter.value.weaponSelected?.length ||
-          characterFilter.value.weaponSelected.includes(character.weaponText)) &&
+          characterFilter.value.weaponSelected.includes(t(`weaponType.${character.weaponType}`))) &&
         (!characterFilter.value.regionSelected?.length ||
-          characterFilter.value.regionSelected.includes(character.region)) &&
+          characterFilter.value.regionSelected.includes(character.region ?? "")) &&
         (!characterFilter.value.identitySelected?.length ||
-          characterFilter.value.identitySelected?.includes(character.region)) &&
-        (!characterSearchKeyword.value ||
-          character.name["CHT"]
-            .toLowerCase()
-            .replace(" ", "")
-            .includes(characterSearchKeyword.value.toLowerCase()) ||
-          character.name["EN"]
-            .toLowerCase()
-            .replace(" ", "")
-            .includes(characterSearchKeyword.value.toLowerCase().replace(" ", ""))) &&
+          characterFilter.value.identitySelected.includes(getIdentity(character))) &&
+        (!keyword ||
+          character.name.toLowerCase().replaceAll(" ", "").includes(keyword) ||
+          character.slug.replaceAll("-", "").includes(keyword)) &&
         (!characterFilter.value.bodySelected?.length ||
-          characterFilter.value.bodySelected.includes(getBodyText(character.bodyType))) &&
+          characterFilter.value.bodySelected.includes(BODY_TEXT[character.bodyType] ?? "")) &&
         (!characterFilter.value.birthMonthSelected?.length ||
-          characterFilter.value.birthMonthSelected.includes(
-            character.birthday.split("/")[0] || "0",
-          ))
+          characterFilter.value.birthMonthSelected.includes(String(character.birthMonth ?? 0)))
       );
     })
-    .toReversed()
     .slice(0, loadLimit.value);
 });
 
 const isFiltered = computed(() => {
   return (
+    enhancedOnly.value ||
     characterFilter.value.raritySelected?.length ||
     characterFilter.value.elementSelected?.length ||
     characterFilter.value.weaponSelected?.length ||
@@ -98,6 +93,7 @@ const isFiltered = computed(() => {
 });
 
 const removeAllFilter = () => {
+  enhancedOnly.value = false;
   characterFilter.value.raritySelected = [];
   characterFilter.value.elementSelected = [];
   characterFilter.value.weaponSelected = [];
@@ -118,7 +114,7 @@ onMounted(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (loadLimit.value < characterList.length) {
+          if (loadLimit.value < characterList.value.length) {
             loadLimit.value += 50;
           }
         }
@@ -203,6 +199,10 @@ onMounted(() => {
               </div>
               <USeparator label="其他設定" />
               <div class="flex flex-col md:flex-row justify-center items-center gap-2">
+                <p class="text-center">只顯示已強化角色</p>
+                <USwitch v-model="enhancedOnly" />
+              </div>
+              <div class="flex flex-col md:flex-row justify-center items-center gap-2">
                 <p class="text-center">將大頭照切換為衣裝版本</p>
                 <USwitch v-model="store.useCostumeIcon" />
               </div>
@@ -212,8 +212,9 @@ onMounted(() => {
       </div>
       <UISearchBar v-model="characterSearchKeyword" placeholder="搜尋角色" />
     </div>
+    <p v-if="error" role="alert" class="text-center">資料暫時無法取得，請稍後再試。</p>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
-      <CharacterBlock v-for="(char, index) in filteredCharacterList" :key="index" :data="char" />
+      <CharacterBlock v-for="char in filteredCharacterList" :key="char.slug" :data="char" />
     </div>
     <div ref="loadMoreTrigger"></div>
   </main>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
-import artifactList from "@/data/artifactList.json";
+
+const { locale } = useI18n();
+const { data, error } = await useFetch("/api/artifact", { query: { locale } });
+const artifactList = computed(() => data.value ?? []);
 
 useSeoMeta({
   title: `聖遺物 | ${siteConfig.title}`,
@@ -14,32 +17,18 @@ const filter = ref<Record<string, string[]>>({
 });
 
 const filteredArtifactList = computed(() => {
-  return artifactList
+  const keyword = artifactSearchKeyword.value.toLowerCase().replaceAll(" ", "");
+  return artifactList.value
     .filter((artifact) => {
       return (
         (!filter.value.raritySelected?.length ||
-          filter.value.raritySelected.includes(
-            artifact.rarityList[artifact.rarityList.length - 1]!.toString(),
-          )) &&
-        (!artifactSearchKeyword.value ||
-          artifact.name
-            .toLowerCase()
-            .replace(" ", "")
-            .includes(artifactSearchKeyword.value.toLowerCase()) ||
-          artifact.slug
-            .replace("-", "")
-            .includes(artifactSearchKeyword.value.toLowerCase().replace(" ", "")))
+          filter.value.raritySelected.includes(artifact.maxRarity.toString())) &&
+        (!keyword ||
+          artifact.name.toLowerCase().replaceAll(" ", "").includes(keyword) ||
+          artifact.slug.replaceAll("-", "").includes(keyword))
       );
     })
-    .sort((a, b) => {
-      const maxRarityOfA = a.rarityList[a.rarityList.length - 1] || 1;
-      const maxRarityOfB = b.rarityList[b.rarityList.length - 1] || 1;
-      if (maxRarityOfA !== maxRarityOfB) {
-        return maxRarityOfB - maxRarityOfA;
-      } else {
-        return b.id - a.id;
-      }
-    });
+    .sort((a, b) => b.maxRarity - a.maxRarity || b.id - a.id);
 });
 
 const isFiltered = computed(() => {
@@ -74,12 +63,9 @@ const removeAllFilter = () => {
       </div>
       <UISearchBar v-model="artifactSearchKeyword" placeholder="搜尋聖遺物" />
     </div>
+    <p v-if="error" role="alert" class="text-center">資料暫時無法取得，請稍後再試。</p>
     <div class="flex flex-wrap justify-center gap-4 sm:gap-5">
-      <ArtifactBlock
-        v-for="(artifact, index) in filteredArtifactList"
-        :key="index"
-        :data="artifact"
-      />
+      <ArtifactBlock v-for="artifact in filteredArtifactList" :key="artifact.id" :data="artifact" />
     </div>
   </main>
 </template>

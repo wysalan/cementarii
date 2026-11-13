@@ -5,7 +5,7 @@ export const siteConfig = {
 };
 
 export const storageConfig = {
-  baseUrl: "https://assets.wysalan.com/cementarii",
+  baseUrl: "https://assets.cementarii.net",
 };
 
 export const siteLinks = [

@@ -1,0 +1,1 @@
+ALTER TABLE "character_ability_i18n" ADD COLUMN "labels_by_level" jsonb;

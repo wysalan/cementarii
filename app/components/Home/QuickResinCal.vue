@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import useResinCalculator from "@/composables/useResinCalculator";
-const { getSimpleResinResult } = useResinCalculator();
 const currentResin = ref(0);
 const recoveryTimeResult = computed(() => {
   const resin = currentResin.value;
   if (resin === null || resin === undefined || resin.toString() === "") {
     return "請輸入樹脂數量";
   }
-  if (resin >= 200) {
-    return "已回滿";
-  }
-  return getSimpleResinResult(resin);
+  const full = getFullResinResult(resin).at(-1)!;
+  return `${full.prefix} ${full.time}`.trim();
 });
 </script>
 

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { siteConfig } from "@/site.config";
 
-import useResinCalculator from "@/composables/useResinCalculator";
-const { getFullResinResult } = useResinCalculator();
-
 useSeoMeta({
   title: `樹脂計算器 | ${siteConfig.title}`,
 });
@@ -13,34 +10,34 @@ const useCustomTime = ref(false);
 const resetResin = ref(true);
 
 const customTimeString = computed({
-  get: () => customTime.value.toTimeString().slice(0, 5),
+  // toISOString 是 UTC，datetime-local 要本地時間，所以先扣掉時區差
+  get: () =>
+    new Date(customTime.value.getTime() - customTime.value.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16),
   set: (value: string) => {
-    const [hour = "0", minute = "0"] = value.split(":");
-    customTime.value.setHours(parseInt(hour));
-    customTime.value.setMinutes(parseInt(minute));
-    customTime.value = new Date(customTime.value);
+    if (value) customTime.value = new Date(value);
   },
 });
 
-const currentTime = ref(
-  new Date().toLocaleTimeString("zh-TW", {
+function formatNow() {
+  return new Date().toLocaleString("zh-TW", {
+    month: "numeric",
+    day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
     hour12: false,
-  }),
-);
+  });
+}
+
+const currentTime = ref(formatNow());
 const customTime = ref(new Date());
 let timer: ReturnType<typeof setInterval> | null = null;
 
 onMounted(() => {
   timer = setInterval(() => {
-    currentTime.value = new Date().toLocaleTimeString("zh-TW", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
+    currentTime.value = formatNow();
   }, 1000);
 });
 
@@ -48,24 +45,14 @@ onUnmounted(() => {
   if (timer) clearInterval(timer);
 });
 
-/**
- * 設定變數 customTime 的時間
- * @param { boolean } autoSet 自動套用目前時間
- * @param { string } [targetTime] 手動指定時間（格式為 hh:mm）
- */
-function setCustomTime(autoSet: boolean, targetTime?: string): void {
+function setCustomTime(autoSet: boolean, targetTime?: Date): void {
   if (autoSet && useCustomTime.value) {
-    const nowTime = new Date();
-    customTime.value.setHours(nowTime.getHours());
-    customTime.value.setMinutes(nowTime.getMinutes());
+    customTime.value = new Date();
   } else if (!autoSet && targetTime) {
-    const [hour = "0", minute = "0"] = targetTime.split(" : ");
     if (resetResin.value) {
       currentResin.value = 0;
     }
-    customTime.value.setHours(parseInt(hour));
-    customTime.value.setMinutes(parseInt(minute));
-    customTime.value = new Date(customTime.value);
+    customTime.value = new Date(targetTime);
   }
 }
 </script>
@@ -104,7 +91,7 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
             現在時間：{{ currentTime }}
           </div>
           <div class="flex flex-col" v-else>
-            <UInput v-model="customTimeString" type="time" class="w-40 text-center" />
+            <UInput v-model="customTimeString" type="datetime-local" class="w-60 text-center" />
           </div>
         </div>
       </div>
@@ -114,8 +101,7 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
           class="flex flex-col w-full md:w-[75vw] lg:w-[50vw]"
           v-for="(resin, index) in getFullResinResult(
             currentResin,
-            { hour: customTime.getHours(), minute: customTime.getMinutes() },
-            useCustomTime,
+            useCustomTime ? customTime : undefined,
           )"
           :key="index"
         >
@@ -123,7 +109,7 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
             class="flex flex-row justify-between items-center px-5 py-3 gi-panel w-full group"
             :class="{ 'mb-5': index >= 1 }"
           >
-            <p>{{ resin.resin }}</p>
+            <p class="font-mono">{{ resin.resin }}</p>
             <div class="flex flex-row gap-3 justify-center items-center h-5">
               <div class="hidden md:group-hover:flex flex-row items-center gap-2" v-if="index">
                 <UCheckbox v-model="resetResin" label="將樹脂設為零" />
@@ -134,12 +120,12 @@ function setCustomTime(autoSet: boolean, targetTime?: string): void {
                   size="xs"
                   class="rounded-full"
                   @click="
-                    setCustomTime(false, resin.time);
+                    setCustomTime(false, resin.date);
                     useCustomTime = true;
                   "
                 />
               </div>
-              <p>{{ resin.prefix }} {{ resin.time }}</p>
+              <p class="font-mono">{{ resin.prefix }} {{ resin.time }}</p>
             </div>
           </div>
           <USeparator v-if="!index" class="my-4" />

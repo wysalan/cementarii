@@ -6,30 +6,73 @@ import Talent from "@/components/Character/Talent.vue";
 import Constellation from "@/components/Character/Constellation.vue";
 import Story from "@/components/Character/Story.vue";
 import VoiceOver from "@/components/Character/VoiceOver.vue";
+import { useUserStore } from "@/stores/User";
 
 definePageMeta({
   layout: "detail",
 });
 
+const { locale, t } = useI18n();
 const { slug } = useRoute().params;
-const { data: characterData, status, error } = await useFetch(`/api/character/${slug}`);
-
-useSeoMeta({
-  title: `${characterData.value?.name || "找不到角色"} | ${siteConfig.title}`,
+const event = useRequestEvent();
+const {
+  data: characterData,
+  status,
+  error,
+} = await useFetch(`/api/character/${slug}`, {
+  query: { locale },
 });
 
-// Tabs
-const tabs: Record<string, { component: Component; icon: string }> = {
-  總覽: { component: Overview, icon: "i-lucide-user-round" },
-  天賦: { component: Talent, icon: "i-lucide-sparkles" },
-  命之座: { component: Constellation, icon: "i-lucide-star" },
-  故事: { component: Story, icon: "i-lucide-book-open" },
-  語音: { component: VoiceOver, icon: "i-lucide-mic" },
+if (event && error.value?.status === 404) {
+  setResponseStatus(event, 404);
+}
+
+// 技能名稱、技能說明、衣裝說明在各分頁有多處顯示，性別標記在這裡一次處理
+const store = useUserStore();
+const displayData = computed(() => {
+  const data = characterData.value;
+  if (!data) return data;
+  const gender = (text: string | null) => applyGender(text, store.playerGender);
+  return {
+    ...data,
+    abilities: data.abilities.map((a) => ({
+      ...a,
+      name: gender(a.name),
+      description: gender(a.description),
+    })),
+    outfits: data.outfits.map((o) => ({ ...o, description: gender(o.description) })),
+  };
+});
+
+// SEO
+const title = computed(
+  () => `${characterData.value?.name || t("character.notFoundTitle")} | ${siteConfig.title}`,
+);
+
+useSeoMeta({ title });
+
+// 分頁
+const allTabs: Record<string, { component: Component; icon: string }> = {
+  overview: { component: Overview, icon: "i-lucide-user-round" },
+  talent: { component: Talent, icon: "i-lucide-sparkles" },
+  constellation: { component: Constellation, icon: "i-lucide-star" },
+  story: { component: Story, icon: "i-lucide-book-open" },
+  voiceline: { component: VoiceOver, icon: "i-lucide-mic" },
 };
 
-const currentTab = ref("總覽");
+const tabs = computed(() => {
+  const data = characterData.value;
+  const hasData: Record<string, boolean> = {
+    constellation: !!data?.abilities.some((a) => a.kind === "constellation"),
+    story: !!data?.stories.length,
+    voiceline: !!(data?.voicelines.friendship.length || data?.voicelines.battle.length),
+  };
+  return Object.fromEntries(Object.entries(allTabs).filter(([name]) => hasData[name] ?? true));
+});
 
-// Extract Image Color
+const currentTab = ref("overview");
+
+// 擷取立繪色彩
 import { getColorSync, getPaletteSync } from "colorthief";
 import type { Color } from "colorthief";
 const imageColors = ref<Record<string, Color | Color[] | null>>({
@@ -38,10 +81,20 @@ const imageColors = ref<Record<string, Color | Color[] | null>>({
 });
 const extractingImgColor = ref(true);
 
+// 設定存在 localStorage，伺服器端讀不到，等掛載後才判斷，避免 hydration 不一致
+const mounted = ref(false);
+// 沒有元素的角色沒有對應的影片，維持自動取色
+const elementBgUrl = computed(() => {
+  const element = characterData.value?.element;
+  if (!mounted.value || store.characterBg !== "elementBg" || !element) return null;
+  return `${storageConfig.baseUrl}/videos/bg_${element}.webm`;
+});
+
 onMounted(() => {
+  mounted.value = true;
   const img = new Image();
   img.crossOrigin = "anonymous";
-  img.src = `${storageConfig.baseUrl}/avatar-img/${characterData.value?.images?.AvatarImg}.webp`;
+  img.src = `${storageConfig.baseUrl}/avatar-img/${characterData.value?.images?.gacha}.webp`;
   img.onload = () => {
     imageColors.value.color = getColorSync(img);
     imageColors.value.palette = getPaletteSync(img, { colorCount: 5 });
@@ -49,44 +102,40 @@ onMounted(() => {
   };
 });
 
-const outfits = characterData.value?.outfits;
-const outfitsObject = outfits
-  ? Object.fromEntries(outfits.map((outfit) => [outfit.name, outfit]))
-  : {};
-
-const outfitList = computed(() => {
-  if (outfits) {
-    const list: string[] = [];
-    outfits.map((outfit) => {
-      list.push(outfit.name);
-    });
-    return list;
-  }
-  return [];
-});
-
+// 角色衣裝
+const outfits = characterData.value?.outfits ?? [];
+const outfitList = computed(() => outfits.map((outfit) => outfit.name));
 const selectedOutfit = ref<string | undefined>(outfitList.value?.[0]);
 
-const outfitImgs = computed(() => {
-  if (selectedOutfit.value) {
-    return {
-      AvatarIcon: outfitsObject[selectedOutfit.value]?.images.AvatarIcon,
-      AvatarImg: outfitsObject[selectedOutfit.value]?.images.AvatarImg,
-    };
-  }
-});
+const currentOutfit = computed(() =>
+  outfits.find((outfit) => outfit.name === selectedOutfit.value),
+);
+
+const outfitImgs = computed(() => ({
+  AvatarIcon: currentOutfit.value?.images.icon,
+  AvatarImg: currentOutfit.value?.images.gacha,
+}));
 </script>
 
 <template>
-  <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor" />
-  <!-- 固定深色：不論站台主題，角色頁元件與面板一律使用深色變數 -->
-  <main class="dark" v-if="status === 'success' && characterData">
-    <!-- 立繪背景（排除 header 列，從 68px 起算） -->
+  <Body :style="'background: ' + imageColors.color" v-if="!extractingImgColor && !elementBgUrl" />
+  <main class="dark" v-if="status === 'success' && displayData">
+    <video
+      v-if="elementBgUrl"
+      :key="elementBgUrl"
+      :src="elementBgUrl"
+      class="fixed -z-1 inset-0 size-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+    ></video>
+    <!-- 立繪背景（排除 header 列） -->
     <div
       class="fixed -z-1 inset-x-0 top-17 bottom-0 bg-cover bg-center"
       :style="`background-image: url(${storageConfig.baseUrl}/avatar-img/${outfitImgs?.AvatarImg}.webp)`"
     ></div>
-    <!-- 漸層壓暗，確保面板可讀性 -->
     <div
       class="fixed -z-1 inset-0 bg-linear-to-t from-black/10 via-transparent to-black/10 pointer-events-none"
     ></div>
@@ -95,7 +144,7 @@ const outfitImgs = computed(() => {
       <KeepAlive>
         <component
           :is="tabs[currentTab]?.component"
-          :data="characterData"
+          :data="displayData"
           v-model:outfitList="outfitList"
           v-model:selectedOutfit="selectedOutfit"
           v-model:outfitImgs="outfitImgs"
@@ -103,16 +152,17 @@ const outfitImgs = computed(() => {
       </KeepAlive>
     </div>
 
-    <!-- 桌面版：左側菱形導覽軌（模仿遊戲內角色介面） -->
+    <!-- 桌面版：左側菱形導覽軌 -->
     <nav
       class="hidden xl:flex fixed left-12 top-1/2 -translate-y-1/2 z-20 flex-col gap-5"
-      aria-label="角色頁面分頁"
+      :aria-label="t('character.tabNav')"
     >
+      <!-- 標籤以絕對定位放在按鈕右側，按鈕（hover 與點擊範圍）只有菱形本身 -->
       <button
         v-for="(tab, name) in tabs"
         :key="name"
         type="button"
-        class="group flex items-center justify-start gap-3 cursor-pointer"
+        class="group relative flex w-fit cursor-pointer"
         :aria-current="currentTab === name ? 'page' : undefined"
         @click="currentTab = name"
       >
@@ -131,10 +181,10 @@ const outfitImgs = computed(() => {
           />
         </span>
         <span
-          class="text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity opacity-0 group-hover:opacity-100"
+          class="absolute left-full top-1/2 -translate-y-1/2 ml-3 whitespace-nowrap pointer-events-none text-sm font-semibold px-2 py-0.5 rounded-md bg-navy-900/70 backdrop-blur-sm transition-opacity opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
           :class="currentTab === name ? 'text-gold-300' : 'text-white/80'"
         >
-          {{ name }}
+          {{ t(`character.tabs.${name}`) }}
         </span>
       </button>
     </nav>
@@ -142,7 +192,7 @@ const outfitImgs = computed(() => {
     <!-- 手機／平板版：底部膠囊導覽列 -->
     <nav
       class="xl:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-20 max-w-[94vw]"
-      aria-label="角色頁面分頁"
+      :aria-label="t('character.tabNav')"
     >
       <div
         class="flex items-center gap-1 px-2 py-1.5 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/50 shadow-lg overflow-x-auto"
@@ -157,18 +207,23 @@ const outfitImgs = computed(() => {
           @click="currentTab = name"
         >
           <UIcon :name="tab.icon" class="size-5" />
-          <span class="text-xs font-semibold whitespace-nowrap">{{ name }}</span>
+          <span class="text-xs font-semibold whitespace-nowrap">
+            {{ t(`character.tabs.${name}`) }}
+          </span>
         </button>
       </div>
     </nav>
   </main>
   <main v-else>
-    <div class="container mx-auto flex flex-col items-center pt-5 pb-10 px-4">
-      <div v-if="error">
-        <p>連接資料庫時發生錯誤</p>
-        <p>{{ error?.statusMessage }}（狀態碼：{{ error?.statusCode }}）</p>
+    <div class="container mx-auto pt-5 pb-10 px-4">
+      <div class="flex flex-col items-center" v-if="error?.status == 404">
+        <p>{{ t("character.notFound") }}</p>
       </div>
-      <p v-else>目前尚無此角色資料</p>
+      <div class="flex flex-col items-center" v-else>
+        <p>{{ t("common.error.server") }}</p>
+        <p>{{ t("common.error.statusCode", { code: error?.status }) }}</p>
+        <p>{{ t("common.error.statusText", { message: error?.statusText }) }}</p>
+      </div>
     </div>
   </main>
 </template>

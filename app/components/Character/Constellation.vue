@@ -1,36 +1,30 @@
 <script setup lang="ts">
-import { objectFromEntries } from "ts-extras";
-import type { character } from "@/generated/prisma/client";
-const { data } = defineProps<{ data: character }>();
+import { storageConfig } from "@/site.config";
+import type { CharacterData } from "@/types/api";
+const { data } = defineProps<{ data: CharacterData }>();
+const { t } = useI18n();
 
-import useDataParser from "@/composables/useDataParser";
-const { parseDescriptionText } = useDataParser();
-
-interface Dictionary {
-  relatedEffects: Record<string, string>;
-  linkToEffect: Record<string, string>;
-  linkToTalent: Record<string, string>;
-  linkToPassive: Record<string, string>;
-  linkToConstellation: Record<string, string>;
-}
-
-const dictionary: Dictionary | null = data.dictionary;
-
-const skills = objectFromEntries([
-  ["talents", Object.values(data.talents!.list)],
-  ["passives", data.passives!],
-  ["constellation", data.constellation?.list],
-] as const);
-
-const constellations = data.constellation?.list || [];
+const abilities = computed(() => data.abilities.filter((a) => !a.isEnhanced));
+const constellations = computed(() => abilities.value.filter((a) => a.kind === "constellation"));
 
 // 弧形排列：中段項目向右凸出（模仿遊戲內命之座弧線）
 const arcOffsets = ["xl:pr-14", "xl:pr-5", "xl:pr-0", "xl:pr-0", "xl:pr-5", "xl:pr-14"];
 
 const selected = ref<number | null>(null);
-const selectedItem = computed(() =>
-  selected.value === null ? null : constellations[selected.value],
+
+const showEnhanced = ref(false);
+watch(selected, () => (showEnhanced.value = false));
+
+const selectedItem = computed(() => {
+  if (selected.value === null) return null;
+  const item = constellations.value[selected.value];
+  if (!item || !showEnhanced.value) return item ?? null;
+  return counterpartOf(data.abilities, item) ?? item;
+});
+const hasVersions = computed(
+  () => !!selectedItem.value && !!counterpartOf(data.abilities, selectedItem.value),
 );
+const toggleVersion = () => (showEnhanced.value = !showEnhanced.value);
 
 // 點擊空白區域時關閉命之座資訊
 const listEl = ref<HTMLElement | null>(null);
@@ -55,49 +49,31 @@ const scrollToDetail = () => {
   }
 };
 
-// 相關效果 hover popover
-const getPopupData = (type: string, name: string) => {
-  const talentsList = Object.fromEntries(skills.talents.map(({ name, ...rest }) => [name, rest]));
-  const passivesList = Object.fromEntries(skills.passives.map(({ name, ...rest }) => [name, rest]));
-  const constellationList = Object.fromEntries(
-    skills.constellation?.map(({ name, ...rest }) => [name, rest]) || [],
-  );
-  if (type === "talent") {
-    return { title: "相關突破天賦", name, description: talentsList[name]?.description || "" };
-  } else if (type === "passive") {
-    return { title: "相關固有天賦", name, description: passivesList[name]?.description || "" };
-  } else if (type === "constellation") {
-    return { title: "相關命之座", name, description: constellationList[name]?.description || "" };
-  } else if (type === "effect") {
-    return { title: "相關效果", name, description: dictionary?.relatedEffects[name] || "" };
-  }
-  return { title: "錯誤", name: "無法取得資料", description: "尚未設定此效果說明" };
-};
+const showDiff = ref(false);
+const descEl = ref<HTMLElement | null>(null);
+useDiffOverlay(descEl, showDiff);
 
-const resolvePopover = (type: string, name: string) => {
-  const { title, name: popupName, description } = getPopupData(type, name);
-  return { title, name: popupName, html: parseDescriptionText(description, skills, dictionary) };
-};
+// 相關效果 popover 資料
+const resolvePopover = useAbilityPopover(data, abilities);
 </script>
 
 <template>
   <div class="max-xl:mx-4 max-xl:mt-[36vh] max-xl:mb-30 max-xl:flex max-xl:flex-col max-xl:gap-4">
-    <!-- 右側：命之座清單（弧形排列，暫以菱形代替圖示） -->
+    <!-- 右側：命之座清單 -->
     <nav
       ref="listEl"
       class="flex flex-col gap-2 xl:gap-9 xl:absolute xl:right-10 xl:top-[calc(50%+34px)] xl:-translate-y-1/2 xl:z-10"
-      aria-label="命之座清單"
+      :aria-label="t('character.constellation.list')"
     >
       <button
         v-for="(constellation, i) in constellations"
         :key="i"
         type="button"
-        class="group relative flex items-center justify-between xl:justify-end gap-4 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
+        class="group relative flex items-center justify-between xl:justify-end gap-3 cursor-pointer max-xl:p-3 max-xl:rounded-lg max-xl:bg-navy-900/70 max-xl:backdrop-blur-sm max-xl:border max-xl:border-gold-500/30"
         :class="arcOffsets[i]"
         :aria-current="selected === i ? 'true' : undefined"
         @click="selected = selected === i ? null : i"
       >
-        <!-- hover／選中時的柔光橫帶（模仿遊戲內效果） -->
         <span
           class="absolute inset-0 xl:-left-16 xl:-right-10 xl:-inset-y-1 -z-10 rounded-lg xl:rounded-none bg-linear-to-r from-transparent to-transparent pointer-events-none transition-opacity duration-200"
           :class="
@@ -117,15 +93,22 @@ const resolvePopover = (type: string, name: string) => {
           </span>
         </span>
         <span
-          class="flex shrink-0 items-center justify-center w-9 h-9 m-1.5 rotate-45 rounded-xs border-2 backdrop-blur-sm transition-colors"
+          class="flex shrink-0 items-center justify-center w-12 h-12 m-1.5 rounded-full border-2 backdrop-blur-sm transition-colors"
           :class="
             selected === i
-              ? 'bg-gold-400 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
+              ? 'bg-gold-600/70 border-gold-200 shadow-[0_0_12px_rgba(211,188,142,0.7)]'
               : 'bg-navy-900/70 border-white/40 group-hover:border-gold-300'
           "
         >
+          <NuxtImg
+            v-if="constellation.icon"
+            :src="`${storageConfig.baseUrl}/skill-icon/${constellation.icon}.webp`"
+            :alt="constellation?.name"
+            class="size-10"
+          />
           <span
-            class="-rotate-45 text-xs font-bold select-none"
+            v-else
+            class="text-sm font-bold select-none"
             :class="selected === i ? 'text-navy-900' : 'text-white/80'"
           >
             {{ i + 1 }}
@@ -145,28 +128,53 @@ const resolvePopover = (type: string, name: string) => {
         <section
           class="flex flex-col bg-navy-900/75 backdrop-blur-md border border-gold-500/30 rounded-lg shadow-lg p-5 text-parchment-100 xl:max-h-[85vh]"
         >
-          <div class="flex items-start justify-between gap-3">
-            <h2 class="gi-diamond text-lg md:text-xl font-semibold text-white">
+          <div class="flex items-center justify-between gap-3">
+            <h2
+              class="flex flex-row justify-center items-center text-lg md:text-xl font-semibold text-white"
+            >
+              <NuxtImg
+                v-if="selectedItem.icon"
+                :src="`${storageConfig.baseUrl}/skill-icon/${selectedItem.icon}.webp`"
+                :alt="selectedItem.name"
+                class="size-10 mr-2"
+              />
+              <span v-else class="gi-diamond"></span>
               {{ selectedItem.name }}
+              <CharacterEnhancedBadge
+                v-if="hasVersions"
+                v-model:active="showDiff"
+                :enhanced="selectedItem.isEnhanced"
+                class="ml-2"
+                @toggle="toggleVersion"
+              />
             </h2>
             <button
               type="button"
               class="flex shrink-0 rounded-full p-1 text-parchment-100/80 hover:text-white hover:bg-white/10 active:bg-white/20 transition-colors cursor-pointer"
-              aria-label="關閉命之座資訊"
+              :aria-label="t('character.constellation.close')"
               @click="selected = null"
             >
               <UIcon name="i-lucide-x" class="size-5" />
             </button>
           </div>
           <p class="text-xs md:text-sm text-gold-300 font-semibold py-2">
-            命之座 第{{ (selected ?? 0) + 1 }}層
+            {{ t("character.constellation.level", { n: (selected ?? 0) + 1 }) }}
           </p>
-          <div class="overflow-y-auto min-h-0">
-            <div :key="selected ?? -1" class="tab-pane">
+          <!-- overflow 會連左右一起裁切：留 8px 給差異強調的左右延伸與外框 -->
+          <div class="overflow-y-auto min-h-0 -mx-2 px-2">
+            <div :key="`${selected ?? -1}-${selectedItem.isEnhanced}`" class="tab-pane">
               <UIHoverPopover :resolve="resolvePopover">
                 <p
-                  v-html="parseDescriptionText(selectedItem.description, skills, dictionary)"
-                  class="text-sm md:text-base"
+                  v-html="
+                    parseDescriptionText(
+                      describeAbility(data.abilities, selectedItem),
+                      abilities,
+                      data.glossary,
+                    )
+                  "
+                  ref="descEl"
+                  class="relative isolate text-sm md:text-base"
+                  :class="{ 'show-diff': showDiff }"
                 ></p>
               </UIHoverPopover>
             </div>
