@@ -65,7 +65,10 @@ const bonuses = computed(() => {
   <main class="container mx-auto mb-6 mt-3" v-if="status === 'success' && artifactData">
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-5 mx-4 sm:mx-5">
       <div class="flex flex-col lg:col-span-4 lg:h-[calc(100dvh-6.5rem)]">
-        <div class="flex shrink-0 px-5 py-2 bg-[#bc6832] rounded-t-lg">
+        <div
+          class="flex shrink-0 px-5 py-2 rounded-t-lg"
+          :class="rarityBar(artifactData.maxRarity)"
+        >
           <p class="text-lg md:text-xl font-semibold text-white">{{ currentPiece?.name }}</p>
         </div>
         <div
