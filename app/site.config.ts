@@ -8,6 +8,11 @@ export const storageConfig = {
   baseUrl: "https://assets.cementarii.net",
 };
 
+export const analyticsConfig = {
+  // 只統計這個網域，本機開發與預覽不列入
+  domain: "cementarii.net",
+};
+
 export const siteLinks = [
   { name: "首頁", path: "index" },
   { name: "角色", path: "character" },

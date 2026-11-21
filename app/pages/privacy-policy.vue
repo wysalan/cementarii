@@ -68,12 +68,28 @@ useSeoMeta({
       </section>
 
       <section class="gi-panel p-5 flex flex-col gap-3">
+        <h2 class="text-xl font-semibold text-highlighted">追蹤與分析</h2>
+        <p>
+          本站使用 Umami 統計網站的使用情況，用來了解哪些頁面與功能較常被使用，作為改善網站的參考。
+        </p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>統計的內容：瀏覽的頁面、來源網站、國家或地區、瀏覽器與裝置類型。</li>
+          <li>不使用 Cookie，也不會在你的裝置上儲存任何識別資料。</li>
+          <li>數據只以整體統計的形式呈現，無法用來辨識或追蹤個別使用者。</li>
+        </ul>
+        <p>
+          本站沒有投放廣告，也沒有使用廣告追蹤工具。如果你不希望被列入統計，可以使用瀏覽器的內容封鎖功能擋下分析腳本，不會影響網站的其他功能。
+        </p>
+      </section>
+
+      <section class="gi-panel p-5 flex flex-col gap-3">
         <h2 class="text-xl font-semibold text-highlighted">第三方服務</h2>
         <p>
           瀏覽本站時，你的瀏覽器或本站伺服器會向下列服務取得資料，這些服務各有自己的隱私權政策：
         </p>
         <ul class="list-disc pl-5 space-y-1">
           <li>Cloudflare：網站主機、圖片與影片的存放</li>
+          <li>Umami：流量分析</li>
           <li>ennead.cc：首頁的兌換碼清單（由你的瀏覽器直接取得）</li>
           <li>Yatta（gi.yatta.moe）：首頁的活動資訊</li>
           <li>HoYoLAB：啟用連動後的樹脂查詢</li>

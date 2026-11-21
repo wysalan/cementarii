@@ -1,4 +1,4 @@
-import { siteConfig } from "./app/site.config";
+import { analyticsConfig, siteConfig } from "./app/site.config";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -9,7 +9,26 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/i18n",
+    "@nuxt/scripts",
   ],
+
+  scripts: {
+    registry: process.env.UMAMI_WEBSITE_ID
+      ? {
+          umamiAnalytics: {
+            websiteId: process.env.UMAMI_WEBSITE_ID,
+            domains: [analyticsConfig.domain],
+            scriptInput: process.env.UMAMI_SCRIPT_URL
+              ? { src: process.env.UMAMI_SCRIPT_URL }
+              : undefined,
+            trigger: "onNuxtReady",
+            // 直接連到 Umami，不經由本站代理（讓使用者可以自行封鎖）
+            proxy: false,
+            bundle: false,
+          },
+        }
+      : {},
+  },
 
   css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
 
