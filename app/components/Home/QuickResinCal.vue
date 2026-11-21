@@ -1,11 +1,24 @@
 <script setup lang="ts">
 const currentResin = ref(0);
+
+// 從 HoYoLAB 取得的起始時間只對當時的樹脂數有效，手動改過數字後就不再套用
+const hoyolab = useHoyolabResin();
+const fetched = ref<{ resin: number; start: Date } | null>(null);
+
+async function loadFromHoyolab() {
+  const result = await hoyolab.fetchResin();
+  if (!result) return;
+  currentResin.value = result.currentResin;
+  fetched.value = { resin: result.currentResin, start: result.start };
+}
+
 const recoveryTimeResult = computed(() => {
   const resin = currentResin.value;
   if (resin === null || resin === undefined || resin.toString() === "") {
     return "請輸入樹脂數量";
   }
-  const full = getFullResinResult(resin).at(-1)!;
+  const start = fetched.value?.resin === resin ? fetched.value.start : undefined;
+  const full = getFullResinResult(resin, start).at(-1)!;
   return `${full.prefix} ${full.time}`.trim();
 });
 </script>
@@ -14,10 +27,25 @@ const recoveryTimeResult = computed(() => {
   <div class="relative">
     <div class="flex flex-col gap-3 gi-panel p-5 max-sm:pr-16">
       <h2 class="text-2xl text-highlighted">快速體力試算</h2>
-      <div class="flex items-center gap-2 text-lg">
+      <div class="flex flex-wrap items-center gap-2 text-lg">
         <span>目前樹脂：</span>
         <UInputNumber v-model="currentResin" :min="0" :max="200" class="w-32" />
+        <ClientOnly>
+          <UButton
+            v-if="hoyolab.linked.value"
+            label="從 HoYoLAB 取得"
+            icon="i-lucide-refresh-cw"
+            color="primary"
+            variant="soft"
+            size="sm"
+            :loading="hoyolab.loading.value"
+            @click="loadFromHoyolab"
+          />
+        </ClientOnly>
       </div>
+      <p v-if="hoyolab.error.value" class="text-sm text-error" role="alert">
+        {{ hoyolab.error.value }}
+      </p>
       <div data-allow-mismatch>預計回滿時間：{{ recoveryTimeResult }}</div>
     </div>
     <UTooltip text="前往完整版">

@@ -45,6 +45,18 @@ onUnmounted(() => {
   if (timer) clearInterval(timer);
 });
 
+// HoYoLAB 連動：回傳的秒數比手動輸入精確，換算成起始時間後沿用自訂時間的計算
+const hoyolab = useHoyolabResin();
+const hoyolabSettingsOpen = ref(false);
+
+async function loadFromHoyolab() {
+  const result = await hoyolab.fetchResin();
+  if (!result) return;
+  currentResin.value = result.currentResin;
+  customTime.value = result.start;
+  useCustomTime.value = true;
+}
+
 function setCustomTime(autoSet: boolean, targetTime?: Date): void {
   if (autoSet && useCustomTime.value) {
     customTime.value = new Date();
@@ -79,6 +91,30 @@ function setCustomTime(autoSet: boolean, targetTime?: Date): void {
             placeholder="在此處輸入樹脂"
             class="w-full"
           />
+          <ClientOnly>
+            <div class="flex flex-wrap justify-center items-center gap-2">
+              <UButton
+                v-if="hoyolab.linked.value"
+                label="從 HoYoLAB 取得"
+                icon="i-lucide-refresh-cw"
+                color="primary"
+                variant="soft"
+                :loading="hoyolab.loading.value"
+                @click="loadFromHoyolab"
+              />
+              <UButton
+                :label="hoyolab.linked.value ? '連動設定' : '設定 HoYoLAB 連動'"
+                icon="i-lucide-link"
+                color="neutral"
+                variant="ghost"
+                @click="hoyolabSettingsOpen = true"
+              />
+            </div>
+            <p v-if="hoyolab.error.value" class="text-sm text-error text-center" role="alert">
+              {{ hoyolab.error.value }}
+            </p>
+            <ToolHoyolabSettings v-model:open="hoyolabSettingsOpen" />
+          </ClientOnly>
         </div>
         <div class="flex flex-col justify-center items-center gap-3 gi-panel p-5 w-full">
           <p class="text-xl font-semibold text-highlighted">設定起始時間</p>

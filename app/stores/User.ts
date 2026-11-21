@@ -5,6 +5,7 @@ export const useUserStore = defineStore("user", {
     defaultTalentLevel: 1,
     useCostumeIcon: false,
     characterBg: "extractFromAvatar",
+    hoyolab: null as HoyolabLink | null,
   }),
   actions: {
     changeUserName(newName: string) {
@@ -21,6 +22,9 @@ export const useUserStore = defineStore("user", {
     },
     setCharacterBg(newCharacterBg: string) {
       this.characterBg = newCharacterBg;
+    },
+    setHoyolab(link: HoyolabLink | null) {
+      this.hoyolab = link;
     },
   },
   persist: {
