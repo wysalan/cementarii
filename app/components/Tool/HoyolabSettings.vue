@@ -62,6 +62,12 @@ function remove() {
               <li>
                 資料只存在這個瀏覽器；查詢時才會經由本站伺服器轉送給 HoYoLAB，伺服器不會保留。
               </li>
+              <li>
+                詳細說明請見
+                <NuxtLink to="/privacy-policy" target="_blank" class="underline"
+                  >隱私權政策</NuxtLink
+                >。
+              </li>
             </ul>
           </template>
         </UAlert>
