@@ -21,6 +21,18 @@ useSeoMeta({
         </div>
         <p class="text-highlighted font-semibold">樹脂計算器</p>
       </NuxtLink>
+      <NuxtLink
+        to="tool/wish-history"
+        class="flex flex-col justify-center items-center w-40 h-45 gi-panel hover:ring-2 ring-gold-500 hover:scale-105 transition"
+      >
+        <div>
+          <NuxtImg
+            :src="`${storageConfig.baseUrl}/item-icon/UI_ItemIcon_223.webp`"
+            alt="祈願紀錄圖示"
+          />
+        </div>
+        <p class="text-highlighted font-semibold">祈願紀錄</p>
+      </NuxtLink>
     </div>
   </main>
 </template>

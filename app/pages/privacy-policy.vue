@@ -21,18 +21,19 @@ useSeoMeta({
           是個人經營的《原神》資料查詢與工具網站。本站沒有帳號系統，不需要註冊或登入，也不會要求你提供姓名、電子郵件等個人資料。
         </p>
         <p>
-          你在本站所做的設定都只儲存在自己的瀏覽器裡。唯一會經過本站伺服器的個人資料，是你主動啟用「HoYoLAB
-          連動」後，查詢樹脂時送出的連動資料，詳見下方說明。
+          你在本站所做的設定都只儲存在自己的瀏覽器裡。會經過本站伺服器的個人資料只有兩種：你主動啟用「HoYoLAB
+          連動」後查詢樹脂時送出的連動資料，以及你貼上祈願紀錄網址匯入時送出的網址驗證資訊，詳見下方說明。
         </p>
       </section>
 
       <section class="gi-panel p-5 flex flex-col gap-3">
         <h2 class="text-xl font-semibold text-highlighted">儲存在瀏覽器的資料</h2>
-        <p>以下資料儲存在你瀏覽器的 localStorage，不會傳送到本站伺服器：</p>
+        <p>以下資料儲存在你瀏覽器的 localStorage 或 IndexedDB，不會傳送到本站伺服器：</p>
         <ul class="list-disc pl-5 space-y-1">
           <li>玩家名稱、性別等顯示用的設定</li>
           <li>天賦預設等級、角色頁面背景樣式、深淺色模式等介面偏好</li>
           <li>HoYoLAB 連動資料（有設定時才有）</li>
+          <li>祈願紀錄（匯入後才有）</li>
         </ul>
         <p>清除瀏覽器的網站資料，就會把上述內容全部刪除。</p>
       </section>
@@ -56,6 +57,19 @@ useSeoMeta({
           帳號的登入狀態，請自行評估風險後再使用。你可以隨時在樹脂計算器的「連動設定」中選擇「移除連動」；若想讓已提供的
           Cookie 失效，請到 HoYoLAB 登出或變更密碼。
         </p>
+      </section>
+
+      <section class="gi-panel p-5 flex flex-col gap-3">
+        <h2 class="text-xl font-semibold text-highlighted">祈願紀錄匯入</h2>
+        <p>祈願紀錄有兩種匯入方式，紀錄本身都只儲存在你的瀏覽器：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>從檔案匯入：檔案只在瀏覽器裡讀取，不會上傳。</li>
+          <li>
+            從遊戲匯入：你貼上的祈願紀錄網址裡的驗證資訊（authkey）會送到本站伺服器，由伺服器代為向官方查詢祈願紀錄，再把結果傳回你的瀏覽器。
+          </li>
+          <li>伺服器只在查詢當下使用驗證資訊與紀錄，不會儲存，也不會寫入紀錄。</li>
+          <li>這組驗證資訊只能讀取祈願紀錄，約 24 小時後失效，本站不會保存在你的瀏覽器裡。</li>
+        </ul>
       </section>
 
       <section class="gi-panel p-5 flex flex-col gap-3">
@@ -93,6 +107,7 @@ useSeoMeta({
           <li>ennead.cc：首頁的兌換碼清單（由你的瀏覽器直接取得）</li>
           <li>Yatta（gi.yatta.moe）：首頁的活動資訊</li>
           <li>HoYoLAB：啟用連動後的樹脂查詢</li>
+          <li>HoYoverse：從遊戲匯入祈願紀錄時的查詢</li>
         </ul>
       </section>
 
