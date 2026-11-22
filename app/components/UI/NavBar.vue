@@ -55,9 +55,10 @@ function saveSettings() {
 </script>
 
 <template>
-  <header class="container mx-auto px-4 sm:px-6 py-3 sticky top-0 z-50">
+  <!-- 兩側透明的部分不攔截點擊，才點得到捲到 header 旁邊的內容 -->
+  <header class="container mx-auto px-4 sm:px-6 py-3 sticky top-0 z-50 pointer-events-none">
     <div class="flex items-center justify-center gap-4">
-      <NuxtLink to="/" class="hidden md:block shrink-0">
+      <NuxtLink to="/" class="hidden md:block shrink-0 pointer-events-auto">
         <img
           src="@/assets/favicon.svg"
           width="40"
@@ -67,7 +68,7 @@ function saveSettings() {
         />
       </NuxtLink>
       <div
-        class="flex items-center gap-1 md:gap-3 rounded-full bg-parchment-100/90 dark:bg-navy-900/85 backdrop-blur-md border border-gold-600/40 dark:border-gold-500/40 shadow-md px-3 md:px-6 h-11 max-w-[92vw] md:max-w-full"
+        class="flex items-center gap-1 md:gap-3 rounded-full bg-parchment-100/90 dark:bg-navy-900/85 backdrop-blur-md border border-gold-600/40 dark:border-gold-500/40 shadow-md px-3 md:px-6 h-11 max-w-[92vw] md:max-w-full pointer-events-auto"
       >
         <div class="relative min-w-0">
           <nav
