@@ -4,4 +4,5 @@ export * from "./core/materials";
 export * from "./data/characters";
 export * from "./data/weapons";
 export * from "./data/artifacts";
+export * from "./data/wishBanners";
 export * from "./relations";
